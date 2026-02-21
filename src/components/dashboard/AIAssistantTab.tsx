@@ -123,13 +123,16 @@ export function AIAssistantTab({ initialMode = "lesson", preloadedResult }: AIAs
     useEffect(() => {
         if (board && grade) {
             setIsLoadingMetadata(true);
+            console.log(`[DEBUG] Fetching metadata for Board: ${board}, Grade: ${grade}`);
             api.get('/curriculum/metadata', { params: { curriculum: board, class: grade } })
                 .then(res => {
+                    console.log(`[DEBUG] Metadata received:`, res.data);
                     setSubjectsList(res.data.subjects || []);
                     setTopicsMap(res.data.topics || {});
 
                     // Only reset subject if the current one is no longer valid for the new metadata
                     if (!res.data.subjects?.includes(subject)) {
+                        console.log(`[DEBUG] Current subject '${subject}' not found in new metadata, resetting.`);
                         setSubject("");
                         setTopic("");
                     }
