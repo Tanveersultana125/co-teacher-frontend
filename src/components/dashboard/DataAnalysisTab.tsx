@@ -608,7 +608,7 @@ export const DataAnalysisTab = () => {
                                                                         : result.overallStats?.average}
                                                                 </p>
                                                             </div>
-                                                            <div className="bg-[#6F8F72] text-white rounded-xl p-6 text-center shadow-lg">
+                                                            <div className="bg-[#215D5F] text-white rounded-xl p-6 text-center shadow-lg">
                                                                 <p className="text-slate-300 font-bold text-sm uppercase tracking-wider mb-2">Highest</p>
                                                                 <p className="text-4xl font-black">
                                                                     {selectedImprovementSubject && result.subjectInsights?.[selectedImprovementSubject]
