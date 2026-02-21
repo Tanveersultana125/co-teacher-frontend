@@ -6,10 +6,10 @@ const CARDS = [
         subject: "History",
         grade: "Grade 7",
         content: "The rise of the Mongol Empire under Genghis Khan involved unifying nomadic tribes on the Asian steppe. Their superior cavalry tactics allowed them to conquer rapid...",
-        image: "https://images.unsplash.com/photo-1558865869-c93f6f8482af?auto=format&fit=crop&w=400&q=80", // Horse/Warrior vibe
+        image: "/mongol_empire_lesson_card_1769608848287.png",
         rotate: -6,
-        x: -480, // Increased spread
-        y: 40,
+        x: -480,
+        y: 60,
         zIndex: 10,
         type: "worksheet"
     },
@@ -18,10 +18,10 @@ const CARDS = [
         subject: "Biology",
         grade: "Grade 9",
         content: "Understanding the movement of water molecules across a semi-permeable membrane. Key concepts include hypotonic, hypertonic, and isotonic solutions.",
-        image: "https://images.unsplash.com/photo-1576086213369-97a306d36557?auto=format&fit=crop&w=400&q=80", // Cells
+        image: "https://images.unsplash.com/photo-1530026405186-ed1f139313f8?auto=format&fit=crop&w=800&q=80",
         rotate: -3,
-        x: -240, // Increased spread
-        y: 10,
+        x: -240,
+        y: 20,
         zIndex: 20,
         type: "notes"
     },
@@ -30,11 +30,11 @@ const CARDS = [
         subject: "Science",
         grade: "Grade 4-6",
         content: "Our solar system consists of the Sun (a central star) and all things orbiting around it, including eight major planets, their moons, and smaller bodies like asteroids and comets.",
-        image: "/the_solar_system_card.png", // Generated AI Image
+        image: "/the_solar_system_card.png",
         rotate: 0,
         x: 0,
-        y: -20,
-        zIndex: 30, // Center, highest
+        y: -15,
+        zIndex: 30,
         type: "slide"
     },
     {
@@ -42,10 +42,10 @@ const CARDS = [
         subject: "Biology",
         grade: "Grade 10",
         content: "Label the four chambers of the heart: right atrium, right ventricle, left atrium, and left ventricle. Trace the path of blood flow.",
-        image: "/heart-quiz-card.png", // Existing Asset
+        image: "https://images.unsplash.com/photo-1530210124550-912dc1381cb8?auto=format&fit=crop&w=800&q=80",
         rotate: 3,
-        x: 240, // Increased spread
-        y: 10,
+        x: 240,
+        y: 20,
         zIndex: 20,
         type: "quiz"
     },
@@ -54,10 +54,10 @@ const CARDS = [
         subject: "Literature",
         grade: "Grade 11",
         content: "Symbolism in Macbeth. Analyze the recurring motif of blood and how it represents guilt throughout the play.",
-        image: "https://images.unsplash.com/photo-1535905557558-afc4877a26fc?auto=format&fit=crop&w=400&q=80", // Books/Old paper
+        image: "https://images.unsplash.com/photo-1507842217343-583bb7270b66?auto=format&fit=crop&w=800&q=80",
         rotate: 6,
-        x: 480, // Increased spread
-        y: 40,
+        x: 480,
+        y: 60,
         zIndex: 10,
         type: "worksheet"
     }
@@ -117,11 +117,11 @@ export const ScrollingShowcase = () => {
                             </div>
 
                             {/* Card Image */}
-                            <div className="w-full h-48 rounded-lg overflow-hidden relative shadow-inner shrink-0">
+                            <div className="w-full h-52 rounded-lg overflow-hidden relative shadow-inner shrink-0 group-hover:h-56 transition-all duration-310">
                                 <img
                                     src={card.image}
                                     alt={card.title}
-                                    className="w-full h-full object-cover"
+                                    className="w-full h-full object-cover object-top"
                                 />
                                 <div className="absolute inset-0 bg-black/5" />
                             </div>

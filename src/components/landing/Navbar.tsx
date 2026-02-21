@@ -18,13 +18,13 @@ const Navbar = () => {
   ];
 
   return (
-    <nav className="fixed top-0 left-0 right-0 z-50 glass shadow-sm border-b border-white/20">
+    <nav className="fixed top-0 left-0 right-0 z-50 bg-[#245D67] shadow-sm">
       <div className="container mx-auto px-4 lg:px-6">
         <div className="flex items-center justify-between h-16 md:h-20">
           {/* Logo */}
           <Link to="/" className="flex items-center gap-2">
-            <Logo className="w-10 h-10 bg-[#1A3263] rounded-xl shadow-md p-1" />
-            <span className="font-display font-bold text-xl md:text-2xl text-[#1A3263]">
+            <Logo className="w-10 h-10 bg-[#347681] rounded-xl shadow-md p-1" />
+            <span className="font-display font-bold text-xl md:text-2xl text-white">
               AI Co-teacher
             </span>
           </Link>
@@ -35,7 +35,7 @@ const Navbar = () => {
               <Link
                 key={link.name}
                 to={link.href}
-                className="text-sm font-semibold text-slate-600 hover:text-[#1A3263] transition-colors"
+                className="text-sm font-semibold text-white/90 hover:text-white transition-colors"
               >
                 {link.name}
               </Link>
@@ -45,11 +45,11 @@ const Navbar = () => {
           {/* Desktop CTA */}
           <div className="hidden md:flex items-center gap-4">
             {isAuthenticated ? (
-              <Link to="/dashboard" className="bg-[#1A3263] hover:bg-[#1A3263]/90 text-white rounded-lg px-6 py-2.5 font-bold shadow-lg shadow-[#1A3263]/10 text-sm">Go to Dashboard</Link>
+              <Link to="/dashboard" className="bg-white hover:bg-white/90 text-[#245D67] rounded-xl px-6 py-2.5 font-bold shadow-lg text-sm transition-all hover:scale-105">Go to Dashboard</Link>
             ) : (
               <>
-                <Link to="/login" className="text-slate-600 hover:text-[#1A3263] px-4 py-2 font-semibold text-sm">Log In</Link>
-                <Link to="/signup" className="bg-[#1A3263] hover:bg-[#1A3263]/90 text-white rounded-lg px-6 py-2.5 font-bold shadow-lg shadow-[#1A3263]/10 text-sm">Sign up free</Link>
+                <Link to="/login" className="text-white hover:text-white/80 px-4 py-2 font-semibold text-sm">Log In</Link>
+                <Link to="/signup" className="bg-white hover:bg-white/90 text-[#245D67] rounded-xl px-6 py-2.5 font-bold shadow-lg text-sm transition-all hover:scale-105">Sign up free</Link>
               </>
             )}
           </div>
