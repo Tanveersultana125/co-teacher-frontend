@@ -38,11 +38,11 @@ const CARDS = [
         type: "slide"
     },
     {
-        title: "Human Heart Anatomy",
+        title: "Cell Structure",
         subject: "Biology",
         grade: "Grade 10",
-        content: "Label the four chambers of the heart: right atrium, right ventricle, left atrium, and left ventricle. Trace the path of blood flow.",
-        image: "https://images.unsplash.com/photo-1530210124550-912dc1381cb8?auto=format&fit=crop&w=800&q=80",
+        content: "Explore the fundamental unit of life. Identify key organelles like the nucleus, mitochondria, and cell membrane. Understand their roles in cellular processes.",
+        image: "https://images.unsplash.com/photo-1530213786676-41ad9f7736f6?auto=format&fit=crop&w=800&q=80",
         rotate: 3,
         x: 240,
         y: 20,

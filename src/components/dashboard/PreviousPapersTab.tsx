@@ -148,6 +148,57 @@ export function PreviousPapersTab() {
                             </SelectContent>
                         </Select>
                     </div>
+
+                    {/* Official Board Links Section */}
+                    {filters.curriculum !== "All" && (
+                        <div className="mt-6 pt-6 border-t border-slate-100 flex flex-col gap-4 bg-indigo-50/30 p-6 rounded-2xl">
+                            <div className="flex items-center gap-3">
+                                <div className="w-10 h-10 rounded-full bg-white flex items-center justify-center shadow-sm">
+                                    <BookOpen className="w-5 h-5 text-indigo-600" />
+                                </div>
+                                <div>
+                                    <h4 className="font-bold text-slate-900 text-sm">Curated {filters.curriculum} Resources</h4>
+                                    <p className="text-xs text-slate-500 font-medium">Quick links to official papers and top educational archives</p>
+                                </div>
+                            </div>
+
+                            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3">
+                                {(() => {
+                                    const resourceLinks: Record<string, { label: string, url: string }[]> = {
+                                        "CBSE": [
+                                            { label: "Official Question Papers", url: "https://www.cbse.gov.in/cbsenew/question-paper.html" },
+                                            { label: "Academic Sample Papers", url: "https://cbseacademic.nic.in/sqp_classx_2023-24.html" },
+                                            { label: "Byju's CBSE Archive", url: "https://byjus.com/cbse-previous-year-question-papers/" },
+                                            { label: "SelfStudys CBSE Papers", url: "https://www.selfstudys.com/books/cbse-previous-year-paper" }
+                                        ],
+                                        "ICSE": [
+                                            { label: "CISCE Official Portal", url: "https://cisce.org/examinations/" },
+                                            { label: "Exam18 Prep Material", url: "https://www.exam18.com/" },
+                                            { label: "AplusTopper Archive", url: "https://www.aplustopper.com/icse-previous-year-question-papers/" },
+                                            { label: "Shaalaa ICSE Papers", url: "https://www.shaalaa.com/question-papers-university/icsc-class-10-10th-standard_2423" }
+                                        ],
+                                        "SSC": [
+                                            { label: "Shaalaa SSC Archive", url: "https://www.shaalaa.com/question-papers-university/maharashtra-state-board-ssc-10th-standard_747" },
+                                            { label: "Schools9 SSC Papers", url: "http://www.schools9.com/" },
+                                            { label: "TS SSC Official (Telangana)", url: "https://www.bse.telangana.gov.in/" },
+                                            { label: "AP SSC Official (Andhra)", url: "https://www.bse.ap.gov.in/" }
+                                        ]
+                                    };
+
+                                    return resourceLinks[filters.curriculum]?.map((link, idx) => (
+                                        <Button
+                                            key={idx}
+                                            variant="outline"
+                                            className="bg-white border-slate-200 text-slate-700 hover:bg-slate-50 hover:text-indigo-600 font-bold text-xs justify-start h-10 px-4 rounded-xl shadow-sm transition-all"
+                                            onClick={() => window.open(link.url, "_blank")}
+                                        >
+                                            <Eye className="w-3 h-3 mr-2 opacity-50" /> {link.label}
+                                        </Button>
+                                    ));
+                                })()}
+                            </div>
+                        </div>
+                    )}
                 </CardContent>
             </Card>
 
@@ -180,9 +231,20 @@ export function PreviousPapersTab() {
                                 </div>
 
                                 <div className="pt-4 border-t border-slate-100 flex items-center justify-between">
-                                    <span className="text-xs font-bold text-slate-400 flex items-center gap-1">
-                                        <Download className="w-3 h-3" /> {paper.downloads} downloads
-                                    </span>
+                                    <div className="flex gap-2">
+                                        <Button
+                                            variant="ghost"
+                                            size="sm"
+                                            className="h-8 text-xs font-bold text-indigo-600 hover:bg-indigo-50"
+                                            onClick={(e) => {
+                                                e.stopPropagation();
+                                                const query = `${paper.curriculum} Class ${paper.grade} ${paper.subject} Question Paper ${paper.year} pdf download`;
+                                                window.open(`https://www.google.com/search?q=${encodeURIComponent(query)}`, '_blank');
+                                            }}
+                                        >
+                                            <Search className="w-3 h-3 mr-1" /> PDF Search
+                                        </Button>
+                                    </div>
                                     <Button variant="ghost" size="sm" className="h-8 w-8 p-0 rounded-full hover:bg-indigo-50 hover:text-indigo-600">
                                         <ArrowRight className="w-4 h-4" />
                                     </Button>
@@ -269,11 +331,25 @@ export function PreviousPapersTab() {
                         </ScrollArea>
                     </div>
 
-                    <DialogFooter className="p-6 border-t bg-white">
-                        <Button variant="outline" onClick={() => setSelectedPaper(null)}>Close</Button>
-                        <Button className="bg-indigo-600 hover:bg-indigo-700">
-                            <Download className="w-4 h-4 mr-2" /> Download PDF
-                        </Button>
+                    <DialogFooter className="p-6 border-t bg-white flex justify-between items-center sm:justify-between">
+                        <div className="flex gap-2">
+                            <Button
+                                variant="outline"
+                                className="border-indigo-200 text-indigo-600 hover:bg-indigo-50 font-bold"
+                                onClick={() => {
+                                    const query = `${selectedPaper?.curriculum} Class ${selectedPaper?.grade} ${selectedPaper?.subject} Previous Year Question Paper ${selectedPaper?.year} official pdf`;
+                                    window.open(`https://www.google.com/search?q=${encodeURIComponent(query)}`, '_blank');
+                                }}
+                            >
+                                <Search className="w-4 h-4 mr-2" /> Find Full PDF
+                            </Button>
+                        </div>
+                        <div className="flex gap-2">
+                            <Button variant="outline" onClick={() => setSelectedPaper(null)}>Close</Button>
+                            <Button className="bg-indigo-600 hover:bg-indigo-700">
+                                <Download className="w-4 h-4 mr-2" /> Download PDF
+                            </Button>
+                        </div>
                     </DialogFooter>
                 </DialogContent>
             </Dialog>

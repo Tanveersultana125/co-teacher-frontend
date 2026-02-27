@@ -1,7 +1,10 @@
-import { useState, useRef } from "react";
+﻿import { useState, useRef } from "react";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
-import { Loader2, ArrowRight, BookOpen, Upload, FileText, CheckCircle2, Copy, X, Text, Sparkles } from "lucide-react";
+import {
+    Loader2, BookOpen, Upload, FileText, X, Text,
+    Copy, Check, RefreshCw, AlignLeft, List
+} from "lucide-react";
 import api from "@/api/client";
 import { toast } from "sonner";
 import { motion, AnimatePresence } from "framer-motion";
@@ -13,6 +16,8 @@ export function LessonSummarizerTab() {
     const [isDragOver, setIsDragOver] = useState(false);
     const [isGenerating, setIsGenerating] = useState(false);
     const [result, setResult] = useState<any>(null);
+    const [displayMode, setDisplayMode] = useState<"bullets" | "paragraph">("bullets");
+    const [copied, setCopied] = useState(false);
     const fileInputRef = useRef<HTMLInputElement>(null);
 
     const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -26,7 +31,7 @@ export function LessonSummarizerTab() {
             toast.error("Please upload a valid PDF file.");
             return;
         }
-        if (selectedFile.size > 200 * 1024 * 1024) { // 200MB limit
+        if (selectedFile.size > 200 * 1024 * 1024) {
             toast.error("File size exceeds 200MB limit.");
             return;
         }
@@ -37,7 +42,7 @@ export function LessonSummarizerTab() {
     const handleDrop = (e: React.DragEvent) => {
         e.preventDefault();
         setIsDragOver(false);
-        if (mode !== "upload") return; // Only allow drop in upload mode
+        if (mode !== "upload") return;
         if (e.dataTransfer.files && e.dataTransfer.files[0]) {
             validateAndSetFile(e.dataTransfer.files[0]);
         }
@@ -58,21 +63,50 @@ export function LessonSummarizerTab() {
             if (mode === "upload" && file) {
                 const formData = new FormData();
                 formData.append('file', file);
-                res = await api.post('/lessons/summarize-pdf', formData, {
+                // Using new production-grade analysis route
+                console.log("[FRONTEND] Sending PDF to analysis/pdf...");
+                res = await api.post('/analysis/pdf', formData, {
                     headers: { 'Content-Type': 'multipart/form-data' },
                 });
             } else {
+                console.log("[FRONTEND] Sending text to lessons/summarize...");
                 res = await api.post('/lessons/summarize', { text: textInput });
             }
 
-            setResult(res.data);
-            toast.success("Summary generated successfully!");
-        } catch (error) {
-            console.error(error);
-            toast.error("Failed to generate summary");
+            console.log("[FRONTEND] Response received:", res.data);
+
+            if (res.data?.success) {
+                setResult(res.data);
+                toast.success("Summary generated successfully!");
+            } else {
+                const errorMsg = res.data?.message || "Failed to generate summary";
+                toast.error(errorMsg);
+                setResult(null);
+            }
+        } catch (error: any) {
+            console.error("[FRONTEND ERROR]", error);
+            const message = error.response?.data?.message || error.response?.data?.details || error.message || "Failed to generate summary";
+            toast.error(message);
+            setResult(null);
         } finally {
             setIsGenerating(false);
         }
+    };
+
+    const handleCopy = () => {
+        if (!result) return;
+
+        const keyPoints = result.key_points || result.keyPoints || [];
+        const overview = result.summary || result.overview || "";
+
+        const text = displayMode === "bullets"
+            ? (Array.isArray(keyPoints) ? keyPoints : []).map((p: string) => `• ${p}`).join("\n")
+            : overview;
+
+        navigator.clipboard.writeText(text);
+        setCopied(true);
+        toast.success("Copied to clipboard!");
+        setTimeout(() => setCopied(false), 2000);
     };
 
     const clearAll = () => {
@@ -80,6 +114,8 @@ export function LessonSummarizerTab() {
         setTextInput("");
         setResult(null);
     };
+
+    const canSubmit = mode === "upload" ? !!file : !!textInput.trim();
 
     return (
         <div className="w-full min-h-full bg-[#F8FAFC] text-slate-900 p-8">
@@ -89,9 +125,11 @@ export function LessonSummarizerTab() {
                 <div className="space-y-8 sticky top-8">
                     <div className="space-y-2">
                         <h1 className="text-4xl lg:text-5xl font-display font-bold tracking-tight text-slate-900 leading-tight">
-                            AI Assistant For Teachers
+                            AI Lesson Summarizer
                         </h1>
-                        <p className="text-slate-500 text-lg font-medium">Use AI to analyze and summarize your lesson materials instantly.</p>
+                        <p className="text-slate-500 text-lg font-medium">
+                            Upload a PDF or paste text to get an instant AI-powered lesson summary.
+                        </p>
                     </div>
 
                     {/* Mode Switcher */}
@@ -99,16 +137,16 @@ export function LessonSummarizerTab() {
                         <button
                             onClick={() => setMode("upload")}
                             className={`flex items-center gap-2 px-6 py-2.5 rounded-lg text-sm font-bold transition-all ${mode === "upload"
-                                ? "bg-[#36656B] text-white shadow-md relative z-10"
-                                : "text-slate-500 hover:text-slate-800 hover:bg-slate-50 relative z-0"}`}
+                                ? "bg-[#36656B] text-white shadow-md"
+                                : "text-slate-500 hover:text-slate-800 hover:bg-slate-50"}`}
                         >
                             <Upload className="w-4 h-4" /> Upload PDF
                         </button>
                         <button
                             onClick={() => setMode("text")}
                             className={`flex items-center gap-2 px-6 py-2.5 rounded-lg text-sm font-bold transition-all ${mode === "text"
-                                ? "bg-[#36656B] text-white shadow-md relative z-10"
-                                : "text-slate-500 hover:text-slate-800 hover:bg-slate-50 relative z-0"}`}
+                                ? "bg-[#36656B] text-white shadow-md"
+                                : "text-slate-500 hover:text-slate-800 hover:bg-slate-50"}`}
                         >
                             <Text className="w-4 h-4" /> Paste Text
                         </button>
@@ -134,7 +172,7 @@ export function LessonSummarizerTab() {
                                         </div>
                                         <Button
                                             variant="outline"
-                                            className="mt-4 border-slate-300 text-slate-700 hover:bg-slate-100 bg-white rounded-xl px-8 h-12 font-bold focus-visible:ring-offset-2"
+                                            className="mt-4 border-slate-300 text-slate-700 hover:bg-slate-100 bg-white rounded-xl px-8 h-12 font-bold"
                                             onClick={() => fileInputRef.current?.click()}
                                         >
                                             Browse files
@@ -152,11 +190,9 @@ export function LessonSummarizerTab() {
                                                 <p className="text-sm text-slate-500 font-medium">{(file.size / 1024 / 1024).toFixed(2)} MB</p>
                                             </div>
                                         </div>
-                                        <div className="flex items-center gap-3">
-                                            <Button variant="ghost" className="text-slate-400 hover:text-red-500 hover:bg-red-50" onClick={() => setFile(null)}>
-                                                <X className="w-5 h-5" />
-                                            </Button>
-                                        </div>
+                                        <Button variant="ghost" className="text-slate-400 hover:text-red-500 hover:bg-red-50" onClick={() => setFile(null)}>
+                                            <X className="w-5 h-5" />
+                                        </Button>
                                     </div>
                                 )}
                             </>
@@ -165,14 +201,14 @@ export function LessonSummarizerTab() {
                                 <p className="font-semibold text-slate-700 ml-1">Paste Or Type Your Content</p>
                                 <Textarea
                                     placeholder="Paste your lesson plan, meeting notes, or educational content here..."
-                                    className="min-h-[300px] bg-white border-slate-200 text-slate-700 placeholder:text-slate-400 rounded-2xl p-6 text-lg resize-none focus:ring-[#36656B] focus:border-[#36656B] transition-all font-medium leading-relaxed shadow-sm"
+                                    className="min-h-[300px] bg-white border-slate-200 text-slate-900 placeholder:text-slate-400 rounded-2xl p-6 text-lg resize-none focus:ring-[#36656B] focus:border-[#36656B] transition-all font-medium leading-relaxed shadow-sm"
                                     value={textInput}
                                     onChange={(e) => setTextInput(e.target.value)}
                                 />
                             </>
                         )}
 
-                        {(file || (mode === "text" && textInput)) && (
+                        {canSubmit && (
                             <Button
                                 onClick={handleSummarize}
                                 disabled={isGenerating}
@@ -190,6 +226,7 @@ export function LessonSummarizerTab() {
                     <AnimatePresence mode="wait">
                         {!result && !isGenerating && (
                             <motion.div
+                                key="empty"
                                 initial={{ opacity: 0 }}
                                 animate={{ opacity: 1 }}
                                 className="hidden lg:flex flex-col items-center justify-center text-center mt-20"
@@ -197,7 +234,7 @@ export function LessonSummarizerTab() {
                                 <div className="relative w-full max-w-md aspect-video rounded-2xl overflow-hidden shadow-2xl border-4 border-white/50 transform rotate-1">
                                     <img
                                         src="/educational-flashcards.png"
-                                        alt="Educational Worksheets and Flashcards"
+                                        alt="Educational Worksheets"
                                         className="w-full h-full object-cover"
                                     />
                                     <div className="absolute inset-0 bg-black/5"></div>
@@ -208,64 +245,162 @@ export function LessonSummarizerTab() {
 
                         {isGenerating && (
                             <motion.div
+                                key="loading"
                                 initial={{ opacity: 0, scale: 0.9 }}
                                 animate={{ opacity: 1, scale: 1 }}
                                 exit={{ opacity: 0, scale: 0.9 }}
-                                className="bg-white rounded-3xl p-12 text-center border border-slate-200 shadow-xl relative overflow-hidden mt-10"
+                                className="bg-white rounded-3xl p-12 text-center border border-slate-200 shadow-xl mt-10"
                             >
-                                <Loader2 className="w-12 h-12 text-indigo-600 animate-spin mx-auto mb-6" />
+                                <Loader2 className="w-12 h-12 text-[#36656B] animate-spin mx-auto mb-6" />
                                 <h3 className="text-2xl font-bold text-slate-900">Analyzing Content...</h3>
                                 <p className="text-slate-500 mt-2 font-medium">Our AI is extracting key concepts for you.</p>
                             </motion.div>
                         )}
 
-                        {result && (
+                        {result && !isGenerating && (
                             <motion.div
-                                initial={{ opacity: 0, x: 50 }}
-                                animate={{ opacity: 1, x: 0 }}
-                                className="relative z-10"
+                                key="result"
+                                initial={{ opacity: 0, y: 30 }}
+                                animate={{ opacity: 1, y: 0 }}
+                                transition={{ duration: 0.4, ease: "easeOut" }}
+                                className="relative"
                             >
-                                <div className="bg-[#2A4D52] rounded-t-2xl px-6 py-4 flex items-center justify-between shadow-lg">
-                                    <div className="flex items-center gap-3 text-white/95">
-                                        <FileText className="w-5 h-5" />
-                                        <span className="font-bold text-base tracking-wide">
-                                            {mode === "upload" && file ? file.name : "Text Summary"}
-                                        </span>
-                                    </div>
-                                    <button onClick={clearAll} className="text-white/70 hover:text-white transition-colors bg-white/10 hover:bg-white/20 p-1.5 rounded-lg">
-                                        <X className="w-4 h-4" />
-                                    </button>
-                                </div>
-                                <div className="bg-[#36656B] p-8 rounded-b-2xl shadow-2xl shadow-teal-900/10 space-y-6 max-h-[700px] overflow-y-auto custom-scrollbar border-t border-white/10">
-                                    {/* Key Points Section */}
-                                    <div className="space-y-4">
-                                        {(result.keyPoints || []).map((point: string, i: number) => (
-                                            <div key={i} className="flex gap-4 text-white group">
-                                                <span className="w-1.5 h-1.5 rounded-full bg-white mt-2.5 shrink-0 opacity-60 group-hover:opacity-100 transition-opacity" />
-                                                <p className="font-medium leading-relaxed text-[15px]">{point}</p>
-                                            </div>
-                                        ))}
-
-                                        {/* Fallback Overview */}
-                                        {(!result.keyPoints || result.keyPoints.length === 0) && result.overview && (
-                                            <p className="text-white font-medium leading-relaxed text-lg">{result.overview}</p>
-                                        )}
-                                    </div>
-
-                                    {/* Action Items Section */}
-                                    {result.actionItems && result.actionItems.length > 0 && (
-                                        <div className="mt-8 pt-6 border-t border-white/20">
-                                            <h4 className="text-white font-black uppercase text-xs tracking-widest mb-4 opacity-80 flex items-center gap-2">
-                                                <ArrowRight className="w-3 h-3" /> Next Steps
-                                            </h4>
-                                            {result.actionItems.map((item: string, i: number) => (
-                                                <div key={i} className="flex gap-3 text-white mb-3 items-start p-3 bg-black/5 rounded-lg border border-white/5 hover:bg-black/10 transition-colors">
-                                                    <CheckCircle2 className="w-4 h-4 mt-0.5 shrink-0 opacity-90 text-white" />
-                                                    <p className="font-medium text-sm leading-snug">{item}</p>
-                                                </div>
-                                            ))}
+                                {/* Card Header */}
+                                <div className="bg-white rounded-3xl border border-slate-200 shadow-xl overflow-hidden">
+                                    <div className="p-6 border-b border-slate-100 flex items-center justify-between">
+                                        <h3 className="text-xl font-bold text-slate-900">Summarize</h3>
+                                        <div className="flex items-center gap-1 bg-slate-100 rounded-xl p-1">
+                                            <button
+                                                onClick={() => setDisplayMode("bullets")}
+                                                className={`flex items-center gap-1.5 px-4 py-2 rounded-lg text-sm font-bold transition-all ${displayMode === "bullets"
+                                                    ? "bg-white text-[#36656B] shadow-sm border border-[#36656B]/20"
+                                                    : "text-slate-500 hover:text-slate-700"}`}
+                                            >
+                                                <List className="w-3.5 h-3.5" />
+                                                Bullets
+                                            </button>
+                                            <button
+                                                onClick={() => setDisplayMode("paragraph")}
+                                                className={`flex items-center gap-1.5 px-4 py-2 rounded-lg text-sm font-bold transition-all ${displayMode === "paragraph"
+                                                    ? "bg-white text-[#36656B] shadow-sm border border-[#36656B]/20"
+                                                    : "text-slate-500 hover:text-slate-700"}`}
+                                            >
+                                                <AlignLeft className="w-3.5 h-3.5" />
+                                                Paragraph
+                                            </button>
                                         </div>
-                                    )}
+                                    </div>
+
+                                    {/* Content Area */}
+                                    <div className="p-6 min-h-[260px] max-h-[460px] overflow-y-auto">
+                                        <AnimatePresence mode="wait">
+                                            {displayMode === "bullets" ? (
+                                                <motion.div
+                                                    key="bullets"
+                                                    initial={{ opacity: 0, y: 8 }}
+                                                    animate={{ opacity: 1, y: 0 }}
+                                                    exit={{ opacity: 0, y: -8 }}
+                                                    transition={{ duration: 0.2 }}
+                                                    className="space-y-3"
+                                                >
+                                                    {(() => {
+                                                        const keyPoints = result.key_points || result.keyPoints || [];
+                                                        const quiz = result.quiz || [];
+
+                                                        const pointsArray = Array.isArray(keyPoints) ? keyPoints : [];
+
+                                                        if (pointsArray.length === 0 && quiz.length === 0) {
+                                                            return <p className="text-slate-500 italic">No summary points generated. Try switching to Paragraph mode.</p>;
+                                                        }
+
+                                                        return (
+                                                            <>
+                                                                {pointsArray.map((point: string, i: number) => (
+                                                                    <div key={i} className="flex gap-3 text-slate-700">
+                                                                        <span className="text-[#36656B] font-bold mt-1 shrink-0">•</span>
+                                                                        <p className="font-medium leading-relaxed text-[15px]">{point}</p>
+                                                                    </div>
+                                                                ))}
+
+                                                                {/* Quiz items at bottom if present */}
+                                                                {Array.isArray(quiz) && quiz.length > 0 && (
+                                                                    <div className="mt-5 pt-5 border-t border-slate-100">
+                                                                        <p className="text-xs font-black uppercase tracking-widest text-slate-400 mb-3">Practice Questions</p>
+                                                                        {quiz.slice(0, 3).map((q: any, i: number) => (
+                                                                            <div key={i} className="flex gap-3 text-slate-600 mb-4">
+                                                                                <span className="text-emerald-500 font-bold mt-1 shrink-0">Q:</span>
+                                                                                <div>
+                                                                                    <p className="font-bold text-[14px] leading-relaxed mb-1">{q.question}</p>
+                                                                                    <p className="text-[13px] opacity-70">Answer: {q.answer}</p>
+                                                                                </div>
+                                                                            </div>
+                                                                        ))}
+                                                                    </div>
+                                                                )}
+                                                            </>
+                                                        );
+                                                    })()}
+                                                </motion.div>
+                                            ) : (
+                                                <motion.div
+                                                    key="paragraph"
+                                                    initial={{ opacity: 0, y: 8 }}
+                                                    animate={{ opacity: 1, y: 0 }}
+                                                    exit={{ opacity: 0, y: -8 }}
+                                                    transition={{ duration: 0.2 }}
+                                                >
+                                                    {(() => {
+                                                        const overview = result.summary || result.overview || "";
+                                                        const quiz = result.quiz || [];
+
+                                                        return (
+                                                            <>
+                                                                <p className="text-slate-700 font-medium leading-relaxed text-[16px] whitespace-pre-wrap">
+                                                                    {overview || "No paragraph summary generated."}
+                                                                </p>
+                                                                {Array.isArray(quiz) && quiz.length > 0 && (
+                                                                    <div className="mt-5 pt-5 border-t border-slate-100">
+                                                                        <p className="text-xs font-black uppercase tracking-widest text-slate-400 mb-3">Context Highlights</p>
+                                                                        <p className="text-slate-600 font-medium text-sm leading-relaxed">
+                                                                            {quiz.map((q: any) => q.question).slice(0, 2).join(" • ")}
+                                                                        </p>
+                                                                    </div>
+                                                                )}
+                                                            </>
+                                                        );
+                                                    })()}
+                                                </motion.div>
+                                            )}
+                                        </AnimatePresence>
+                                    </div>
+
+                                    {/* Action Buttons */}
+                                    <div className="px-6 py-5 border-t border-slate-100 flex items-center gap-3 bg-slate-50/50">
+                                        <Button
+                                            onClick={handleCopy}
+                                            className="bg-slate-900 hover:bg-slate-700 text-white font-bold px-8 h-11 rounded-xl text-sm gap-2 transition-all"
+                                        >
+                                            {copied
+                                                ? <><Check className="w-4 h-4" /> Copied!</>
+                                                : <><Copy className="w-4 h-4" /> Copy</>
+                                            }
+                                        </Button>
+                                        <Button
+                                            onClick={handleSummarize}
+                                            disabled={isGenerating}
+                                            variant="ghost"
+                                            className="text-slate-500 hover:text-slate-900 font-bold h-11 rounded-xl text-sm gap-2 px-5 border border-slate-200 bg-white hover:bg-slate-50"
+                                        >
+                                            <RefreshCw className="w-4 h-4" />
+                                            Regenerate
+                                        </Button>
+                                        <button
+                                            onClick={clearAll}
+                                            className="ml-auto text-slate-400 hover:text-slate-600 transition-colors p-2 rounded-lg hover:bg-slate-100"
+                                        >
+                                            <X className="w-4 h-4" />
+                                        </button>
+                                    </div>
                                 </div>
                             </motion.div>
                         )}

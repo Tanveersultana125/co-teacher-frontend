@@ -14,10 +14,10 @@ const CTA = () => {
           className="relative max-w-4xl mx-auto"
         >
           {/* Background Glow */}
-          <div className="absolute inset-0 bg-[#1E56A0] rounded-3xl opacity-20 blur-3xl" />
+          <div className="absolute inset-0 bg-[#0D5355] rounded-3xl opacity-20 blur-3xl" />
 
           {/* Card */}
-          <div className="relative bg-[#1E56A0] rounded-3xl p-12 text-center overflow-hidden">
+          <div className="relative bg-[#0D5355] rounded-3xl p-12 text-center overflow-hidden">
             {/* Decorative elements */}
             <div className="absolute top-0 right-0 w-64 h-64 bg-white/10 rounded-full -translate-y-1/2 translate-x-1/2" />
             <div className="absolute bottom-0 left-0 w-48 h-48 bg-white/10 rounded-full translate-y-1/2 -translate-x-1/2" />

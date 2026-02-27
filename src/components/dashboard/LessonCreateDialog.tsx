@@ -23,6 +23,7 @@ export function LessonCreateDialog() {
         grade: "",
         subjectId: "",
         topicId: "",
+        customTopic: "",
         title: "",
         aiAssist: true
     });
@@ -64,7 +65,17 @@ export function LessonCreateDialog() {
         e.preventDefault();
         setLoading(true);
         try {
-            await api.post("/lessons", formData);
+            const subject = subjects.find(s => s.id === formData.subjectId);
+            const topic = topics.find(t => t.id === formData.topicId);
+
+            const payload = {
+                ...formData,
+                curriculum: formData.board,
+                subject: subject?.name || "",
+                topic: formData.topicId === 'custom' ? formData.customTopic : (topic?.name || ""),
+            };
+
+            await api.post("/lessons", payload);
             toast.success("Lesson plan created successfully!");
             setOpen(false);
             queryClient.invalidateQueries({ queryKey: ["lessons"] });
@@ -127,15 +138,34 @@ export function LessonCreateDialog() {
 
                     <div className="space-y-2">
                         <Label>Topic</Label>
-                        <Select disabled={!formData.subjectId} onValueChange={(v) => setFormData({ ...formData, topicId: v })}>
+                        <Select disabled={!formData.subjectId} onValueChange={(v) => {
+                            if (v === "custom") {
+                                setFormData({ ...formData, topicId: "custom" });
+                            } else {
+                                setFormData({ ...formData, topicId: v, customTopic: "" });
+                            }
+                        }}>
                             <SelectTrigger>
                                 <SelectValue placeholder="Select Topic" />
                             </SelectTrigger>
                             <SelectContent>
                                 {topics.map(t => <SelectItem key={t.id} value={t.id}>{t.name}</SelectItem>)}
+                                <SelectItem value="custom" className="font-bold text-indigo-600">+ Custom Topic</SelectItem>
                             </SelectContent>
                         </Select>
                     </div>
+
+                    {formData.topicId === 'custom' && (
+                        <div className="space-y-2 animate-in fade-in slide-in-from-top-1">
+                            <Label>Custom Topic Name</Label>
+                            <Input
+                                placeholder="Enter custom topic name..."
+                                value={formData.customTopic || ""}
+                                onChange={(e) => setFormData({ ...formData, customTopic: e.target.value })}
+                                required
+                            />
+                        </div>
+                    )}
 
                     <div className="space-y-2">
                         <Label>Lesson Title</Label>

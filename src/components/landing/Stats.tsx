@@ -27,7 +27,7 @@ const stats = [
 const Stats = () => {
     return (
         <section className="relative z-20 -mt-6 sm:-mt-10 w-full">
-            <div className="bg-[#1A3263] shadow-2xl border-y border-white/5 w-full overflow-hidden relative rounded-t-[2.5rem] sm:rounded-none">
+            <div className="bg-[#FF7444] shadow-2xl border-y border-white/5 w-full overflow-hidden relative rounded-t-[2.5rem] sm:rounded-none">
                 {/* Background decoration */}
                 <div className="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none opacity-10">
                     <div className="absolute top-0 right-0 w-64 h-64 bg-white rounded-full blur-[80px] -translate-y-1/2 translate-x-1/2" />
@@ -44,7 +44,7 @@ const Stats = () => {
                                 <div className="text-2xl sm:text-3xl font-black text-white font-display tracking-tight leading-none mb-1">
                                     {stat.value}
                                 </div>
-                                <div className="text-white/60 font-bold text-[10px] sm:text-xs uppercase tracking-[0.2em]">
+                                <div className="text-white font-bold text-[10px] sm:text-xs uppercase tracking-[0.2em]">
                                     {stat.label}
                                 </div>
                             </div>

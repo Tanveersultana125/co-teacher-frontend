@@ -27,14 +27,14 @@ export const Logo: React.FC<LogoProps> = ({ className = "w-10 h-10", showText = 
 
                         {/* Deep Teal Gradient for Background */}
                         <linearGradient id="tealGrad" x1="0%" y1="0%" x2="0%" y2="100%">
-                            <stop offset="0%" stopColor="#296374" />
-                            <stop offset="100%" stopColor="#1A4855" />
+                            <stop offset="0%" stopColor="#0D5355" />
+                            <stop offset="100%" stopColor="#083334" />
                         </linearGradient>
 
                         {/* Gold/Orange Gradient for Accents/Text */}
                         <linearGradient id="goldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-                            <stop offset="0%" stopColor="#FFC048" />
-                            <stop offset="100%" stopColor="#FA8112" />
+                            <stop offset="0%" stopColor="#FF8C66" />
+                            <stop offset="100%" stopColor="#FF7444" />
                         </linearGradient>
 
                         {/* Glow Filter */}
@@ -92,7 +92,7 @@ export const Logo: React.FC<LogoProps> = ({ className = "w-10 h-10", showText = 
                         width="28"
                         height="28"
                         rx="6"
-                        fill="#1A4855"
+                        fill="#083334"
                         stroke="url(#silverGrad)"
                         strokeWidth="1.5"
                     />

@@ -161,7 +161,7 @@ export function LessonsTab({ onLessonSelect }: LessonsTabProps) {
                                                 Launch Quiz
                                             </Button>
                                         )}
-                                        <span className={`px-4 py-1.5 rounded-full text-[10px] font-bold uppercase tracking-widest ${lesson.status === 'PUBLISHED' ? 'bg-emerald-50 text-emerald-600' : 'bg-slate-50 text-slate-400'}`}>
+                                        <span className={`px-4 py-1.5 rounded-full text-[10px] font-bold uppercase tracking-widest ${lesson.status === 'PUBLISHED' ? 'bg-teal-50 text-[#0D5355]' : 'bg-slate-50 text-slate-400'}`}>
                                             {lesson.status}
                                         </span>
                                         <button className="p-2 text-slate-300 hover:text-slate-600">

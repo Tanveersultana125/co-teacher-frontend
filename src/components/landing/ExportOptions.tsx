@@ -21,7 +21,7 @@ export const ExportOptions = () => {
                         </p>
                         <Button
                             onClick={() => navigate('/login')}
-                            className="bg-[#1E56A0] hover:bg-[#163172] text-white rounded-full px-8 h-12 font-bold shadow-lg shadow-indigo-200"
+                            className="bg-[#0D5355] hover:bg-[#083334] text-white rounded-full px-8 h-12 font-bold shadow-lg shadow-teal-200"
                         >
                             Try Generator Free
                         </Button>

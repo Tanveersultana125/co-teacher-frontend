@@ -223,7 +223,7 @@ export default function QuizPage() {
                                 <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-indigo-50 rounded-full opacity-50 blur-3xl pointer-events-none" />
 
                                 <div className="relative z-10 flex flex-col items-center">
-                                    <div className="w-24 h-24 bg-indigo-600 rounded-3xl flex items-center justify-center text-white mb-8 shadow-xl shadow-indigo-200 rotate-3 transition-transform hover:rotate-0">
+                                    <div className="w-24 h-24 bg-[#0D5355] rounded-3xl flex items-center justify-center text-white mb-8 shadow-xl shadow-teal-200 rotate-3 transition-transform hover:rotate-0">
                                         <Trophy className="w-12 h-12" />
                                     </div>
 
@@ -237,7 +237,7 @@ export default function QuizPage() {
 
                                     {/* Main Stats Header */}
                                     <div className="flex flex-col lg:flex-row gap-6 w-full mb-8">
-                                        <div className="flex-1 bg-indigo-600 p-8 rounded-[2rem] text-white shadow-xl shadow-indigo-100 flex flex-col items-center justify-center relative overflow-hidden group">
+                                        <div className="flex-1 bg-[#0D5355] p-8 rounded-[2rem] text-white shadow-xl shadow-teal-100 flex flex-col items-center justify-center relative overflow-hidden group">
                                             <div className="absolute top-0 right-0 p-4 opacity-10 group-hover:scale-125 transition-transform">
                                                 <Sparkles className="w-20 h-20 text-white" />
                                             </div>
@@ -313,7 +313,7 @@ export default function QuizPage() {
                                         </Button>
                                         <Button
                                             onClick={() => navigate('/dashboard')}
-                                            className="h-16 flex-1 rounded-2xl bg-indigo-600 hover:bg-indigo-700 text-white font-black text-lg shadow-xl shadow-indigo-100 transition-all flex items-center justify-center gap-3"
+                                            className="h-16 flex-1 rounded-2xl bg-[#0D5355] hover:bg-[#083334] text-white font-black text-lg shadow-xl shadow-teal-100 transition-all flex items-center justify-center gap-3"
                                         >
                                             <Home className="w-6 h-6" /> Dashboard
                                         </Button>

@@ -1,36 +1,12 @@
-const CACHE_NAME = 'co-teacher-v1';
-const ASSETS_TO_CACHE = [
-    '/',
-    '/index.html',
-    '/manifest.json'
-];
+// This service worker unregisters itself and clears all caches
+self.addEventListener('install', () => self.skipWaiting());
 
-self.addEventListener('install', (event) => {
-    event.waitUntil(
-        caches.open(CACHE_NAME).then((cache) => {
-            return cache.addAll(ASSETS_TO_CACHE);
-        })
-    );
+self.addEventListener('activate', async () => {
+    // Clear ALL caches
+    const keys = await caches.keys();
+    await Promise.all(keys.map(key => caches.delete(key)));
+    // Unregister self
+    await self.registration.unregister();
 });
 
-self.addEventListener('activate', (event) => {
-    event.waitUntil(
-        caches.keys().then((cacheNames) => {
-            return Promise.all(
-                cacheNames.map((cacheName) => {
-                    if (cacheName !== CACHE_NAME) {
-                        return caches.delete(cacheName);
-                    }
-                })
-            );
-        })
-    );
-});
 
-self.addEventListener('fetch', (event) => {
-    event.respondWith(
-        caches.match(event.request).then((response) => {
-            return response || fetch(event.request);
-        })
-    );
-});

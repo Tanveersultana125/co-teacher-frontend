@@ -35,7 +35,7 @@ const UniqueValueProp = () => {
                                             <h3 className="font-bold text-slate-900 text-lg">Cell Biology: Osmosis</h3>
                                             <span className="text-xs text-slate-500 uppercase tracking-wide font-semibold">Science • Grade 9</span>
                                         </div>
-                                        <span className="bg-emerald-100 text-emerald-700 text-xs px-2 py-1 rounded font-bold">Generated</span>
+                                        <span className="bg-teal-50 text-[#0D5355] text-xs px-2 py-1 rounded font-bold">Generated</span>
                                     </div>
 
                                     {/* Mock Content */}

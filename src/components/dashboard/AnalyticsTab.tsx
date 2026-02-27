@@ -98,9 +98,9 @@ export function AnalyticsTab() {
                                 </div>
                             </CardContent>
                         </Card>
-                        <Card className="border-none shadow-sm shadow-emerald-100">
+                        <Card className="border-none shadow-sm shadow-teal-100">
                             <CardContent className="p-6 flex items-center gap-4">
-                                <div className="w-12 h-12 bg-emerald-50 rounded-xl flex items-center justify-center text-emerald-600">
+                                <div className="w-12 h-12 bg-teal-50 rounded-xl flex items-center justify-center text-[#0D5355]">
                                     <BookOpen className="w-6 h-6" />
                                 </div>
                                 <div>

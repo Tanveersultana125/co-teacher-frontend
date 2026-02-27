@@ -4,17 +4,17 @@ import { Logo } from "@/components/common/Logo";
 
 const Footer = () => {
   return (
-    <footer className="bg-[#111827] pt-24 pb-12 text-slate-400">
+    <footer className="bg-[#0D5355] pt-24 pb-12 text-teal-50">
       <div className="container mx-auto px-6">
         <div className="grid grid-cols-1 xs:grid-cols-2 md:grid-cols-5 gap-12 mb-20">
           <div className="col-span-1 xs:col-span-2 md:col-span-2 space-y-8">
             <Link to="/" className="flex items-center gap-2 group">
-              <Logo className="w-12 h-12 bg-[#215D5F] rounded-2xl shadow-2xl p-2 transition-transform group-hover:scale-110" />
+              <Logo className="w-12 h-12 bg-white/20 rounded-2xl shadow-xl p-2 transition-transform group-hover:scale-110" />
               <span className="font-display font-bold text-2xl tracking-tight text-white">
                 AI Co-teacher
               </span>
             </Link>
-            <p className="text-slate-400 text-lg leading-relaxed max-w-sm font-medium">
+            <p className="text-teal-50/80 text-lg leading-relaxed max-w-sm font-medium">
               Empowering educators worldwide with ethical AI tools to simplify teaching and inspire learning.
             </p>
             <div className="flex gap-4">
@@ -22,7 +22,7 @@ const Footer = () => {
                 <a
                   key={i}
                   href="#"
-                  className="w-12 h-12 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center text-white hover:bg-[#215D5F] hover:border-[#215D5F] transition-all duration-300 shadow-sm"
+                  className="w-12 h-12 rounded-2xl bg-white/10 border border-white/20 flex items-center justify-center text-white hover:bg-white hover:text-[#0D5355] transition-all duration-300 shadow-sm"
                   aria-label={`Social Media ${i}`}
                 >
                   <Icon className="w-5 h-5" />
@@ -62,9 +62,9 @@ const Footer = () => {
           </div>
         </div>
 
-        <div className="pt-12 border-t border-white/20 flex flex-col md:flex-row justify-between items-center gap-6">
-          <p className="text-blue-100 font-bold text-sm">© 2024 AI Co-teacher. All rights reserved.</p>
-          <p className="text-blue-100 font-bold text-sm italic">Built for teachers, by teachers ❤️</p>
+        <div className="pt-12 border-t border-white/10 flex flex-col md:flex-row justify-between items-center gap-6">
+          <p className="text-teal-50/60 font-medium text-sm">© 2024 AI Co-teacher. All rights reserved.</p>
+          <p className="text-teal-50/60 font-medium text-sm italic">Built for teachers, by teachers ❤️</p>
         </div>
       </div>
     </footer>

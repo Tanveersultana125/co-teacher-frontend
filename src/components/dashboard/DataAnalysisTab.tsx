@@ -581,14 +581,14 @@ export const DataAnalysisTab = () => {
 
                                                 {/* 2. Class Subject Performance */}
                                                 <div>
-                                                    <div className="bg-slate-800/50 rounded-2xl p-6 border border-slate-700 mb-8">
+                                                    <div className="bg-[#6F8F72] rounded-2xl p-6 border border-[#5d7a61] mb-8 shadow-xl">
                                                         <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6">
-                                                            <h3 className="text-xl font-bold text-slate-200">
+                                                            <h3 className="text-xl font-bold text-white">
                                                                 {selectedImprovementSubject ? `${selectedImprovementSubject} Performance` : "Class Subject Performance"}
                                                             </h3>
                                                             <div className="relative min-w-[250px]">
                                                                 <select
-                                                                    className="w-full bg-slate-900 border border-slate-600 rounded-lg py-2.5 px-4 text-white appearance-none cursor-pointer focus:ring-2 focus:ring-indigo-500"
+                                                                    className="w-full bg-white/10 border border-white/20 rounded-lg py-2.5 px-4 text-white appearance-none cursor-pointer focus:ring-2 focus:ring-white/30"
                                                                     value={selectedImprovementSubject}
                                                                     onChange={(e) => setSelectedImprovementSubject(e.target.value)}
                                                                 >
@@ -608,7 +608,7 @@ export const DataAnalysisTab = () => {
                                                                         : result.overallStats?.average}
                                                                 </p>
                                                             </div>
-                                                            <div className="bg-[#215D5F] text-white rounded-xl p-6 text-center shadow-lg">
+                                                            <div className="bg-white/20 backdrop-blur-md text-white rounded-xl p-6 text-center shadow-lg border border-white/10">
                                                                 <p className="text-slate-300 font-bold text-sm uppercase tracking-wider mb-2">Highest</p>
                                                                 <p className="text-4xl font-black">
                                                                     {selectedImprovementSubject && result.subjectInsights?.[selectedImprovementSubject]
@@ -628,14 +628,14 @@ export const DataAnalysisTab = () => {
 
                                                         {selectedImprovementSubject && result.subjectInsights?.[selectedImprovementSubject] && (
                                                             <div className="animate-in fade-in slide-in-from-top-2 pt-4 border-t border-slate-700">
-                                                                <h4 className="font-bold text-emerald-400 mb-4 flex items-center gap-2">
+                                                                <h4 className="font-bold text-white mb-4 flex items-center gap-2">
                                                                     <Sparkles className="w-4 h-4" />
                                                                     Suggestions to Improve Performance in {selectedImprovementSubject}:
                                                                 </h4>
                                                                 <ul className="space-y-3">
                                                                     {result.subjectInsights[selectedImprovementSubject].suggestions.map((suggestion: string, idx: number) => (
-                                                                        <li key={idx} className="flex items-start gap-3 text-slate-300">
-                                                                            <div className="w-1.5 h-1.5 rounded-full bg-indigo-400 mt-2 shrink-0" />
+                                                                        <li key={idx} className="flex items-start gap-3 text-white/90">
+                                                                            <div className="w-1.5 h-1.5 rounded-full bg-white mt-2 shrink-0" />
                                                                             <span className="leading-relaxed">{suggestion}</span>
                                                                         </li>
                                                                     ))}
@@ -708,7 +708,7 @@ export const DataAnalysisTab = () => {
                                                                         <p className="text-slate-200 font-bold text-sm uppercase tracking-wider mb-2">Average</p>
                                                                         <p className="text-4xl font-black">{result.subjectInsights[selectedDetailSubject].average}</p>
                                                                     </div>
-                                                                    <div className="bg-slate-200 text-slate-900 rounded-xl p-8 text-center">
+                                                                    <div className="bg-[#6F8F72] text-white rounded-xl p-8 text-center shadow-lg">
                                                                         <p className="text-slate-500 font-bold text-sm uppercase tracking-wider mb-2">Highest</p>
                                                                         <p className="text-4xl font-black">{result.subjectInsights[selectedDetailSubject].highest}</p>
                                                                     </div>

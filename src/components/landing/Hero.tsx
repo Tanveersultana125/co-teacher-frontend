@@ -16,7 +16,7 @@ const Hero = () => {
       <div className="container mx-auto px-4 lg:px-6 relative z-10">
         <div className="max-w-3xl mx-auto text-center text-slate-900">
           <h1 className="text-4xl sm:text-5xl md:text-7xl font-sans font-black leading-[1.1] mb-6 tracking-tight">
-            Plan Less, <span className="text-[#F97316] relative inline-block">Teach More <span className="absolute bottom-0 left-0 w-full h-[4px] bg-[#F97316]"></span></span>
+            Plan Less, <span className="text-[#FF7444] relative inline-block">Teach More <span className="absolute bottom-0 left-0 w-full h-[4px] bg-[#FF7444]"></span></span>
           </h1>
 
           <p className="text-lg md:text-2xl mb-10 max-w-2xl mx-auto leading-relaxed text-slate-800 font-medium tracking-tight">

@@ -251,16 +251,52 @@ export function TeachingMaterialTab() {
                                     </div>
 
                                     {/* Illustration Area (Visual Placeholder) */}
-                                    <div className="aspect-square bg-white rounded-[2.5rem] border border-slate-100 shadow-xl shadow-indigo-50 flex flex-col items-center justify-center p-8 text-center gap-4 group cursor-help transition-all hover:scale-[1.02]">
-                                        <div className="w-20 h-20 rounded-3xl bg-slate-50 flex items-center justify-center group-hover:bg-indigo-50 transition-colors">
-                                            <Presentation className="w-10 h-10 text-slate-300 group-hover:text-indigo-400 transition-colors" />
-                                        </div>
-                                        <div>
-                                            <p className="text-[10px] font-black uppercase tracking-widest text-slate-400 mb-1">Visual Study Guide</p>
-                                            <p className="text-xs font-semibold text-slate-500 italic px-4 leading-relaxed">
-                                                {generatedContent.illustrationDescription || "Detailed diagram for " + generatedContent.title}
-                                            </p>
-                                        </div>
+                                    <div className="aspect-square bg-white rounded-[2.5rem] border border-slate-100 shadow-xl shadow-indigo-50 flex flex-col items-center justify-center p-4 text-center gap-4 group cursor-help transition-all hover:scale-[1.02] overflow-hidden relative">
+                                        {generatedContent.generatedImage ? (
+                                            <div className="w-full h-full flex flex-col items-center justify-center relative">
+                                                <img
+                                                    src={generatedContent.generatedImage}
+                                                    alt="Educational Diagram"
+                                                    className="w-full h-full object-contain rounded-3xl"
+                                                    onError={(e) => {
+                                                        (e.target as HTMLImageElement).src = "https://images.unsplash.com/photo-1546410531-bb4caa6b424d?auto=format&fit=crop&w=1600&q=80";
+                                                    }}
+                                                />
+                                                <div className="absolute bottom-4 left-0 right-0 group-hover:bottom-6 transition-all">
+                                                    <span className="bg-white/90 backdrop-blur-sm px-4 py-1.5 rounded-full shadow-lg border border-indigo-100 text-[10px] font-black uppercase tracking-widest text-indigo-600">
+                                                        Visual Study Guide
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        ) : generatedContent.title?.toLowerCase().includes("human body") ||
+                                            generatedContent.illustrationDescription?.toLowerCase().includes("human body") ||
+                                            generatedContent.illustrationDescription?.toLowerCase().includes("anatomy") ||
+                                            generatedContent.illustrationDescription?.toLowerCase().includes("internal parts") ? (
+                                            <div className="w-full h-full flex flex-col items-center justify-center">
+                                                <img
+                                                    src="/human-body-diagram.png"
+                                                    alt="Human Body Diagram"
+                                                    className="w-full h-full object-contain rounded-3xl"
+                                                />
+                                                <div className="absolute bottom-4 left-0 right-0">
+                                                    <span className="bg-white/90 backdrop-blur-sm px-4 py-1.5 rounded-full shadow-lg border border-indigo-100 text-[10px] font-black uppercase tracking-widest text-indigo-600">
+                                                        Visual Study Guide
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        ) : (
+                                            <>
+                                                <div className="w-20 h-20 rounded-3xl bg-slate-50 flex items-center justify-center group-hover:bg-indigo-50 transition-colors">
+                                                    <Presentation className="w-10 h-10 text-slate-300 group-hover:text-indigo-400 transition-colors" />
+                                                </div>
+                                                <div>
+                                                    <p className="text-[10px] font-black uppercase tracking-widest text-slate-400 mb-1">Visual Study Guide</p>
+                                                    <p className="text-xs font-semibold text-slate-500 italic px-4 leading-relaxed">
+                                                        {generatedContent.illustrationDescription || "Detailed diagram for " + generatedContent.title}
+                                                    </p>
+                                                </div>
+                                            </>
+                                        )}
                                     </div>
                                 </div>
                             </div>

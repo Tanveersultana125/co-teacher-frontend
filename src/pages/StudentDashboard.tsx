@@ -52,7 +52,7 @@ const StudentDashboard = () => {
   }
 
   const stats = [
-    { label: "Lessons Completed", value: dashboardData?.stats.lessonsCompleted || "0", icon: BookOpen, color: "text-indigo-600", bg: "bg-indigo-50" },
+    { label: "Lessons Completed", value: dashboardData?.stats.lessonsCompleted || "0", icon: BookOpen, color: "text-[#0D5355]", bg: "bg-teal-50" },
     { label: "Assignments Due", value: dashboardData?.stats.assignmentsDue || "0", icon: FileText, color: "text-amber-600", bg: "bg-amber-50" },
     { label: "Average Score", value: (dashboardData?.stats.avgScore || "0") + "%", icon: Award, color: "text-emerald-600", bg: "bg-emerald-50" },
     { label: "Attendance", value: (dashboardData?.stats.attendanceRate || "0") + "%", icon: Calendar, color: "text-blue-600", bg: "bg-blue-50" },
@@ -75,8 +75,8 @@ const StudentDashboard = () => {
               key={item.id}
               onClick={() => setActiveTab(item.id)}
               className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-200 font-medium ${activeTab === item.id
-                  ? "bg-[#EEF2FF] text-[#4F46E5]"
-                  : "text-slate-500 hover:bg-slate-50 hover:text-slate-900"
+                ? "bg-[#EEF2FF] text-[#4F46E5]"
+                : "text-slate-500 hover:bg-slate-50 hover:text-slate-900"
                 }`}
             >
               <item.icon className={`w-5 h-5 ${activeTab === item.id ? "text-[#4F46E5]" : "text-slate-400"}`} />
