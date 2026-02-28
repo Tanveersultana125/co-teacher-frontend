@@ -168,7 +168,7 @@ export function AIAssistantTab({ initialMode = "lesson", preloadedResult }: AIAs
                     setTopicsMap(res.data.topics || {});
 
                     // Only reset subject if the current one is no longer valid for the new metadata
-                    if (!res.data.subjects?.includes(subject)) {
+                    if (subject && !res.data.subjects?.includes(subject)) {
                         console.log(`[DEBUG] Current subject '${subject}' not found in new metadata, resetting.`);
                         setSubject("");
                         setTopic("");
@@ -734,7 +734,11 @@ window.onload = function() {
                             />
                             <Button
                                 variant="outline"
+<<<<<<< HEAD
                                 className={`h - 11 px - 4 rounded-xl border-slate - 200 font-bold text - xs transition-all ${pdfText ? 'bg-emerald-50 border-emerald-200 text-emerald-600' : 'bg-white hover:bg-slate-50'} `}
+=======
+                                className={`h - 11 px - 4 rounded - xl border - slate - 200 font - bold text - xs transition - all ${pdfText ? 'bg-emerald-50 border-emerald-200 text-emerald-600' : 'bg-white hover:bg-slate-50'} `}
+>>>>>>> 0bb2feabc84b8ecbc85a0387fdd7621f67eec645
                             >
                                 {isUploading ? <Loader2 className="w-4 h-4 animate-spin mr-2" /> : <FileUp className="w-4 h-4 mr-2" />}
                                 {pdfText ? 'PDF Added' : 'Add PDF'}
@@ -925,7 +929,11 @@ window.onload = function() {
                                     {(typeof result.activities === 'string' ? JSON.parse(result.activities) : result.activities).map((_: any, idx: number) => (
                                         <div
                                             key={idx}
+<<<<<<< HEAD
                                             className={`h - 1.5 w - 8 rounded - full transition-all ${idx === activeActivityIndex ? 'bg-indigo-600' : 'bg-slate-200'} `}
+=======
+                                            className={`h - 1.5 w - 8 rounded - full transition - all ${idx === activeActivityIndex ? 'bg-indigo-600' : 'bg-slate-200'} `}
+>>>>>>> 0bb2feabc84b8ecbc85a0387fdd7621f67eec645
                                         />
                                     ))}
                                 </div>
@@ -1000,7 +1008,11 @@ window.onload = function() {
                                                 setActiveActivityIndex(activeActivityIndex + 1);
                                             } else {
                                                 setActiveActivityIndex(null);
+<<<<<<< HEAD
                                                 toast.success("Lesson completed! ?? Great job!");
+=======
+                                                toast.success("Lesson completed! 🎉 Great job!");
+>>>>>>> 0bb2feabc84b8ecbc85a0387fdd7621f67eec645
                                             }
                                         }}
                                         className="h-14 px-10 rounded-2xl font-bold bg-indigo-600 hover:bg-indigo-700 shadow-xl shadow-indigo-100"
@@ -1021,9 +1033,15 @@ window.onload = function() {
                             {/* Result Header - Premium Glassmorphism style */}
                             <div className="sticky top-0 z-20 bg-white/95 backdrop-blur-xl border-b border-slate-100 p-6 flex flex-col md:flex-row md:items-center justify-between gap-6 shadow-sm print:static print:shadow-none print:border-none print:bg-white">
                                 <div className="flex items-center gap-5">
+<<<<<<< HEAD
                                     <div className={`w - 16 h - 16 rounded-2xl flex items - center justify - center shadow-lg ${mode === 'lesson' ? 'bg-[#0D5355] text-white shadow-teal-100' :
                                         mode === 'quiz' ? 'bg-amber-500 text-white shadow-amber-200' :
                                             'bg-[#0D5355] text-white shadow-teal-100'
+=======
+                                    <div className={`w - 16 h - 16 rounded - 2xl flex items - center justify - center shadow - lg ${mode === 'lesson' ? 'bg-[#0D5355] text-white shadow-teal-100' :
+                                            mode === 'quiz' ? 'bg-amber-500 text-white shadow-amber-200' :
+                                                'bg-[#0D5355] text-white shadow-teal-100'
+>>>>>>> 0bb2feabc84b8ecbc85a0387fdd7621f67eec645
                                         } `}>
                                         {mode === 'lesson' ? <GraduationCap className="w-8 h-8" /> :
                                             mode === 'quiz' ? <HelpCircle className="w-8 h-8" /> :
@@ -1085,7 +1103,11 @@ window.onload = function() {
 
                                     {mode === 'quiz' && result?.id && (
                                         <Button
+<<<<<<< HEAD
                                             onClick={() => navigate(`/quiz/${result.id}`)}
+=======
+                                            onClick={() => navigate(`/ quiz / ${result.id} `)}
+>>>>>>> 0bb2feabc84b8ecbc85a0387fdd7621f67eec645
                                             className="rounded-xl h-12 px-6 font-bold bg-amber-500 hover:bg-amber-600 text-white shadow-lg shadow-amber-100 transition-all"
                                         >
                                             <PlayCircle className="w-4 h-4 mr-2" /> Start Quiz
@@ -1099,7 +1121,11 @@ window.onload = function() {
                                         <Download className="w-4 h-4" /> Download PDF
                                     </Button>
                                     <Button
+<<<<<<< HEAD
                                         className={`rounded-xl h-12 px-8 font-bold shadow-lg transition-all ${result?.status === 'PUBLISHED' ? 'bg-emerald-50 text-emerald-600 border border-emerald-100 hover:bg-emerald-100' : 'bg-indigo-600 hover:bg-indigo-700 text-white shadow-indigo-100'} `}
+=======
+                                        className={`rounded - xl h - 12 px - 8 font - bold shadow - lg transition - all ${result?.status === 'PUBLISHED' ? 'bg-emerald-50 text-emerald-600 border border-emerald-100 hover:bg-emerald-100' : 'bg-indigo-600 hover:bg-indigo-700 text-white shadow-indigo-100'} `}
+>>>>>>> 0bb2feabc84b8ecbc85a0387fdd7621f67eec645
                                         onClick={handleSaveToLibrary}
                                         disabled={isSaving || result?.status === 'PUBLISHED'}
                                     >
@@ -1249,6 +1275,7 @@ window.onload = function() {
                                             <div className="flex flex-wrap items-center gap-x-6 gap-y-2 text-sm font-medium text-slate-600">
                                                 <span><span className="font-bold text-indigo-700">Unit:</span> {unitDetails || title || topic}</span>
                                                 <span className="w-1.5 h-1.5 rounded-full bg-slate-300" />
+<<<<<<< HEAD
                                                 <span><span className="font-bold text-indigo-700">Duration:</span> {sessionDuration} Min</span>
                                                 <span className="w-1.5 h-1.5 rounded-full bg-slate-300" />
                                                 <span><span className="font-bold text-indigo-700">Sessions:</span> {numSessions}</span>
@@ -1264,6 +1291,11 @@ window.onload = function() {
                                                         <span><span className="font-bold text-rose-600">Standards:</span> {result.standardsAlignment}</span>
                                                     </>
                                                 )}
+=======
+                                                <span><span className="font-bold text-indigo-700">Session Duration:</span> {sessionDuration} Minutes</span>
+                                                <span className="w-1.5 h-1.5 rounded-full bg-slate-300" />
+                                                <span><span className="font-bold text-indigo-700">Number of Sessions:</span> {numSessions}</span>
+>>>>>>> 0bb2feabc84b8ecbc85a0387fdd7621f67eec645
                                             </div>
                                         </div>
 
@@ -1357,6 +1389,7 @@ window.onload = function() {
                                                 <h4 className="font-bold text-lg text-slate-900">Lesson Activities:</h4>
                                             </div>
                                             <div className="space-y-4">
+<<<<<<< HEAD
                                                 {(() => {
                                                     let acts = [];
                                                     try {
@@ -1432,6 +1465,44 @@ window.onload = function() {
                                             </div>
                                         )}
 
+=======
+                                                {result?.activities && (typeof result.activities === 'string' ? JSON.parse(result.activities) : result.activities).map((act: any, i: number) => (
+                                                    <div key={i} className="p-5 bg-white rounded-2xl border border-slate-100 shadow-sm hover:border-indigo-100 transition-all group">
+                                                        <div className="flex items-start justify-between gap-4 mb-3">
+                                                            <div className="flex-1">
+                                                                <h5 className="font-black text-slate-900 leading-tight">
+                                                                    <span className="text-indigo-600 mr-2">{i + 1}.</span>
+                                                                    {act.task || act.description}
+                                                                </h5>
+                                                            </div>
+                                                            {act.time && (
+                                                                <span className="px-3 py-1 bg-slate-50 text-slate-500 text-[10px] font-black uppercase tracking-widest rounded-lg border border-slate-100">
+                                                                    {act.time}
+                                                                </span>
+                                                            )}
+                                                        </div>
+                                                        {(act.recap || act.tip) && (
+                                                            <div className="grid grid-cols-1 md:grid-cols-2 gap-3 mt-4 pt-4 border-t border-slate-50">
+                                                                {act.recap && (
+                                                                    <div className="p-3 bg-indigo-50/50 rounded-xl border border-indigo-50">
+                                                                        <span className="text-[10px] font-black uppercase text-indigo-400 block mb-1">Concept Recap</span>
+                                                                        <p className="text-xs text-indigo-900/70 font-medium leading-relaxed">{act.recap}</p>
+                                                                    </div>
+                                                                )}
+                                                                {act.tip && (
+                                                                    <div className="p-3 bg-emerald-50/50 rounded-xl border border-emerald-50">
+                                                                        <span className="text-[10px] font-black uppercase text-emerald-400 block mb-1">Teacher Tip</span>
+                                                                        <p className="text-xs text-emerald-900/70 font-medium leading-relaxed">{act.tip}</p>
+                                                                    </div>
+                                                                )}
+                                                            </div>
+                                                        )}
+                                                    </div>
+                                                ))}
+                                            </div>
+                                        </div>
+
+>>>>>>> 0bb2feabc84b8ecbc85a0387fdd7621f67eec645
                                         {/* Teaching Strategies */}
                                         {result?.teachingStrategies && result.teachingStrategies.length > 0 && (
                                             <div>
@@ -1449,6 +1520,7 @@ window.onload = function() {
                                             </div>
                                         )}
 
+<<<<<<< HEAD
                                         {/* Assessment Breakdown */}
                                         {result?.assessment ? (
                                             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -1468,6 +1540,10 @@ window.onload = function() {
                                                 </div>
                                             </div>
                                         ) : result?.assessmentMethods && result.assessmentMethods.length > 0 && (
+=======
+                                        {/* Assessment Methods */}
+                                        {result?.assessmentMethods && result.assessmentMethods.length > 0 && (
+>>>>>>> 0bb2feabc84b8ecbc85a0387fdd7621f67eec645
                                             <div>
                                                 <div className="flex items-center gap-2 mb-4">
                                                     <div className="w-8 h-8 rounded-lg bg-indigo-50 flex items-center justify-center text-indigo-600">
@@ -1498,7 +1574,11 @@ window.onload = function() {
 
                                         {/* Review Questions */}
                                         {(result?.questions || result?.content?.questions) && (
+<<<<<<< HEAD
                                             <div className="p-8 bg-[#84B179] rounded-3xl text-white shadow-xl shadow-emerald-100 relative overflow-hidden">
+=======
+                                            <div className="p-8 bg-[#1A3263] rounded-3xl text-white shadow-xl shadow-indigo-100 relative overflow-hidden">
+>>>>>>> 0bb2feabc84b8ecbc85a0387fdd7621f67eec645
                                                 <div className="absolute top-0 right-0 p-6 opacity-10">
                                                     <HelpCircle className="w-20 h-20" />
                                                 </div>
@@ -1530,6 +1610,7 @@ window.onload = function() {
 
                                         {/* Differentiation */}
                                         {result?.differentiation && (
+<<<<<<< HEAD
                                             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                                                 <div className="p-6 bg-emerald-50 rounded-2xl border border-emerald-100">
                                                     <h5 className="font-bold text-emerald-900 mb-2 flex items-center gap-2">
@@ -1537,10 +1618,20 @@ window.onload = function() {
                                                         Advanced:
                                                     </h5>
                                                     <p className="text-xs text-emerald-800 leading-relaxed font-medium">{result.differentiation.advanced}</p>
+=======
+                                            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                                <div className="p-6 bg-emerald-50 rounded-2xl border border-emerald-100">
+                                                    <h5 className="font-bold text-emerald-900 mb-2 flex items-center gap-2">
+                                                        <Sparkles className="w-4 h-4" />
+                                                        For Advanced Learners:
+                                                    </h5>
+                                                    <p className="text-sm text-emerald-800 leading-relaxed">{result.differentiation.advanced}</p>
+>>>>>>> 0bb2feabc84b8ecbc85a0387fdd7621f67eec645
                                                 </div>
                                                 <div className="p-6 bg-amber-50 rounded-2xl border border-amber-100">
                                                     <h5 className="font-bold text-amber-900 mb-2 flex items-center gap-2">
                                                         <Settings2 className="w-4 h-4" />
+<<<<<<< HEAD
                                                         Struggling:
                                                     </h5>
                                                     <p className="text-xs text-amber-800 leading-relaxed font-medium">{result.differentiation.struggling}</p>
@@ -1554,6 +1645,12 @@ window.onload = function() {
                                                         <p className="text-xs text-blue-800 leading-relaxed font-medium">{result.differentiation.ell}</p>
                                                     </div>
                                                 )}
+=======
+                                                        For Struggling Learners:
+                                                    </h5>
+                                                    <p className="text-sm text-amber-800 leading-relaxed">{result.differentiation.struggling}</p>
+                                                </div>
+>>>>>>> 0bb2feabc84b8ecbc85a0387fdd7621f67eec645
                                             </div>
                                         )}
 
@@ -1763,7 +1860,11 @@ window.onload = function() {
 
                                                                             {isAnswered && (
                                                                                 isCorrect ? <CheckCircle2 className="w-5 h-5 text-emerald-500" /> :
+<<<<<<< HEAD
                                                                                     (isSelected ? <div className="w-5 h-5 rounded-full bg-rose-500 flex items-center justify-center text-white text-[10px]">?</div> : null)
+=======
+                                                                                    (isSelected ? <div className="w-5 h-5 rounded-full bg-rose-500 flex items-center justify-center text-white text-[10px]">✕</div> : null)
+>>>>>>> 0bb2feabc84b8ecbc85a0387fdd7621f67eec645
                                                                             )}
                                                                         </button>
                                                                     );
