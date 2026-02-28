@@ -734,11 +734,7 @@ window.onload = function() {
                             />
                             <Button
                                 variant="outline"
-<<<<<<< HEAD
-                                className={`h - 11 px - 4 rounded-xl border-slate - 200 font-bold text - xs transition-all ${pdfText ? 'bg-emerald-50 border-emerald-200 text-emerald-600' : 'bg-white hover:bg-slate-50'} `}
-=======
-                                className={`h - 11 px - 4 rounded - xl border - slate - 200 font - bold text - xs transition - all ${pdfText ? 'bg-emerald-50 border-emerald-200 text-emerald-600' : 'bg-white hover:bg-slate-50'} `}
->>>>>>> 0bb2feabc84b8ecbc85a0387fdd7621f67eec645
+                                className={`h-11 px-4 rounded-xl border-slate-200 font-bold text-xs transition-all ${pdfText ? 'bg-emerald-50 border-emerald-200 text-emerald-600' : 'bg-white hover:bg-slate-50'}`}
                             >
                                 {isUploading ? <Loader2 className="w-4 h-4 animate-spin mr-2" /> : <FileUp className="w-4 h-4 mr-2" />}
                                 {pdfText ? 'PDF Added' : 'Add PDF'}
@@ -929,11 +925,7 @@ window.onload = function() {
                                     {(typeof result.activities === 'string' ? JSON.parse(result.activities) : result.activities).map((_: any, idx: number) => (
                                         <div
                                             key={idx}
-<<<<<<< HEAD
-                                            className={`h - 1.5 w - 8 rounded - full transition-all ${idx === activeActivityIndex ? 'bg-indigo-600' : 'bg-slate-200'} `}
-=======
-                                            className={`h - 1.5 w - 8 rounded - full transition - all ${idx === activeActivityIndex ? 'bg-indigo-600' : 'bg-slate-200'} `}
->>>>>>> 0bb2feabc84b8ecbc85a0387fdd7621f67eec645
+                                            className={`h-1.5 w-8 rounded-full transition-all ${idx === activeActivityIndex ? 'bg-indigo-600' : 'bg-slate-200'}`}
                                         />
                                     ))}
                                 </div>
@@ -1008,11 +1000,7 @@ window.onload = function() {
                                                 setActiveActivityIndex(activeActivityIndex + 1);
                                             } else {
                                                 setActiveActivityIndex(null);
-<<<<<<< HEAD
-                                                toast.success("Lesson completed! ?? Great job!");
-=======
                                                 toast.success("Lesson completed! 🎉 Great job!");
->>>>>>> 0bb2feabc84b8ecbc85a0387fdd7621f67eec645
                                             }
                                         }}
                                         className="h-14 px-10 rounded-2xl font-bold bg-indigo-600 hover:bg-indigo-700 shadow-xl shadow-indigo-100"
@@ -1033,16 +1021,9 @@ window.onload = function() {
                             {/* Result Header - Premium Glassmorphism style */}
                             <div className="sticky top-0 z-20 bg-white/95 backdrop-blur-xl border-b border-slate-100 p-6 flex flex-col md:flex-row md:items-center justify-between gap-6 shadow-sm print:static print:shadow-none print:border-none print:bg-white">
                                 <div className="flex items-center gap-5">
-<<<<<<< HEAD
-                                    <div className={`w - 16 h - 16 rounded-2xl flex items - center justify - center shadow-lg ${mode === 'lesson' ? 'bg-[#0D5355] text-white shadow-teal-100' :
+                                    <div className={`w-16 h-16 rounded-2xl flex items-center justify-center shadow-lg ${mode === 'lesson' ? 'bg-[#0D5355] text-white shadow-teal-100' :
                                         mode === 'quiz' ? 'bg-amber-500 text-white shadow-amber-200' :
-                                            'bg-[#0D5355] text-white shadow-teal-100'
-=======
-                                    <div className={`w - 16 h - 16 rounded - 2xl flex items - center justify - center shadow - lg ${mode === 'lesson' ? 'bg-[#0D5355] text-white shadow-teal-100' :
-                                            mode === 'quiz' ? 'bg-amber-500 text-white shadow-amber-200' :
-                                                'bg-[#0D5355] text-white shadow-teal-100'
->>>>>>> 0bb2feabc84b8ecbc85a0387fdd7621f67eec645
-                                        } `}>
+                                            'bg-[#0D5355] text-white shadow-teal-100'}`}>
                                         {mode === 'lesson' ? <GraduationCap className="w-8 h-8" /> :
                                             mode === 'quiz' ? <HelpCircle className="w-8 h-8" /> :
                                                 <FileText className="w-8 h-8" />}
@@ -1081,7 +1062,7 @@ window.onload = function() {
                                             )}
                                         </div>
                                     </div>
-                                </div>
+                                </div >
 
                                 <div className="flex items-center gap-2 print:hidden">
                                     <Button
@@ -1103,11 +1084,7 @@ window.onload = function() {
 
                                     {mode === 'quiz' && result?.id && (
                                         <Button
-<<<<<<< HEAD
                                             onClick={() => navigate(`/quiz/${result.id}`)}
-=======
-                                            onClick={() => navigate(`/ quiz / ${result.id} `)}
->>>>>>> 0bb2feabc84b8ecbc85a0387fdd7621f67eec645
                                             className="rounded-xl h-12 px-6 font-bold bg-amber-500 hover:bg-amber-600 text-white shadow-lg shadow-amber-100 transition-all"
                                         >
                                             <PlayCircle className="w-4 h-4 mr-2" /> Start Quiz
@@ -1121,11 +1098,7 @@ window.onload = function() {
                                         <Download className="w-4 h-4" /> Download PDF
                                     </Button>
                                     <Button
-<<<<<<< HEAD
                                         className={`rounded-xl h-12 px-8 font-bold shadow-lg transition-all ${result?.status === 'PUBLISHED' ? 'bg-emerald-50 text-emerald-600 border border-emerald-100 hover:bg-emerald-100' : 'bg-indigo-600 hover:bg-indigo-700 text-white shadow-indigo-100'} `}
-=======
-                                        className={`rounded - xl h - 12 px - 8 font - bold shadow - lg transition - all ${result?.status === 'PUBLISHED' ? 'bg-emerald-50 text-emerald-600 border border-emerald-100 hover:bg-emerald-100' : 'bg-indigo-600 hover:bg-indigo-700 text-white shadow-indigo-100'} `}
->>>>>>> 0bb2feabc84b8ecbc85a0387fdd7621f67eec645
                                         onClick={handleSaveToLibrary}
                                         disabled={isSaving || result?.status === 'PUBLISHED'}
                                     >
@@ -1139,7 +1112,7 @@ window.onload = function() {
                                         {result?.status === 'PUBLISHED' ? 'Saved' : 'Save to Library'}
                                     </Button>
                                 </div>
-                            </div>
+                            </div >
 
                             <div className="p-8 prose prose-slate max-w-none bg-slate-50/50 min-h-screen">
                                 {/* ... (Other rendering logic omitted for brevity, focusing on Quiz below) ... */}
@@ -1275,7 +1248,6 @@ window.onload = function() {
                                             <div className="flex flex-wrap items-center gap-x-6 gap-y-2 text-sm font-medium text-slate-600">
                                                 <span><span className="font-bold text-indigo-700">Unit:</span> {unitDetails || title || topic}</span>
                                                 <span className="w-1.5 h-1.5 rounded-full bg-slate-300" />
-<<<<<<< HEAD
                                                 <span><span className="font-bold text-indigo-700">Duration:</span> {sessionDuration} Min</span>
                                                 <span className="w-1.5 h-1.5 rounded-full bg-slate-300" />
                                                 <span><span className="font-bold text-indigo-700">Sessions:</span> {numSessions}</span>
@@ -1291,94 +1263,99 @@ window.onload = function() {
                                                         <span><span className="font-bold text-rose-600">Standards:</span> {result.standardsAlignment}</span>
                                                     </>
                                                 )}
-=======
-                                                <span><span className="font-bold text-indigo-700">Session Duration:</span> {sessionDuration} Minutes</span>
-                                                <span className="w-1.5 h-1.5 rounded-full bg-slate-300" />
-                                                <span><span className="font-bold text-indigo-700">Number of Sessions:</span> {numSessions}</span>
->>>>>>> 0bb2feabc84b8ecbc85a0387fdd7621f67eec645
-                                            </div>
-                                        </div>
+                                            </div >
+                                        </div >
 
                                         {/* Learning Outcomes */}
-                                        <div>
+                                        < div >
                                             <div className="flex items-center gap-2 mb-4">
                                                 <div className="w-8 h-8 rounded-lg bg-indigo-50 flex items-center justify-center text-indigo-600">
                                                     <Target className="w-4 h-4" />
                                                 </div>
                                                 <h4 className="font-bold text-lg text-slate-900">Learning Outcomes:</h4>
                                             </div>
-                                            {Array.isArray(result?.objective) ? (
-                                                <ol className="list-decimal pl-5 space-y-2 marker:text-indigo-600 marker:font-bold">
-                                                    {result.objective.map((obj: string, i: number) => (
-                                                        <li key={i} className="text-slate-700 leading-relaxed pl-2">{obj}</li>
-                                                    ))}
-                                                </ol>
-                                            ) : (
-                                                <p className="text-slate-700 leading-relaxed pl-2 border-l-4 border-indigo-100 bg-slate-50/50 p-4 rounded-r-xl">{result?.objective}</p>
-                                            )}
-                                        </div>
+                                            {
+                                                Array.isArray(result?.objective) ? (
+                                                    <ol className="list-decimal pl-5 space-y-2 marker:text-indigo-600 marker:font-bold">
+                                                        {result.objective.map((obj: string, i: number) => (
+                                                            <li key={i} className="text-slate-700 leading-relaxed pl-2">{obj}</li>
+                                                        ))}
+                                                    </ol>
+                                                ) : (
+                                                    <p className="text-slate-700 leading-relaxed pl-2 border-l-4 border-indigo-100 bg-slate-50/50 p-4 rounded-r-xl">{result?.objective}</p>
+                                                )
+                                            }
+                                        </div >
 
                                         {/* Materials Needed */}
-                                        {result?.materials && (
-                                            <div>
-                                                <div className="flex items-center gap-2 mb-4">
-                                                    <div className="w-8 h-8 rounded-lg bg-indigo-50 flex items-center justify-center text-indigo-600">
-                                                        <FileText className="w-4 h-4" />
+                                        {
+                                            result?.materials && (
+                                                <div>
+                                                    <div className="flex items-center gap-2 mb-4">
+                                                        <div className="w-8 h-8 rounded-lg bg-indigo-50 flex items-center justify-center text-indigo-600">
+                                                            <FileText className="w-4 h-4" />
+                                                        </div>
+                                                        <h4 className="font-bold text-lg text-slate-900">Materials Needed:</h4>
                                                     </div>
-                                                    <h4 className="font-bold text-lg text-slate-900">Materials Needed:</h4>
+                                                    <ul className="list-disc pl-5 space-y-1 marker:text-slate-400">
+                                                        {(Array.isArray(result.materials) ? result.materials : [result.materials]).map((m: string, i: number) => (
+                                                            <li key={i} className="text-slate-700 leading-relaxed pl-2">{m}</li>
+                                                        ))}
+                                                    </ul>
                                                 </div>
-                                                <ul className="list-disc pl-5 space-y-1 marker:text-slate-400">
-                                                    {(Array.isArray(result.materials) ? result.materials : [result.materials]).map((m: string, i: number) => (
-                                                        <li key={i} className="text-slate-700 leading-relaxed pl-2">{m}</li>
-                                                    ))}
-                                                </ul>
-                                            </div>
-                                        )}
+                                            )
+                                        }
 
                                         {/* Core Concept Explanation */}
-                                        {(result?.explanation || result?.content?.explanation) && (
-                                            <div className="bg-white rounded-2xl border border-slate-100 p-6 shadow-sm">
-                                                <div className="flex items-center gap-2 mb-4">
-                                                    <div className="w-8 h-8 rounded-lg bg-indigo-50 flex items-center justify-center text-indigo-600">
-                                                        <Brain className="w-4 h-4" />
+                                        {
+                                            (result?.explanation || result?.content?.explanation) && (
+                                                <div className="bg-white rounded-2xl border border-slate-100 p-6 shadow-sm">
+                                                    <div className="flex items-center gap-2 mb-4">
+                                                        <div className="w-8 h-8 rounded-lg bg-indigo-50 flex items-center justify-center text-indigo-600">
+                                                            <Brain className="w-4 h-4" />
+                                                        </div>
+                                                        <h4 className="font-bold text-lg text-slate-900">Concept Explanation:</h4>
                                                     </div>
-                                                    <h4 className="font-bold text-lg text-slate-900">Concept Explanation:</h4>
+                                                    <div className="text-slate-700 leading-relaxed whitespace-pre-wrap text-sm font-medium">
+                                                        {result?.explanation || result?.content?.explanation}
+                                                    </div>
                                                 </div>
-                                                <div className="text-slate-700 leading-relaxed whitespace-pre-wrap text-sm font-medium">
-                                                    {result?.explanation || result?.content?.explanation}
-                                                </div>
-                                            </div>
-                                        )}
+                                            )
+                                        }
 
                                         {/* Pedagogy */}
-                                        {result?.pedagogy && (
-                                            <div>
-                                                <div className="flex items-center gap-2 mb-4">
-                                                    <div className="w-8 h-8 rounded-lg bg-indigo-50 flex items-center justify-center text-indigo-600">
-                                                        <GraduationCap className="w-4 h-4" />
+                                        {
+                                            result?.pedagogy && (
+                                                <div>
+                                                    <div className="flex items-center gap-2 mb-4">
+                                                        <div className="w-8 h-8 rounded-lg bg-indigo-50 flex items-center justify-center text-indigo-600">
+                                                            <GraduationCap className="w-4 h-4" />
+                                                        </div>
+                                                        <h4 className="font-bold text-lg text-slate-900">Pedagogy:</h4>
                                                     </div>
-                                                    <h4 className="font-bold text-lg text-slate-900">Pedagogy:</h4>
+                                                    <div className="text-slate-700 leading-relaxed pl-2 border-l-4 border-indigo-100 bg-slate-50/50 p-4 rounded-r-xl whitespace-pre-wrap text-sm font-medium">
+                                                        {result.pedagogy}
+                                                    </div>
                                                 </div>
-                                                <div className="text-slate-700 leading-relaxed pl-2 border-l-4 border-indigo-100 bg-slate-50/50 p-4 rounded-r-xl whitespace-pre-wrap text-sm font-medium">
-                                                    {result.pedagogy}
-                                                </div>
-                                            </div>
-                                        )}
+                                            )
+                                        }
 
                                         {/* Inquiry based learning */}
-                                        {result?.inquiryBasedLearning && (
-                                            <div className="bg-white rounded-2xl border border-dashed border-indigo-200 p-6">
-                                                <div className="flex items-center gap-2 mb-4">
-                                                    <div className="w-8 h-8 rounded-lg bg-indigo-50 flex items-center justify-center text-indigo-600">
-                                                        <BookOpen className="w-4 h-4" />
+                                        {
+                                            result?.inquiryBasedLearning && (
+                                                <div className="bg-white rounded-2xl border border-dashed border-indigo-200 p-6">
+                                                    <div className="flex items-center gap-2 mb-4">
+                                                        <div className="w-8 h-8 rounded-lg bg-indigo-50 flex items-center justify-center text-indigo-600">
+                                                            <BookOpen className="w-4 h-4" />
+                                                        </div>
+                                                        <h4 className="font-bold text-lg text-indigo-900">Inquiry based learning:</h4>
                                                     </div>
-                                                    <h4 className="font-bold text-lg text-indigo-900">Inquiry based learning:</h4>
+                                                    <div className="text-slate-700 leading-relaxed whitespace-pre-wrap text-sm font-medium">
+                                                        {result.inquiryBasedLearning}
+                                                    </div>
                                                 </div>
-                                                <div className="text-slate-700 leading-relaxed whitespace-pre-wrap text-sm font-medium">
-                                                    {result.inquiryBasedLearning}
-                                                </div>
-                                            </div>
-                                        )}
+                                            )
+                                        }
 
                                         {/* Lesson Activities and Descriptions */}
                                         <div className="space-y-6">
@@ -1389,410 +1366,364 @@ window.onload = function() {
                                                 <h4 className="font-bold text-lg text-slate-900">Lesson Activities:</h4>
                                             </div>
                                             <div className="space-y-4">
-<<<<<<< HEAD
-                                                {(() => {
-                                                    let acts = [];
-                                                    try {
-                                                        acts = typeof result.activities === 'string'
-                                                            ? JSON.parse(result.activities)
-                                                            : (Array.isArray(result.activities) ? result.activities : []);
-                                                    } catch (e) {
-                                                        console.error("Error parsing activities:", e);
-                                                        acts = [];
-                                                    }
+                                                {
+                                                    (() => {
+                                                        let acts = [];
+                                                        try {
+                                                            // @preloadedResult or result are already partially merged in useEffects but we check again here
+                                                            const actsSource = result?.activities || result?.content?.activities || [];
+                                                            acts = typeof actsSource === 'string'
+                                                                ? JSON.parse(actsSource)
+                                                                : (Array.isArray(actsSource) ? actsSource : []);
+                                                        } catch (e) {
+                                                            console.error("Error parsing activities:", e);
+                                                            acts = [];
+                                                        }
 
-                                                    if (!Array.isArray(acts)) acts = [];
+                                                        if (!Array.isArray(acts)) acts = [];
 
-                                                    return acts.map((act: any, i: number) => (
-                                                        <div key={i} className="p-5 bg-white rounded-2xl border border-slate-100 shadow-sm hover:border-indigo-100 transition-all group">
-                                                            <div className="flex items-start justify-between gap-4 mb-3">
-                                                                <div className="flex-1">
-                                                                    <h5 className="font-black text-slate-900 leading-tight">
-                                                                        <span className="text-indigo-600 mr-2">{i + 1}.</span>
-                                                                        {act.task || act.description || "Activity " + (i + 1)}
-                                                                    </h5>
+                                                        if (acts.length === 0) return <p className="text-slate-400 italic">No activities listed.</p>;
+
+                                                        return acts.map((act: any, i: number) => (
+                                                            <div key={i} className="p-5 bg-white rounded-2xl border border-slate-100 shadow-sm hover:border-indigo-100 transition-all group">
+                                                                <div className="flex items-start justify-between gap-4 mb-3">
+                                                                    <div className="flex-1">
+                                                                        <h5 className="font-black text-slate-900 leading-tight">
+                                                                            <span className="text-indigo-600 mr-2">{i + 1}.</span>
+                                                                            {act.task || act.description || "Activity " + (i + 1)}
+                                                                        </h5>
+                                                                    </div>
+                                                                    {act.time && (
+                                                                        <span className="px-3 py-1 bg-slate-50 text-slate-500 text-[10px] font-black uppercase tracking-widest rounded-lg border border-slate-100">
+                                                                            {act.time}
+                                                                        </span>
+                                                                    )}
                                                                 </div>
-                                                                {act.time && (
-                                                                    <span className="px-3 py-1 bg-slate-50 text-slate-500 text-[10px] font-black uppercase tracking-widest rounded-lg border border-slate-100">
-                                                                        {act.time}
-                                                                    </span>
+                                                                {(act.recap || act.tip || (act.task && act.description)) && (
+                                                                    <div className="space-y-3">
+                                                                        {act.task && act.description && (
+                                                                            <p className="text-sm text-slate-600 leading-relaxed font-medium">
+                                                                                {act.description}
+                                                                            </p>
+                                                                        )}
+                                                                        <div className="grid grid-cols-1 md:grid-cols-2 gap-3 mt-4 pt-4 border-t border-slate-50">
+                                                                            {act.recap && (
+                                                                                <div className="p-3 bg-indigo-50/50 rounded-xl border border-indigo-50">
+                                                                                    <span className="text-[10px] font-black uppercase text-indigo-400 block mb-1">Concept Recap</span>
+                                                                                    <p className="text-xs text-indigo-900/70 font-medium leading-relaxed">{act.recap}</p>
+                                                                                </div>
+                                                                            )}
+                                                                            {act.tip && (
+                                                                                <div className="p-3 bg-emerald-50/50 rounded-xl border border-emerald-50">
+                                                                                    <span className="text-[10px] font-black uppercase text-emerald-400 block mb-1">Teacher Tip</span>
+                                                                                    <p className="text-xs text-emerald-900/70 font-medium leading-relaxed">{act.tip}</p>
+                                                                                </div>
+                                                                            )}
+                                                                        </div>
+                                                                    </div>
                                                                 )}
                                                             </div>
-                                                            {(act.recap || act.tip || act.description) && (
-                                                                <div className="space-y-3">
-                                                                    {act.task && act.description && (
-                                                                        <p className="text-sm text-slate-600 leading-relaxed font-medium">
-                                                                            {act.description}
-                                                                        </p>
-                                                                    )}
-                                                                    <div className="grid grid-cols-1 md:grid-cols-2 gap-3 mt-4 pt-4 border-t border-slate-50">
-                                                                        {act.recap && (
-                                                                            <div className="p-3 bg-indigo-50/50 rounded-xl border border-indigo-50">
-                                                                                <span className="text-[10px] font-black uppercase text-indigo-400 block mb-1">Concept Recap</span>
-                                                                                <p className="text-xs text-indigo-900/70 font-medium leading-relaxed">{act.recap}</p>
-                                                                            </div>
-                                                                        )}
-                                                                        {act.tip && (
-                                                                            <div className="p-3 bg-emerald-50/50 rounded-xl border border-emerald-50">
-                                                                                <span className="text-[10px] font-black uppercase text-emerald-400 block mb-1">Teacher Tip</span>
-                                                                                <p className="text-xs text-emerald-900/70 font-medium leading-relaxed">{act.tip}</p>
-                                                                            </div>
-                                                                        )}
-                                                                    </div>
-                                                                </div>
-                                                            )}
-                                                        </div>
-                                                    ));
-                                                })()}
+                                                        ));
+                                                    })()
+                                                }
                                             </div>
                                         </div>
 
                                         {/* Closure Activity */}
                                         {result?.closure && (
-                                            <div className="p-8 bg-indigo-50/40 rounded-3xl border border-indigo-100 border-dashed relative overflow-hidden">
+                                            <div className="p-8 bg-indigo-50/40 rounded-3xl border border-indigo-100 border-dashed relative overflow-hidden mt-8">
                                                 <div className="absolute -right-4 -bottom-4 opacity-5">
                                                     <RotateCcw className="w-24 h-24 text-indigo-900" />
                                                 </div>
-                                                <h4 className="font-bold text-lg text-indigo-900 mb-4 flex items-center gap-3">
+                                                <div className="flex items-center gap-3 mb-4">
                                                     <div className="w-10 h-10 rounded-xl bg-indigo-600 flex items-center justify-center text-white shadow-lg shadow-indigo-100">
                                                         <RotateCcw className="w-5 h-5" />
                                                     </div>
-                                                    Closure & Reflection:
-                                                </h4>
+                                                    <h4 className="font-bold text-lg text-indigo-900">Closure & Reflection:</h4>
+                                                </div>
                                                 <div className="text-slate-700 leading-relaxed whitespace-pre-wrap text-sm font-bold italic pl-13">
                                                     {result.closure}
                                                 </div>
                                             </div>
                                         )}
-
-=======
-                                                {result?.activities && (typeof result.activities === 'string' ? JSON.parse(result.activities) : result.activities).map((act: any, i: number) => (
-                                                    <div key={i} className="p-5 bg-white rounded-2xl border border-slate-100 shadow-sm hover:border-indigo-100 transition-all group">
-                                                        <div className="flex items-start justify-between gap-4 mb-3">
-                                                            <div className="flex-1">
-                                                                <h5 className="font-black text-slate-900 leading-tight">
-                                                                    <span className="text-indigo-600 mr-2">{i + 1}.</span>
-                                                                    {act.task || act.description}
-                                                                </h5>
-                                                            </div>
-                                                            {act.time && (
-                                                                <span className="px-3 py-1 bg-slate-50 text-slate-500 text-[10px] font-black uppercase tracking-widest rounded-lg border border-slate-100">
-                                                                    {act.time}
-                                                                </span>
-                                                            )}
-                                                        </div>
-                                                        {(act.recap || act.tip) && (
-                                                            <div className="grid grid-cols-1 md:grid-cols-2 gap-3 mt-4 pt-4 border-t border-slate-50">
-                                                                {act.recap && (
-                                                                    <div className="p-3 bg-indigo-50/50 rounded-xl border border-indigo-50">
-                                                                        <span className="text-[10px] font-black uppercase text-indigo-400 block mb-1">Concept Recap</span>
-                                                                        <p className="text-xs text-indigo-900/70 font-medium leading-relaxed">{act.recap}</p>
-                                                                    </div>
-                                                                )}
-                                                                {act.tip && (
-                                                                    <div className="p-3 bg-emerald-50/50 rounded-xl border border-emerald-50">
-                                                                        <span className="text-[10px] font-black uppercase text-emerald-400 block mb-1">Teacher Tip</span>
-                                                                        <p className="text-xs text-emerald-900/70 font-medium leading-relaxed">{act.tip}</p>
-                                                                    </div>
-                                                                )}
-                                                            </div>
-                                                        )}
-                                                    </div>
-                                                ))}
-                                            </div>
-                                        </div>
-
->>>>>>> 0bb2feabc84b8ecbc85a0387fdd7621f67eec645
                                         {/* Teaching Strategies */}
-                                        {result?.teachingStrategies && result.teachingStrategies.length > 0 && (
-                                            <div>
-                                                <div className="flex items-center gap-2 mb-4">
-                                                    <div className="w-8 h-8 rounded-lg bg-indigo-50 flex items-center justify-center text-indigo-600">
-                                                        <Lightbulb className="w-4 h-4" />
+                                        {
+                                            result?.teachingStrategies && result.teachingStrategies.length > 0 && (
+                                                <div>
+                                                    <div className="flex items-center gap-2 mb-4">
+                                                        <div className="w-8 h-8 rounded-lg bg-indigo-50 flex items-center justify-center text-indigo-600">
+                                                            <Lightbulb className="w-4 h-4" />
+                                                        </div>
+                                                        <h4 className="font-bold text-lg text-slate-900">Teaching Strategies to Increase Student Engagement:</h4>
                                                     </div>
-                                                    <h4 className="font-bold text-lg text-slate-900">Teaching Strategies to Increase Student Engagement:</h4>
+                                                    <ul className="list-disc pl-5 space-y-2 marker:text-slate-400">
+                                                        {(Array.isArray(result.teachingStrategies) ? result.teachingStrategies : []).map((s: string, i: number) => (
+                                                            <li key={i} className="text-slate-700 leading-relaxed pl-2">{s}</li>
+                                                        ))}
+                                                    </ul>
                                                 </div>
-                                                <ul className="list-disc pl-5 space-y-2 marker:text-slate-400">
-                                                    {(Array.isArray(result.teachingStrategies) ? result.teachingStrategies : []).map((s: string, i: number) => (
-                                                        <li key={i} className="text-slate-700 leading-relaxed pl-2">{s}</li>
-                                                    ))}
-                                                </ul>
-                                            </div>
-                                        )}
+                                            )
+                                        }
 
-<<<<<<< HEAD
                                         {/* Assessment Breakdown */}
-                                        {result?.assessment ? (
-                                            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                                                <div className="p-6 bg-slate-50 rounded-2xl border border-slate-200">
-                                                    <h5 className="font-bold text-slate-900 mb-2 flex items-center gap-2">
-                                                        <Eye className="w-4 h-4 text-indigo-600" />
-                                                        Formative Assessment:
-                                                    </h5>
-                                                    <p className="text-sm text-slate-700 leading-relaxed font-medium">{result.assessment.formative}</p>
-                                                </div>
-                                                <div className="p-6 bg-slate-50 rounded-2xl border border-slate-200">
-                                                    <h5 className="font-bold text-slate-900 mb-2 flex items-center gap-2">
-                                                        <UserCheck className="w-4 h-4 text-emerald-600" />
-                                                        Individual Assessment:
-                                                    </h5>
-                                                    <p className="text-sm text-slate-700 leading-relaxed font-medium">{result.assessment.individual}</p>
-                                                </div>
-                                            </div>
-                                        ) : result?.assessmentMethods && result.assessmentMethods.length > 0 && (
-=======
-                                        {/* Assessment Methods */}
-                                        {result?.assessmentMethods && result.assessmentMethods.length > 0 && (
->>>>>>> 0bb2feabc84b8ecbc85a0387fdd7621f67eec645
-                                            <div>
-                                                <div className="flex items-center gap-2 mb-4">
-                                                    <div className="w-8 h-8 rounded-lg bg-indigo-50 flex items-center justify-center text-indigo-600">
-                                                        <ShieldCheck className="w-4 h-4" />
+                                        {
+                                            result?.assessment ? (
+                                                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-8">
+                                                    <div className="p-6 bg-slate-50 rounded-2xl border border-slate-200">
+                                                        <h5 className="font-bold text-slate-900 mb-2 flex items-center gap-2">
+                                                            <Eye className="w-4 h-4 text-indigo-600" />
+                                                            Formative Assessment:
+                                                        </h5>
+                                                        <p className="text-sm text-slate-700 leading-relaxed font-medium">{result.assessment.formative}</p>
                                                     </div>
-                                                    <h4 className="font-bold text-lg text-slate-900">Assessment Methods:</h4>
+                                                    <div className="p-6 bg-slate-50 rounded-2xl border border-slate-200">
+                                                        <h5 className="font-bold text-slate-900 mb-2 flex items-center gap-2">
+                                                            <UserCheck className="w-4 h-4 text-emerald-600" />
+                                                            Individual Assessment:
+                                                        </h5>
+                                                        <p className="text-sm text-slate-700 leading-relaxed font-medium">{result.assessment.individual}</p>
+                                                    </div>
                                                 </div>
-                                                <ul className="list-disc pl-5 space-y-2 marker:text-slate-400">
-                                                    {(Array.isArray(result.assessmentMethods) ? result.assessmentMethods : []).map((m: string, i: number) => (
-                                                        <li key={i} className="text-slate-700 leading-relaxed pl-2">{m}</li>
-                                                    ))}
-                                                </ul>
-                                            </div>
-                                        )}
+                                            ) : result?.assessmentMethods && result.assessmentMethods.length > 0 && (
+                                                <div>
+                                                    <div className="flex items-center gap-2 mb-4">
+                                                        <div className="w-8 h-8 rounded-lg bg-indigo-50 flex items-center justify-center text-indigo-600">
+                                                            <ShieldCheck className="w-4 h-4" />
+                                                        </div>
+                                                        <h4 className="font-bold text-lg text-slate-900">Assessment Methods:</h4>
+                                                    </div>
+                                                    <ul className="list-disc pl-5 space-y-2 marker:text-slate-400">
+                                                        {(Array.isArray(result.assessmentMethods) ? result.assessmentMethods : []).map((m: string, i: number) => (
+                                                            <li key={i} className="text-slate-700 leading-relaxed pl-2">{m}</li>
+                                                        ))}
+                                                    </ul>
+                                                </div>
+                                            )
+                                        }
 
                                         {/* Homework */}
-                                        {result?.homework && (
-                                            <div className="p-6 bg-slate-50 rounded-2xl border border-slate-200">
-                                                <h4 className="font-bold text-lg text-slate-900 mb-3 flex items-center gap-2">
-                                                    <BookOpen className="w-5 h-5 text-indigo-600" />
-                                                    Homework Assignment:
-                                                </h4>
-                                                <div className="text-slate-700 leading-relaxed whitespace-pre-wrap text-sm font-medium">
-                                                    {result.homework}
+                                        {
+                                            result?.homework && (
+                                                <div className="p-6 bg-slate-50 rounded-2xl border border-slate-200">
+                                                    <h4 className="font-bold text-lg text-slate-900 mb-3 flex items-center gap-2">
+                                                        <BookOpen className="w-5 h-5 text-indigo-600" />
+                                                        Homework Assignment:
+                                                    </h4>
+                                                    <div className="text-slate-700 leading-relaxed whitespace-pre-wrap text-sm font-medium">
+                                                        {result.homework}
+                                                    </div>
                                                 </div>
-                                            </div>
-                                        )}
+                                            )
+                                        }
 
                                         {/* Review Questions */}
-                                        {(result?.questions || result?.content?.questions) && (
-<<<<<<< HEAD
-                                            <div className="p-8 bg-[#84B179] rounded-3xl text-white shadow-xl shadow-emerald-100 relative overflow-hidden">
-=======
-                                            <div className="p-8 bg-[#1A3263] rounded-3xl text-white shadow-xl shadow-indigo-100 relative overflow-hidden">
->>>>>>> 0bb2feabc84b8ecbc85a0387fdd7621f67eec645
-                                                <div className="absolute top-0 right-0 p-6 opacity-10">
-                                                    <HelpCircle className="w-20 h-20" />
-                                                </div>
-                                                <h4 className="text-white/70 font-black uppercase tracking-[0.2em] text-[10px] mb-6 flex items-center gap-2">
-                                                    <span className="w-1.5 h-1.5 rounded-full bg-indigo-400" />
-                                                    Review & Evaluation
-                                                </h4>
-                                                <div className="space-y-6">
-                                                    {(Array.isArray(result?.questions || result?.content?.questions) ? (result?.questions || result?.content?.questions) : []).map((q: any, i: number) => (
-                                                        <div key={i} className="flex gap-4">
-                                                            <span className="text-indigo-400 font-black">Q{i + 1}.</span>
-                                                            <div className="flex-1">
-                                                                <p className="font-bold text-lg leading-relaxed">{typeof q === 'string' ? q : (q.question || q.text)}</p>
-                                                                {q.options && (
-                                                                    <div className="grid grid-cols-1 md:grid-cols-2 gap-2 mt-3">
-                                                                        {q.options.map((opt: string, idx: number) => (
-                                                                            <div key={idx} className="text-sm bg-white/10 p-2 rounded-lg border border-white/5">
-                                                                                {String.fromCharCode(65 + idx)}. {opt}
-                                                                            </div>
-                                                                        ))}
-                                                                    </div>
-                                                                )}
+                                        {
+                                            (result?.questions || result?.content?.questions) && (
+                                                <div className="p-8 bg-[#0D5355] rounded-3xl text-white shadow-xl shadow-teal-100 relative overflow-hidden mb-8">
+                                                    <div className="absolute top-0 right-0 p-6 opacity-10">
+                                                        <HelpCircle className="w-20 h-20" />
+                                                    </div>
+                                                    <h4 className="text-white/70 font-black uppercase tracking-[0.2em] text-[10px] mb-6 flex items-center gap-2">
+                                                        <span className="w-1.5 h-1.5 rounded-full bg-teal-400" />
+                                                        Review & Evaluation
+                                                    </h4>
+                                                    <div className="space-y-6">
+                                                        {(Array.isArray(result?.questions || result?.content?.questions) ? (result?.questions || result?.content?.questions) : []).map((q: any, i: number) => (
+                                                            <div key={i} className="flex gap-4">
+                                                                <span className="text-teal-400 font-black">Q{i + 1}.</span>
+                                                                <div className="flex-1">
+                                                                    <p className="font-bold text-lg leading-relaxed">{typeof q === 'string' ? q : (q.question || q.text)}</p>
+                                                                    {q.options && (
+                                                                        <div className="grid grid-cols-1 md:grid-cols-2 gap-2 mt-3">
+                                                                            {q.options.map((opt: string, idx: number) => (
+                                                                                <div key={idx} className="text-sm bg-white/10 p-2 rounded-lg border border-white/5">
+                                                                                    {String.fromCharCode(65 + idx)}. {opt}
+                                                                                </div>
+                                                                            ))}
+                                                                        </div>
+                                                                    )}
+                                                                </div>
                                                             </div>
-                                                        </div>
-                                                    ))}
+                                                        ))}
+                                                    </div>
                                                 </div>
-                                            </div>
-                                        )}
+                                            )
+                                        }
 
                                         {/* Differentiation */}
-                                        {result?.differentiation && (
-<<<<<<< HEAD
-                                            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                                                <div className="p-6 bg-emerald-50 rounded-2xl border border-emerald-100">
-                                                    <h5 className="font-bold text-emerald-900 mb-2 flex items-center gap-2">
-                                                        <Sparkles className="w-4 h-4" />
-                                                        Advanced:
-                                                    </h5>
-                                                    <p className="text-xs text-emerald-800 leading-relaxed font-medium">{result.differentiation.advanced}</p>
-=======
-                                            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                                                <div className="p-6 bg-emerald-50 rounded-2xl border border-emerald-100">
-                                                    <h5 className="font-bold text-emerald-900 mb-2 flex items-center gap-2">
-                                                        <Sparkles className="w-4 h-4" />
-                                                        For Advanced Learners:
-                                                    </h5>
-                                                    <p className="text-sm text-emerald-800 leading-relaxed">{result.differentiation.advanced}</p>
->>>>>>> 0bb2feabc84b8ecbc85a0387fdd7621f67eec645
-                                                </div>
-                                                <div className="p-6 bg-amber-50 rounded-2xl border border-amber-100">
-                                                    <h5 className="font-bold text-amber-900 mb-2 flex items-center gap-2">
-                                                        <Settings2 className="w-4 h-4" />
-<<<<<<< HEAD
-                                                        Struggling:
-                                                    </h5>
-                                                    <p className="text-xs text-amber-800 leading-relaxed font-medium">{result.differentiation.struggling}</p>
-                                                </div>
-                                                {result.differentiation.ell && (
-                                                    <div className="p-6 bg-blue-50 rounded-2xl border border-blue-100">
-                                                        <h5 className="font-bold text-blue-900 mb-2 flex items-center gap-2">
-                                                            <Languages className="w-4 h-4" />
-                                                            ELL Support:
+                                        {
+                                            result?.differentiation && (
+                                                <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-8">
+                                                    <div className="p-6 bg-emerald-50 rounded-2xl border border-emerald-100">
+                                                        <h5 className="font-bold text-emerald-900 mb-2 flex items-center gap-2">
+                                                            <Sparkles className="w-4 h-4" />
+                                                            Advanced:
                                                         </h5>
-                                                        <p className="text-xs text-blue-800 leading-relaxed font-medium">{result.differentiation.ell}</p>
+                                                        <p className="text-xs text-emerald-800 leading-relaxed font-medium">{result.differentiation.advanced}</p>
                                                     </div>
-                                                )}
-=======
-                                                        For Struggling Learners:
-                                                    </h5>
-                                                    <p className="text-sm text-amber-800 leading-relaxed">{result.differentiation.struggling}</p>
-                                                </div>
->>>>>>> 0bb2feabc84b8ecbc85a0387fdd7621f67eec645
-                                            </div>
-                                        )}
-
-                                        {/* Estimated Time Breakdown */}
-                                        {result?.estimatedTime && result.estimatedTime.length > 0 && (
-                                            <div>
-                                                <h4 className="font-bold text-lg mb-4 text-slate-900">Time Allocation:</h4>
-                                                <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-                                                    {(Array.isArray(result.estimatedTime) ? result.estimatedTime : []).map((item: any, i: number) => (
-                                                        <div key={i} className="p-4 bg-white rounded-2xl border border-slate-100 text-center">
-                                                            <span className="block text-[10px] font-black uppercase text-slate-400 mb-1">{item.section}</span>
-                                                            <span className="text-sm font-bold text-indigo-600">{item.time}</span>
-                                                        </div>
-                                                    ))}
-                                                </div>
-                                            </div>
-                                        )}
-
-                                        {/* Reference URL */}
-                                        {result?.referenceUrl && (
-                                            <div className="relative group/ref">
-                                                <div className="flex items-center justify-between mb-4">
-                                                    <div className="flex items-center gap-2">
-                                                        <div className="w-8 h-8 rounded-lg bg-red-50 flex items-center justify-center text-red-600 border border-red-100 shadow-sm">
-                                                            <Youtube className="w-4 h-4" />
-                                                        </div>
-                                                        <h4 className="font-bold text-lg text-slate-900">Recommended Videos for "{result?.title?.replace('Lesson: ', '') || topic}":</h4>
+                                                    <div className="p-6 bg-amber-50 rounded-2xl border border-amber-100">
+                                                        <h5 className="font-bold text-amber-900 mb-2 flex items-center gap-2">
+                                                            <Settings2 className="w-4 h-4" />
+                                                            Struggling:
+                                                        </h5>
+                                                        <p className="text-xs text-amber-800 leading-relaxed font-medium">{result.differentiation.struggling}</p>
                                                     </div>
-                                                    {!isEditingLink && (
-                                                        <Button
-                                                            variant="ghost"
-                                                            size="sm"
-                                                            onClick={() => {
-                                                                const currentLink = result.referenceUrl;
-                                                                if (typeof currentLink === 'string') {
-                                                                    setTempLink({ title: "Video Resource", url: currentLink });
-                                                                } else if (typeof currentLink === 'object') {
-                                                                    setTempLink({ title: currentLink.title || "Video Resource", url: currentLink.url || "" });
-                                                                } else {
-                                                                    setTempLink({ title: "", url: "" });
-                                                                }
-                                                                setIsEditingLink(true);
-                                                            }}
-                                                            className="text-slate-400 hover:text-indigo-600 h-8 w-8 p-0"
-                                                        >
-                                                            <Edit3 className="w-4 h-4" />
-                                                        </Button>
+                                                    {result.differentiation.ell && (
+                                                        <div className="p-6 bg-blue-50 rounded-2xl border border-blue-100">
+                                                            <h5 className="font-bold text-blue-900 mb-2 flex items-center gap-2">
+                                                                <Languages className="w-4 h-4" />
+                                                                ELL Support:
+                                                            </h5>
+                                                            <p className="text-xs text-blue-800 leading-relaxed font-medium">{result.differentiation.ell}</p>
+                                                        </div>
                                                     )}
                                                 </div>
+                                            )
+                                        }
 
-                                                {isEditingLink ? (
-                                                    <div className="flex flex-col gap-3 p-6 bg-slate-50 border border-indigo-100 rounded-3xl mb-4">
-                                                        <input
-                                                            value={tempLink.title}
-                                                            onChange={(e) => setTempLink({ ...tempLink, title: e.target.value })}
-                                                            placeholder="Video Title"
-                                                            className="flex h-12 w-full rounded-xl border border-slate-200 bg-white px-4 py-2 text-sm font-bold placeholder:text-slate-400 focus:outline-none focus:ring-2 ring-indigo-500/10"
-                                                        />
-                                                        <div className="flex gap-2">
-                                                            <input
-                                                                value={tempLink.url}
-                                                                onChange={(e) => setTempLink({ ...tempLink, url: e.target.value })}
-                                                                placeholder="YouTube URL"
-                                                                className="flex h-12 flex-1 rounded-xl border border-slate-200 bg-white px-4 py-2 text-sm font-bold placeholder:text-slate-400 focus:outline-none focus:ring-2 ring-indigo-500/10"
-                                                            />
-                                                            <Button
-                                                                onClick={() => {
-                                                                    setResult({ ...result, referenceUrl: tempLink });
-                                                                    setIsEditingLink(false);
-                                                                }}
-                                                                className="h-12 w-12 rounded-xl bg-indigo-600 text-white"
-                                                            >
-                                                                <Check className="w-4 h-4" />
-                                                            </Button>
+                                        {/* Estimated Time Breakdown */}
+                                        {
+                                            result?.estimatedTime && result.estimatedTime.length > 0 && (
+                                                <div>
+                                                    <h4 className="font-bold text-lg mb-4 text-slate-900">Time Allocation:</h4>
+                                                    <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+                                                        {(Array.isArray(result.estimatedTime) ? result.estimatedTime : []).map((item: any, i: number) => (
+                                                            <div key={i} className="p-4 bg-white rounded-2xl border border-slate-100 text-center">
+                                                                <span className="block text-[10px] font-black uppercase text-slate-400 mb-1">{item.section}</span>
+                                                                <span className="text-sm font-bold text-indigo-600">{item.time}</span>
+                                                            </div>
+                                                        ))}
+                                                    </div>
+                                                </div>
+                                            )
+                                        }
+
+                                        {/* Reference URL */}
+                                        {
+                                            result?.referenceUrl && (
+                                                <div className="relative group/ref">
+                                                    <div className="flex items-center justify-between mb-4">
+                                                        <div className="flex items-center gap-2">
+                                                            <div className="w-8 h-8 rounded-lg bg-red-50 flex items-center justify-center text-red-600 border border-red-100 shadow-sm">
+                                                                <Youtube className="w-4 h-4" />
+                                                            </div>
+                                                            <h4 className="font-bold text-lg text-slate-900">Recommended Videos for "{result?.title?.replace('Lesson: ', '') || topic}":</h4>
+                                                        </div>
+                                                        {!isEditingLink && (
                                                             <Button
                                                                 variant="ghost"
-                                                                onClick={() => setIsEditingLink(false)}
-                                                                className="h-12 w-12 rounded-xl text-slate-400 hover:text-rose-600"
+                                                                size="sm"
+                                                                onClick={() => {
+                                                                    const currentLink = result.referenceUrl;
+                                                                    if (typeof currentLink === 'string') {
+                                                                        setTempLink({ title: "Video Resource", url: currentLink });
+                                                                    } else if (typeof currentLink === 'object') {
+                                                                        setTempLink({ title: currentLink.title || "Video Resource", url: currentLink.url || "" });
+                                                                    } else {
+                                                                        setTempLink({ title: "", url: "" });
+                                                                    }
+                                                                    setIsEditingLink(true);
+                                                                }}
+                                                                className="text-slate-400 hover:text-indigo-600 h-8 w-8 p-0"
                                                             >
-                                                                <X className="w-4 h-4" />
+                                                                <Edit3 className="w-4 h-4" />
                                                             </Button>
-                                                        </div>
+                                                        )}
                                                     </div>
-                                                ) : (
-                                                    <div className="p-6 bg-white rounded-3xl border border-slate-100 shadow-sm flex flex-col md:flex-row items-start md:items-center justify-between gap-6 hover:shadow-md transition-all">
-                                                        <div className="flex-1">
-                                                            <div className="flex items-center gap-2 mb-1">
-                                                                <Youtube className="w-4 h-4 text-red-600" />
-                                                                <h5 className="font-bold text-slate-900">
-                                                                    YouTube Video Search
-                                                                </h5>
+
+                                                    {isEditingLink ? (
+                                                        <div className="flex flex-col gap-3 p-6 bg-slate-50 border border-indigo-100 rounded-3xl mb-4">
+                                                            <input
+                                                                value={tempLink.title}
+                                                                onChange={(e) => setTempLink({ ...tempLink, title: e.target.value })}
+                                                                placeholder="Video Title"
+                                                                className="flex h-12 w-full rounded-xl border border-slate-200 bg-white px-4 py-2 text-sm font-bold placeholder:text-slate-400 focus:outline-none focus:ring-2 ring-indigo-500/10"
+                                                            />
+                                                            <div className="flex gap-2">
+                                                                <input
+                                                                    value={tempLink.url}
+                                                                    onChange={(e) => setTempLink({ ...tempLink, url: e.target.value })}
+                                                                    placeholder="YouTube URL"
+                                                                    className="flex h-12 flex-1 rounded-xl border border-slate-200 bg-white px-4 py-2 text-sm font-bold placeholder:text-slate-400 focus:outline-none focus:ring-2 ring-indigo-500/10"
+                                                                />
+                                                                <Button
+                                                                    onClick={() => {
+                                                                        setResult({ ...result, referenceUrl: tempLink });
+                                                                        setIsEditingLink(false);
+                                                                    }}
+                                                                    className="h-12 w-12 rounded-xl bg-indigo-600 text-white"
+                                                                >
+                                                                    <Check className="w-4 h-4" />
+                                                                </Button>
+                                                                <Button
+                                                                    variant="ghost"
+                                                                    onClick={() => setIsEditingLink(false)}
+                                                                    className="h-12 w-12 rounded-xl text-slate-400 hover:text-rose-600"
+                                                                >
+                                                                    <X className="w-4 h-4" />
+                                                                </Button>
                                                             </div>
-                                                            <p className="text-sm text-slate-500 font-medium">
-                                                                Find curated videos for: <span className="text-indigo-600 font-bold">"{result.videoSearchQuery || topic}"</span>
-                                                            </p>
                                                         </div>
-                                                        <a
-                                                            href={`https://www.youtube.com/results?search_query=${encodeURIComponent(result.videoSearchQuery || topic + ' lesson for grade ' + grade)}`}
-                                                            target="_blank"
-                                                            rel="noopener noreferrer"
-                                                            className="w-full md:w-auto inline-flex items-center justify-center gap-2 px-6 py-3 bg-red-50 text-red-600 hover:bg-red-600 hover:text-white rounded-xl font-black text-xs uppercase tracking-[0.2em] transition-all shadow-sm active:scale-95"
-                                                        >
-                                                            <Youtube className="w-4 h-4" /> Open Search
-                                                        </a >
-                                                    </div >
-                                                )}
+                                                    ) : (
+                                                        <div className="p-6 bg-white rounded-3xl border border-slate-100 shadow-sm flex flex-col md:flex-row items-start md:items-center justify-between gap-6 hover:shadow-md transition-all">
+                                                            <div className="flex-1">
+                                                                <div className="flex items-center gap-2 mb-1">
+                                                                    <Youtube className="w-4 h-4 text-red-600" />
+                                                                    <h5 className="font-bold text-slate-900">
+                                                                        YouTube Video Search
+                                                                    </h5>
+                                                                </div>
+                                                                <p className="text-sm text-slate-500 font-medium">
+                                                                    Find curated videos for: <span className="text-indigo-600 font-bold">"{result.videoSearchQuery || topic}"</span>
+                                                                </p>
+                                                            </div>
+                                                            <a
+                                                                href={`https://www.youtube.com/results?search_query=${encodeURIComponent(result.videoSearchQuery || topic + ' lesson for grade ' + grade)}`}
+                                                                target="_blank"
+                                                                rel="noopener noreferrer"
+                                                                className="w-full md:w-auto inline-flex items-center justify-center gap-2 px-6 py-3 bg-red-50 text-red-600 hover:bg-red-600 hover:text-white rounded-xl font-black text-xs uppercase tracking-[0.2em] transition-all shadow-sm active:scale-95"
+                                                            >
+                                                                <Youtube className="w-4 h-4" /> Open Search
+                                                            </a >
+                                                        </div >
+                                                    )}
 
-                                                {/* YouTube Embed - Only show for direct video links */}
-                                                {
-                                                    !isEditingLink && typeof result.referenceUrl === 'object' && result.referenceUrl.url && !result.referenceUrl.url.includes('results?search_query') && (
-                                                        (() => {
-                                                            const url = result.referenceUrl.url;
-                                                            const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/;
-                                                            const match = url.match(regExp);
-                                                            const embedId = (match && match[2].length === 11) ? match[2] : null;
+                                                    {/* YouTube Embed - Only show for direct video links */}
+                                                    {
+                                                        !isEditingLink && typeof result.referenceUrl === 'object' && result.referenceUrl.url && !result.referenceUrl.url.includes('results?search_query') && (
+                                                            (() => {
+                                                                const url = result.referenceUrl.url;
+                                                                const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/;
+                                                                const match = url.match(regExp);
+                                                                const embedId = (match && match[2].length === 11) ? match[2] : null;
 
-                                                            if (embedId) {
-                                                                return (
-                                                                    <div className="mt-6 aspect-video rounded-3xl overflow-hidden border border-slate-200 shadow-lg bg-slate-900">
-                                                                        <iframe
-                                                                            width="100%"
-                                                                            height="100%"
-                                                                            src={`https://www.youtube.com/embed/${embedId}`}
-                                                                            title="YouTube video player"
-                                                                            frameBorder="0"
-                                                                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                                                                            allowFullScreen
-                                                                        />
-                                                                    </div>
-                                                                );
-                                                            }
-                                                            return null;
-                                                        })()
-                                                    )
-                                                }
+                                                                if (embedId) {
+                                                                    return (
+                                                                        <div className="mt-6 aspect-video rounded-3xl overflow-hidden border border-slate-200 shadow-lg bg-slate-900">
+                                                                            <iframe
+                                                                                width="100%"
+                                                                                height="100%"
+                                                                                src={`https://www.youtube.com/embed/${embedId}`}
+                                                                                title="YouTube video player"
+                                                                                frameBorder="0"
+                                                                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                                                                allowFullScreen
+                                                                            />
+                                                                        </div>
+                                                                    );
+                                                                }
+                                                                return null;
+                                                            })()
+                                                        )
+                                                    }
 
-                                                <p className="text-slate-400 text-[10px] mt-4 italic px-2 flex items-center gap-2">
-                                                    <Search className="w-3 h-3" />
-                                                    Note: This will open a YouTube search for the most relevant and high-quality educational videos on this topic.
-                                                </p>
-                                            </div >
-                                        )}
+                                                    <p className="text-slate-400 text-[10px] mt-4 italic px-2 flex items-center gap-2">
+                                                        <Search className="w-3 h-3" />
+                                                        Note: This will open a YouTube search for the most relevant and high-quality educational videos on this topic.
+                                                    </p>
+                                                </div >
+                                            )
+                                        }
 
                                         {/* Motivational Quote */}
                                         {
@@ -1851,20 +1782,14 @@ window.onload = function() {
                                                                             className={`group flex items-center justify-between p-4 rounded-2xl border text-base font-bold transition-all text-left ${variantClass}`}
                                                                         >
                                                                             <span className="flex items-center gap-3">
-                                                                                <span className={`w-6 h-6 rounded-lg flex items-center justify-center text-[10px] border transition-colors ${isSelected ? 'bg-white border-transparent' : 'bg-white border-slate-200 group-hover:border-slate-300'
-                                                                                    }`}>
+                                                                                <span className={`w-6 h-6 rounded-lg flex items-center justify-center text-[10px] border transition-colors ${isSelected ? 'bg-white border-transparent' : 'bg-white border-slate-200 group-hover:border-slate-300'}`}>
                                                                                     {String.fromCharCode(65 + j)}
                                                                                 </span>
                                                                                 {opt}
                                                                             </span>
-
                                                                             {isAnswered && (
                                                                                 isCorrect ? <CheckCircle2 className="w-5 h-5 text-emerald-500" /> :
-<<<<<<< HEAD
-                                                                                    (isSelected ? <div className="w-5 h-5 rounded-full bg-rose-500 flex items-center justify-center text-white text-[10px]">?</div> : null)
-=======
                                                                                     (isSelected ? <div className="w-5 h-5 rounded-full bg-rose-500 flex items-center justify-center text-white text-[10px]">✕</div> : null)
->>>>>>> 0bb2feabc84b8ecbc85a0387fdd7621f67eec645
                                                                             )}
                                                                         </button>
                                                                     );
@@ -1886,12 +1811,11 @@ window.onload = function() {
                                                         </div>
                                                     </div>
                                                 </div>
-                                            );
+                                            )
                                         })}
                                     </div>
                                 ) : mode === 'material' ? (
                                     <div className="flex flex-col gap-6">
-                                        {/* Pagination Header */}
                                         <div className="flex items-center justify-between bg-white p-4 rounded-2xl border border-slate-200 shadow-sm">
                                             <div className="flex items-center gap-4">
                                                 <Button
@@ -1911,11 +1835,7 @@ window.onload = function() {
                                                     Page 2: Review
                                                 </Button>
                                             </div>
-                                            <div className="text-[10px] font-black uppercase tracking-widest text-slate-400">
-                                                Textbook View • {currentPage} of 2
-                                            </div>
                                         </div>
-
                                         <AnimatePresence mode="wait">
                                             {currentPage === 1 ? (
                                                 <motion.div
@@ -1925,156 +1845,23 @@ window.onload = function() {
                                                     exit={{ opacity: 0, x: 20 }}
                                                     className="flex flex-col bg-[#FAF9F6] rounded-[2.5rem] overflow-hidden border border-slate-200"
                                                 >
-                                                    {/* Result Header */}
-                                                    <div className="p-10 border-b border-slate-200 bg-white flex items-start justify-between relative overflow-hidden">
-                                                        <div className="absolute top-0 right-0 w-64 h-64 bg-indigo-50/50 rounded-full -translate-y-1/2 translate-x-1/2 blur-3xl pointer-events-none" />
-
-                                                        <div className="flex items-start gap-8 relative z-10 w-full">
-                                                            <div className="flex flex-col items-center gap-2">
-                                                                <span className="text-[10px] font-black text-indigo-400 uppercase tracking-widest leading-none">Lesson</span>
-                                                                <div className="w-20 h-20 rounded-full bg-[#1A3263] flex items-center justify-center text-white text-4xl font-black shadow-xl shadow-indigo-100 shrink-0">
-                                                                    {result?.chapterNumber || "1"}
+                                                    <div className="p-10 border-b border-slate-200 bg-white flex-1">
+                                                        <div className="prose prose-slate max-w-none">
+                                                            <ReactMarkdown>{result?.intro || ""}</ReactMarkdown>
+                                                            {result?.pedagogy && (
+                                                                <div className="mt-8 p-6 bg-indigo-50 rounded-2xl border border-indigo-100 italic font-medium">
+                                                                    {result.pedagogy}
                                                                 </div>
-                                                            </div>
-                                                            <div className="flex-1">
-                                                                <h1 className="text-4xl font-black text-[#1A3263] mb-4 tracking-tight leading-tight">
-                                                                    {result?.title}
-                                                                </h1>
-                                                                <div className="flex items-center gap-3">
-                                                                    <span className="px-3 py-1 bg-indigo-50 text-indigo-600 text-[10px] font-black uppercase tracking-widest rounded-full">
-                                                                        Lesson {result?.chapterNumber || "1"}
-                                                                    </span>
-                                                                    <span className="text-slate-300 font-light px-2">|</span>
-                                                                    <span className="text-slate-500 text-sm font-semibold italic">
-                                                                        {result?.footer || `${subject} | Grade ${grade}`}
-                                                                    </span>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-
-                                                    {/* Body Content */}
-                                                    <div className="p-10 lg:p-12 grid grid-cols-1 lg:grid-cols-12 gap-10">
-                                                        {/* Main Content Column */}
-                                                        <div className="lg:col-span-8 space-y-10">
-                                                            {/* Introduction */}
-                                                            <div className="relative">
-                                                                <p className="text-xl font-medium text-slate-800 leading-relaxed first-letter:text-5xl first-letter:font-black first-letter:mr-3 first-letter:float-left first-letter:text-indigo-600 first-letter:mt-1">
-                                                                    {result?.intro}
-                                                                </p>
-                                                            </div>
-
-                                                            {/* Sections */}
-                                                            <div className="space-y-12">
-                                                                {result?.sections?.map((section: any, idx: number) => (
-                                                                    <motion.div
-                                                                        key={idx}
-                                                                        initial={{ opacity: 0, y: 10 }}
-                                                                        animate={{ opacity: 1, y: 0 }}
-                                                                        transition={{ delay: idx * 0.1 }}
-                                                                        className="space-y-4"
-                                                                    >
-                                                                        <h3 className="text-2xl font-black text-slate-900 flex items-center gap-3">
-                                                                            <div className="w-1.5 h-8 bg-indigo-600 rounded-full" />
-                                                                            {section.heading}
-                                                                        </h3>
-                                                                        <p className="text-slate-700 leading-relaxed font-medium">
-                                                                            {section.content}
-                                                                        </p>
-                                                                        <ul className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-6">
-                                                                            {section.bulletPoints?.map((point: string, pIdx: number) => (
-                                                                                <li key={pIdx} className="flex items-start gap-4 p-4 rounded-2xl bg-white border border-slate-100 shadow-sm hover:shadow-md transition-shadow group">
-                                                                                    <div className="w-6 h-6 rounded-lg bg-indigo-50 flex items-center justify-center shrink-0 group-hover:bg-indigo-600 transition-colors">
-                                                                                        <span className="w-1.5 h-1.5 rounded-full bg-indigo-600 group-hover:bg-white" />
-                                                                                    </div>
-                                                                                    <span className="text-sm font-semibold text-slate-700 leading-snug">{point}</span>
-                                                                                </li>
-                                                                            ))}
-                                                                        </ul>
-                                                                    </motion.div>
+                                                            )}
+                                                            <div className="mt-8 space-y-6">
+                                                                {result?.sections?.map((s: any, idx: number) => (
+                                                                    <div key={idx} className="pb-8 border-b border-slate-100 last:border-none">
+                                                                        <h3 className="text-xl font-black text-slate-800 mb-4">{s.heading}</h3>
+                                                                        <div className="text-slate-600 leading-relaxed">{s.content}</div>
+                                                                    </div>
                                                                 ))}
                                                             </div>
                                                         </div>
-
-                                                        {/* Sidebar Column */}
-                                                        <div className="lg:col-span-4 space-y-8">
-                                                            {/* In This Chapter Box */}
-                                                            <div className="bg-indigo-50 p-8 rounded-[2.5rem] border-2 border-dashed border-indigo-200 relative overflow-hidden">
-                                                                <div className="absolute top-0 right-0 p-4 opacity-10">
-                                                                    <BookOpen className="w-12 h-12 text-indigo-600" />
-                                                                </div>
-                                                                <h4 className="text-indigo-900 font-black uppercase tracking-widest text-xs mb-6 flex items-center gap-2">
-                                                                    <span className="w-2 h-2 rounded-full bg-indigo-600" />
-                                                                    In This Lesson
-                                                                </h4>
-                                                                <ul className="space-y-4">
-                                                                    {result?.learningObjectives?.map((obj: string, i: number) => (
-                                                                        <li key={i} className="flex gap-3 text-sm font-bold text-indigo-900/70">
-                                                                            <ChevronRight className="w-4 h-4 text-indigo-400 shrink-0 mt-0.5" />
-                                                                            {obj}
-                                                                        </li>
-                                                                    ))}
-                                                                </ul>
-                                                            </div>
-
-                                                            {/* Illustration Area */}
-                                                            <div className="aspect-square bg-white rounded-[2.5rem] border border-slate-100 shadow-xl shadow-indigo-50 flex flex-col items-center justify-center p-4 text-center gap-4 group cursor-help transition-all hover:scale-[1.02] relative overflow-hidden">
-                                                                {generatedImage ? (
-                                                                    <div className="w-full h-full flex flex-col items-center justify-center relative">
-                                                                        <img
-                                                                            src={generatedImage}
-                                                                            alt="Topic Illustration"
-                                                                            className="w-full h-full object-contain rounded-3xl"
-                                                                            onError={(e) => {
-                                                                                (e.target as HTMLImageElement).src = "https://images.unsplash.com/photo-1546410531-bb4caa6b424d?auto=format&fit=crop&w=1600&q=80";
-                                                                            }}
-                                                                        />
-                                                                        <div className="absolute bottom-4 left-0 right-0 opacity-0 group-hover:opacity-100 transition-all">
-                                                                            <span className="bg-white/90 backdrop-blur-sm px-4 py-1.5 rounded-full shadow-lg border border-indigo-100 text-[10px] font-black uppercase tracking-widest text-indigo-600">
-                                                                                AI Generated Diagram
-                                                                            </span>
-                                                                        </div>
-                                                                    </div>
-                                                                ) : result?.title?.toLowerCase().includes('human body') ||
-                                                                    result?.illustrationDescription?.toLowerCase().includes('human body') ||
-                                                                    result?.illustrationDescription?.toLowerCase().includes('anatomy') ||
-                                                                    result?.illustrationDescription?.toLowerCase().includes('internal parts') ? (
-                                                                    <div className="w-full h-full flex flex-col items-center justify-center p-4">
-                                                                        <img
-                                                                            src="/human-body-diagram.png"
-                                                                            alt="Human Body Diagram"
-                                                                            className="w-full h-full object-contain rounded-3xl"
-                                                                        />
-                                                                        <div className="absolute bottom-4 left-0 right-0">
-                                                                            <span className="bg-white/90 backdrop-blur-sm px-4 py-1.5 rounded-full shadow-lg border border-indigo-100 text-[10px] font-black uppercase tracking-widest text-indigo-600">
-                                                                                Visual Study Guide
-                                                                            </span>
-                                                                        </div>
-                                                                    </div>
-                                                                ) : (
-                                                                    <>
-                                                                        <div className="w-20 h-20 rounded-3xl bg-slate-50 flex items-center justify-center group-hover:bg-indigo-50 transition-colors">
-                                                                            <Presentation className="w-10 h-10 text-slate-300 group-hover:text-indigo-400 transition-colors" />
-                                                                        </div>
-                                                                        <div>
-                                                                            <p className="text-[10px] font-black uppercase tracking-widest text-slate-400 mb-1">Visual Study Guide</p>
-                                                                            <p className="text-xs font-semibold text-slate-500 italic px-4 leading-relaxed">
-                                                                                {result?.illustrationDescription || "Detailed diagram for " + result?.title}
-                                                                            </p>
-                                                                        </div>
-                                                                    </>
-                                                                )}
-                                                            </div>
-                                                        </div>
-                                                    </div>
-
-                                                    <div className="p-8 bg-white border-t border-slate-100 flex items-center justify-center">
-                                                        <Button
-                                                            onClick={() => setCurrentPage(2)}
-                                                            className="rounded-xl h-12 px-8 font-black bg-[#1A3263] hover:bg-[#2A4273] text-white uppercase tracking-[0.2em] shadow-lg shadow-indigo-100"
-                                                        >
-                                                            Go to Review Page <ChevronRight className="w-5 h-5 ml-2" />
-                                                        </Button>
                                                     </div>
                                                 </motion.div>
                                             ) : (
@@ -2083,103 +1870,15 @@ window.onload = function() {
                                                     initial={{ opacity: 0, x: 20 }}
                                                     animate={{ opacity: 1, x: 0 }}
                                                     exit={{ opacity: 0, x: -20 }}
-                                                    className="flex flex-col bg-white rounded-[2.5rem] overflow-hidden border border-slate-200 min-h-[600px]"
+                                                    className="flex flex-col bg-white rounded-[2.5rem] overflow-hidden border border-slate-200 p-10"
                                                 >
-                                                    {/* Page 2 Header */}
-                                                    <div className="p-10 border-b border-slate-100 bg-emerald-50/30 flex items-center justify-between">
-                                                        <div>
-                                                            <h2 className="text-3xl font-black text-[#064E3B] mb-2 tracking-tight">Review & Mastery</h2>
-                                                            <p className="text-emerald-700/60 font-medium">Concept check for {result?.title}</p>
-                                                        </div>
-                                                        <div className="w-16 h-16 rounded-3xl bg-emerald-600 flex items-center justify-center text-white shadow-xl shadow-emerald-100">
-                                                            <CheckCircle2 className="w-8 h-8" />
-                                                        </div>
-                                                    </div>
-
-                                                    <div className="p-10 lg:p-14 flex-1 space-y-10">
-                                                        {/* Section 1: Preparation Tips (Suggestion Points) */}
-                                                        {result?.preparationTips && (
-                                                            <div className="grid grid-cols-1 lg:grid-cols-12 gap-10">
-                                                                <div className="lg:col-span-12">
-                                                                    <div className="p-10 bg-[#569F9C] rounded-[3rem] text-white relative overflow-hidden shadow-2xl shadow-teal-100 group">
-                                                                        <div className="absolute top-0 right-0 p-8 opacity-20 group-hover:scale-110 transition-transform">
-                                                                            <Lightbulb className="w-32 h-32 text-white/30" />
-                                                                        </div>
-                                                                        <div className="relative z-10">
-                                                                            <h4 className="text-white/70 font-black uppercase tracking-[0.2em] text-[10px] mb-4">Preparation Tips & Suggestions</h4>
-                                                                            <h3 className="text-3xl font-black mb-10 leading-tight">How to Master this Lesson</h3>
-
-                                                                            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-                                                                                {result?.preparationTips?.map((tip: string, i: number) => (
-                                                                                    <div key={i} className="bg-white/10 backdrop-blur-md p-6 rounded-3xl border border-white/10 hover:bg-white/20 transition-all group/tip">
-                                                                                        <div className="w-10 h-10 rounded-2xl bg-white/20 flex items-center justify-center text-white font-black mb-4 group-hover/tip:scale-110 transition-transform">
-                                                                                            {i + 1}
-                                                                                        </div>
-                                                                                        <p className="text-white font-bold leading-relaxed">{tip}</p>
-                                                                                    </div>
-                                                                                ))}
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
+                                                    <h2 className="text-3xl font-black text-[#1A3263] mb-6">Review Questions</h2>
+                                                    <div className="space-y-6">
+                                                        {result?.reviewQuestions?.map((q: string, i: number) => (
+                                                            <div key={i} className="p-6 bg-slate-50 rounded-2xl border border-slate-100">
+                                                                <span className="font-black text-indigo-600 mr-2">{i + 1}.</span> {q}
                                                             </div>
-                                                        )}
-
-                                                        {/* Section 2: Lesson Reflection */}
-                                                        <div className="p-10 rounded-[3rem] bg-[#FFFBEB] border border-[#FEF3C7] relative overflow-hidden">
-                                                            <div className="absolute -left-4 -top-4 opacity-[0.03]">
-                                                                <Brain className="w-40 h-40 text-indigo-900" />
-                                                            </div>
-                                                            <div className="relative z-10 flex items-center gap-8">
-                                                                <div className="w-16 h-16 rounded-3xl bg-indigo-600 flex items-center justify-center text-white shadow-lg shrink-0">
-                                                                    <MessageSquare className="w-8 h-8" />
-                                                                </div>
-                                                                <div className="flex-1">
-                                                                    <h4 className="text-indigo-900 font-black uppercase tracking-widest text-xs mb-3">Lesson Reflection</h4>
-                                                                    <p className="text-indigo-900/70 text-xl font-medium leading-relaxed italic">
-                                                                        "Think about how the concepts you learned in Page 1 apply to your daily life. Can you identify these patterns in your own surroundings?"
-                                                                    </p>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-
-                                                        {/* Section 3: Check Out! (Review Questions) */}
-                                                        <div className="bg-[#1A3263] p-12 rounded-[3.5rem] border-4 border-double border-white/10 shadow-2xl shadow-indigo-900/20 relative overflow-hidden group">
-                                                            <div className="absolute -bottom-10 -right-10 w-64 h-64 bg-white/5 rounded-full opacity-30 group-hover:scale-125 transition-transform" />
-
-                                                            <div className="flex items-center gap-6 mb-12 relative z-10">
-                                                                <div className="w-20 h-20 rounded-[2rem] bg-white/10 backdrop-blur-md flex items-center justify-center text-white border border-white/20 shadow-xl rotate-3 group-hover:rotate-0 transition-transform">
-                                                                    <GraduationCap className="w-10 h-10" />
-                                                                </div>
-                                                                <div>
-                                                                    <h3 className="text-4xl font-black text-white tracking-tight">Check Out!</h3>
-                                                                    <p className="text-white/50 font-black uppercase tracking-[0.2em] text-[10px]">End of Lesson Review</p>
-                                                                </div>
-                                                            </div>
-
-                                                            <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
-                                                                {result?.reviewQuestions?.map((q: string, i: number) => (
-                                                                    <div key={i} className="flex gap-6 p-6 rounded-3xl bg-white/10 border border-white/10 shadow-sm hover:bg-white/15 transition-all group/q">
-                                                                        <span className="text-white/40 font-black text-2xl group-hover/q:text-white transition-colors">{i + 1}.</span>
-                                                                        <p className="text-lg font-bold text-white/90 leading-relaxed">{q}</p>
-                                                                    </div>
-                                                                ))}
-                                                            </div>
-                                                        </div>
-                                                    </div>
-
-                                                    <div className="p-10 bg-slate-50 border-t border-slate-200 flex items-center justify-between font-black text-[10px] uppercase tracking-[0.3em] text-slate-400">
-                                                        <div className="flex items-center gap-3">
-                                                            <div className="w-2 h-2 rounded-full bg-indigo-600" />
-                                                            <span>Page 2: Knowledge Assessment & Tips</span>
-                                                        </div>
-                                                        <Button
-                                                            variant="ghost"
-                                                            onClick={() => setCurrentPage(1)}
-                                                            className="text-[10px] font-black uppercase tracking-[0.3em] hover:bg-white rounded-xl"
-                                                        >
-                                                            <ChevronLeft className="w-4 h-4 mr-2" /> Back to Lesson
-                                                        </Button>
+                                                        ))}
                                                     </div>
                                                 </motion.div>
                                             )}
@@ -2187,39 +1886,32 @@ window.onload = function() {
                                     </div>
                                 ) : (
                                     <div className="bg-slate-50/50 rounded-2xl border border-slate-100 p-10">
-                                        <div className="prose prose-slate prose-indigo max-w-none prose-headings:font-display prose-headings:text-slate-900 prose-p:text-slate-600 prose-p:leading-relaxed prose-li:text-slate-600 prose-strong:text-slate-900">
-                                            <ReactMarkdown>
-                                                {result?.content || result?.explanation || ""}
-                                            </ReactMarkdown>
+                                        <div className="prose prose-slate prose-indigo max-w-none">
+                                            <ReactMarkdown>{result?.content || result?.explanation || ""}</ReactMarkdown>
                                         </div>
                                     </div>
                                 )}
-                            </div >
-                        </motion.div >
+                            </div>
+                        </motion.div>
                     )}
-                </AnimatePresence >
-            </main >
-
+                </AnimatePresence>
+            </main>
             <QuickActionDialog
                 open={showQuickAction}
                 onOpenChange={setShowQuickAction}
                 contentToProcess={(() => {
                     if (!result) return "";
-                    // Build a clean, readable text summary for the AI - do NOT pass raw JSON
                     const parts: string[] = [];
                     if (result.title) parts.push(`Title: ${result.title}`);
-                    // Lesson plan fields
                     if (result.objective) parts.push(`Learning Objectives:\n${(Array.isArray(result.objective) ? result.objective : [result.objective]).map((o: string) => `- ${o}`).join('\n')}`);
                     if (result.explanation) parts.push(`Explanation:\n${result.explanation}`);
                     if (result.pedagogy) parts.push(`Pedagogy:\n${result.pedagogy}`);
                     if (result.inquiryBasedLearning) parts.push(`Inquiry Based Learning:\n${result.inquiryBasedLearning}`);
                     if (result.homework) parts.push(`Homework:\n${result.homework}`);
-                    // Activities (may be a JSON string)
                     try {
                         const acts = result.activities ? (Array.isArray(result.activities) ? result.activities : JSON.parse(result.activities)) : [];
                         if (acts.length) parts.push(`Activities:\n${acts.map((a: any) => `- ${a.time || ''}: ${a.description || a.task || ''}`).join('\n')}`);
                     } catch { }
-                    // Material / quiz / assignment fields
                     if (result.sections?.length) parts.push(`Sections:\n${result.sections.map((s: any) => `${s.heading}: ${s.content}`).join('\n')}`);
                     if (result.questions?.length) parts.push(`Questions:\n${result.questions.map((q: any, i: number) => `${i + 1}. ${q.question || q}`).join('\n')}`);
                     if (result.intro) parts.push(`Introduction:\n${result.intro}`);
@@ -2228,6 +1920,6 @@ window.onload = function() {
                     return parts.length > 0 ? parts.join('\n\n') : `Topic: ${topic}, Subject: ${subject}, Grade: ${grade}`;
                 })()}
             />
-        </div >
+        </div>
     );
 }
