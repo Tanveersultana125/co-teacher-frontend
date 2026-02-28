@@ -15,7 +15,8 @@ import {
     Sparkles,
     CheckCircle2,
     Info,
-    ArrowLeft
+    ArrowLeft,
+    Target
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
@@ -37,13 +38,14 @@ export default function QuizPage() {
     useEffect(() => {
         const fetchQuiz = async () => {
             try {
-                // We're using the lessons endpoint since quizzes are stored there in the updated logic
-                const res = await api.get(`/lessons`);
-                const found = res.data.find((q: any) => q.id === id);
+                // Fetch directly by ID for efficiency and reliability
+                const res = await api.get(`/lessons/${id}`);
+                const found = res.data;
                 if (found) {
                     // Parse questions if they are stored as string
                     const questions = typeof found.questions === 'string' ? JSON.parse(found.questions) : found.questions;
-                    setQuiz({ ...found, questions });
+                    const totalMarks = found.totalMarks || (questions?.length || 0);
+                    setQuiz({ ...found, questions, totalMarks });
                 } else {
                     toast.error("Quiz not found");
                 }
@@ -237,41 +239,54 @@ export default function QuizPage() {
 
                                     {/* Main Stats Header */}
                                     <div className="flex flex-col lg:flex-row gap-6 w-full mb-8">
-                                        <div className="flex-1 bg-[#0D5355] p-8 rounded-[2rem] text-white shadow-xl shadow-teal-100 flex flex-col items-center justify-center relative overflow-hidden group">
-                                            <div className="absolute top-0 right-0 p-4 opacity-10 group-hover:scale-125 transition-transform">
-                                                <Sparkles className="w-20 h-20 text-white" />
+                                        {/* Box 1: Motivation Points - Custom #BCD9A2 */}
+                                        <div className="flex-1 bg-[#BCD9A2] p-8 rounded-[2.5rem] text-slate-800 shadow-2xl shadow-slate-200/50 flex flex-col items-center justify-center relative overflow-hidden group transition-all duration-500 hover:shadow-slate-300/60">
+                                            <div className="absolute top-0 right-0 p-4 opacity-10 group-hover:scale-125 transition-transform duration-700">
+                                                <Sparkles className="w-24 h-24 text-slate-700" />
                                             </div>
 
-                                            {/* Repositioned Motivational Badge (Top Center to clear label) */}
-                                            <div className="absolute top-6 left-1/2 -translate-x-1/2 px-3 py-1 bg-white/20 backdrop-blur-md rounded-full border border-white/30 text-[10px] font-black uppercase tracking-widest animate-pulse z-20 whitespace-nowrap">
-                                                {results.percentage >= 90 ? "Subject Master!" :
-                                                    results.percentage >= 75 ? "Expert Level!" :
-                                                        results.percentage >= 40 ? "Keep Pushing!" :
-                                                            "Starting Strong!"}
+                                            <div className="absolute top-6 left-1/2 -translate-x-1/2 px-4 py-1.5 bg-white/40 backdrop-blur-md rounded-full border border-white/30 text-[10px] font-black uppercase tracking-widest z-20 whitespace-nowrap text-slate-700">
+                                                {results.percentage >= 40 ? "Points Gained!" : "Starting Out!"}
                                             </div>
 
                                             <div className="pt-6 flex flex-col items-center">
-                                                <p className="text-indigo-100 text-[10px] font-black uppercase tracking-[0.2em] mb-1 relative z-10 opacity-80">Motivation Points</p>
-                                                <p className="text-6xl font-black relative z-10">{results.xp} <span className="text-2xl opacity-80 uppercase tracking-tighter">XP Earned!</span></p>
+                                                <p className="text-slate-700 text-[11px] font-black uppercase tracking-[0.2em] mb-2 relative z-10 opacity-70">Motivation Points</p>
+                                                <div className="flex items-baseline gap-2 relative z-10">
+                                                    <span className="text-7xl font-black tabular-nums text-slate-900">{results.xp}</span>
+                                                    <span className="text-2xl font-black opacity-70 uppercase tracking-tighter text-slate-700">XP</span>
+                                                </div>
+                                                <p className="text-[10px] font-bold text-slate-700 uppercase tracking-widest mt-2 relative z-10">Points Earned!</p>
                                             </div>
                                         </div>
 
-                                        <div className="flex-1 bg-emerald-600 p-8 rounded-[2rem] text-white shadow-xl shadow-emerald-100 flex flex-col items-center justify-center relative overflow-hidden group">
-                                            <div className="absolute top-0 right-0 p-4 opacity-10 group-hover:scale-125 transition-transform">
-                                                <Trophy className="w-20 h-20 text-white" />
+                                        {/* Box 2: Teacher's Praise - Custom #6D9E51 */}
+                                        <div className="flex-1 bg-[#6D9E51] p-8 rounded-[2.5rem] text-white shadow-2xl shadow-slate-200/50 flex flex-col items-center justify-center relative overflow-hidden group transition-all duration-500 hover:shadow-slate-300/60">
+                                            <div className="absolute top-0 right-0 p-4 opacity-15 group-hover:scale-125 transition-transform duration-700">
+                                                <Trophy className="w-24 h-24 text-white" />
                                             </div>
-                                            <p className="text-emerald-100 text-xs font-black uppercase tracking-widest mb-2 relative z-10">Teacher's Praise</p>
-                                            <p className="text-4xl font-black relative z-10">
-                                                {results.percentage >= 90 ? "AWESOME! 🌟" :
-                                                    results.percentage >= 75 ? "GREAT! 🚀" :
-                                                        results.percentage >= 50 ? "GOOD JOB! 📈" :
-                                                            "WORK HARD! 💪"}
-                                            </p>
+                                            <p className="text-white/80 text-xs font-black uppercase tracking-widest mb-3 relative z-10">Teacher's Praise</p>
+                                            <div className="text-center relative z-10">
+                                                <p className="text-4xl font-black leading-tight drop-shadow-md text-white">
+                                                    {results.percentage >= 90 ? "AWESOME! 🌟" :
+                                                        results.percentage >= 75 ? "GREAT! 🚀" :
+                                                            results.percentage >= 50 ? "GOOD JOB! 📈" :
+                                                                "WORK HARD! 💪"}
+                                                </p>
+                                            </div>
                                         </div>
 
-                                        <div className="flex-1 bg-white border-2 border-slate-100 p-8 rounded-[2rem] flex flex-col items-center justify-center group hover:border-indigo-200 transition-all relative">
-                                            <p className="text-slate-400 text-xs font-black uppercase tracking-widest mb-2">Student Proficiency</p>
-                                            <p className="text-4xl font-black text-slate-800">{results.level}</p>
+                                        {/* Box 3: Student Proficiency - Custom #E8F5BD */}
+                                        <div className="flex-1 bg-[#E8F5BD] p-8 rounded-[2.5rem] text-slate-800 shadow-2xl shadow-slate-200/50 flex flex-col items-center justify-center group transition-all duration-500 hover:shadow-slate-300/60 relative overflow-hidden">
+                                            <div className="absolute top-0 right-0 p-4 opacity-15 group-hover:scale-125 transition-transform duration-700">
+                                                <Target className="w-24 h-24 text-slate-700" />
+                                            </div>
+                                            <p className="text-slate-600 text-xs font-black uppercase tracking-widest mb-3 relative z-10">Student Proficiency</p>
+                                            <p className="text-4xl font-black relative z-10 drop-shadow-sm text-slate-900">{results.level}</p>
+                                            <div className="mt-4 flex gap-1.5 relative z-10 bg-slate-900/10 p-2 rounded-full backdrop-blur-sm">
+                                                {[1, 2, 3, 4, 5].map((s) => (
+                                                    <div key={s} className={`w-2 h-2 rounded-full transition-all duration-500 ${s <= (results.percentage / 20) ? 'bg-slate-800 scale-110' : 'bg-slate-400/30'}`} />
+                                                ))}
+                                            </div>
                                         </div>
                                     </div>
 

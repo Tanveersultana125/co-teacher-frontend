@@ -1,4 +1,5 @@
 import { motion } from "framer-motion";
+import { Link } from "react-router-dom";
 import {
   BookOpen,
   Brain,
@@ -20,14 +21,14 @@ const features = [
     description: "Generate comprehensive, curriculum-aligned lesson plans in seconds with advanced AI.",
     icon: BookOpen,
     color: "indigo",
-    image: "/features/intelligent-lesson-planning.png" // AI Generated
+    image: "/features/premium_export_slides.png" // Premium Icon Set
   },
   {
     title: "AI Resource Generation",
     description: "Create interactive quizzes, worksheets and teaching aids tailored to your specific topics.",
     icon: Brain,
     color: "amber",
-    image: "/features/ai-resource-generation.png" // AI Generated
+    image: "/features/premium_export_slides.png" // Premium Icon Set
   },
   {
     title: "Automated Assessments",
@@ -133,9 +134,6 @@ const Features = () => {
                   </div>
                   <h3 className="text-xl font-bold text-slate-900 mb-3 font-display">{feature.title}</h3>
                   <p className="text-slate-500 leading-relaxed mb-8 flex-1">{feature.description}</p>
-                  <button className="text-slate-900 font-bold text-sm flex items-center gap-2 group-hover:gap-4 transition-all group-hover:text-indigo-600">
-                    Learn more <ArrowRight className="w-4 h-4" />
-                  </button>
                 </div>
               </Card>
             </motion.div>

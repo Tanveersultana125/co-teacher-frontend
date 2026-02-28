@@ -27,9 +27,11 @@ const ForTeachers = () => {
                         Empower every teacher to create curriculum-aligned, consistent, and high-quality lessons, presentations, and assessments in seconds.
                     </p>
                     <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-                        <Button size="lg" className="h-14 px-8 text-lg font-bold bg-[#0F766E] hover:bg-[#0D6E66] text-white rounded-full shadow-xl shadow-teal-200/50 transition-all hover:scale-105">
-                            Start Free Trial
-                        </Button>
+                        <Link to="/login">
+                            <Button size="lg" className="h-14 px-8 text-lg font-bold bg-[#0F766E] hover:bg-[#0D6E66] text-white rounded-full shadow-xl shadow-teal-200/50 transition-all hover:scale-105">
+                                Start Free Trial
+                            </Button>
+                        </Link>
                         <Button size="lg" variant="outline" className="h-14 px-8 text-lg font-bold border-2 rounded-full hover:bg-slate-50 gap-2">
                             <PlayCircle className="w-5 h-5" />
                             Watch Demo
@@ -195,16 +197,66 @@ const ForTeachers = () => {
                 </div>
             </section>
 
-            {/* Simple Footer CTA */}
-            <section className="py-20 bg-white text-center">
+            {/* Premium Footer CTA */}
+            <section className="py-24 bg-white">
                 <div className="container mx-auto px-6">
-                    <h2 className="text-4xl font-bold text-slate-900 mb-8">Ready to transform your teaching?</h2>
-                    <div className="flex justify-center gap-4">
-                        <Button size="lg" className="h-14 px-10 rounded-full bg-[#1E56A0] hover:bg-[#163172] text-white font-bold text-lg">
-                            Get Started Free
-                        </Button>
+                    <div className="bg-[#0F766E] rounded-[3rem] overflow-hidden flex flex-col md:flex-row items-center relative shadow-2xl shadow-teal-900/20 group">
+                        {/* Decorative background patterns */}
+                        <div className="absolute inset-0 opacity-10 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] pointer-events-none"></div>
+                        <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-white rounded-full blur-[120px] -translate-y-1/2 translate-x-1/2 opacity-20 pointer-events-none" />
+                        <div className="absolute bottom-0 left-1/4 w-64 h-64 bg-teal-400 rounded-full blur-[100px] opacity-10 pointer-events-none" />
+
+                        <div className="md:w-3/5 p-12 md:p-20 relative z-10">
+                            <h2 className="text-4xl md:text-6xl font-black text-white mb-8 leading-[1.1] tracking-tight">
+                                Ready to transform <br className="hidden md:block" />
+                                your teaching?
+                            </h2>
+                            <p className="text-xl text-teal-50/90 mb-10 max-w-lg leading-relaxed font-medium">
+                                Join 250,000+ educators who are saving time and improving student outcomes with Co-Teacher's AI tools.
+                            </p>
+                            <div className="flex flex-col sm:flex-row gap-4 mb-8">
+                                <Link to="/login">
+                                    <Button size="lg" className="h-16 px-12 rounded-full bg-white text-teal-900 hover:bg-teal-50 font-black text-xl shadow-2xl transition-all hover:scale-105 active:scale-95">
+                                        Get Started Free
+                                    </Button>
+                                </Link>
+                            </div>
+                            <p className="text-teal-100/60 text-sm font-bold mt-2 italic">Trial includes 1 AI-generated lesson plan for free.</p>
+                            <div className="flex items-center gap-6">
+                                <div className="flex items-center gap-2 text-teal-50/70 font-bold text-sm">
+                                    <CheckCircle2 className="w-5 h-5 text-teal-300" /> No credit card required
+                                </div>
+                                <div className="w-px h-4 bg-teal-50/20"></div>
+                                <div className="flex items-center gap-2 text-teal-50/70 font-bold text-sm">
+                                    <CheckCircle2 className="w-5 h-5 text-teal-300" /> Cancel anytime
+                                </div>
+                            </div>
+                        </div>
+
+                        <div className="md:w-2/5 h-[400px] md:h-full min-h-[500px] relative overflow-hidden self-stretch">
+                            <img
+                                src="https://images.unsplash.com/photo-1544533382-7c9b878021d0?q=80&w=2070&auto=format&fit=crop"
+                                alt="Modern Educator"
+                                className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                            />
+                            {/* Gradient Overlays for smooth blending */}
+                            <div className="absolute inset-y-0 left-0 w-40 bg-gradient-to-r from-[#0F766E] to-transparent hidden md:block" />
+                            <div className="absolute inset-x-0 top-0 h-40 bg-gradient-to-b from-[#0F766E] to-transparent md:hidden" />
+
+                            {/* Floating UI Elements for "Wow" factor */}
+                            <div className="absolute bottom-8 right-8 bg-white/10 backdrop-blur-xl p-4 rounded-2xl border border-white/20 shadow-2xl hidden lg:block animate-bounce-slow">
+                                <div className="flex items-center gap-4">
+                                    <div className="w-10 h-10 bg-teal-500 rounded-xl flex items-center justify-center shadow-lg">
+                                        <Sparkles className="w-5 h-5 text-white" />
+                                    </div>
+                                    <div>
+                                        <p className="text-[10px] font-black text-white/60 uppercase tracking-widest">Efficiency</p>
+                                        <p className="text-sm font-black text-white">+10hrs saved/wk</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                    <p className="mt-6 text-slate-500 font-medium">No credit card required • Cancel anytime</p>
                 </div>
             </section>
 

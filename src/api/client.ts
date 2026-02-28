@@ -26,7 +26,20 @@ api.interceptors.response.use(
     (response) => response,
     (error) => {
         if (error.response?.status === 401) {
-            useAuthStore.getState().logout();
+            const token = localStorage.getItem('token');
+            if (token) {
+                console.warn("[API] Session expired - Clearing data");
+                localStorage.removeItem('token');
+                localStorage.removeItem('user_data');
+                useAuthStore.getState().logout();
+
+                // Only redirect if we are on a protected route and not already on login
+                if (window.location.pathname.startsWith('/dashboard') || window.location.pathname.startsWith('/teacher')) {
+                    if (!window.location.pathname.includes('/login')) {
+                        window.location.href = '/login?expired=true';
+                    }
+                }
+            }
         }
         return Promise.reject(error);
     }

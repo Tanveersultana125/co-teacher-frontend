@@ -42,7 +42,7 @@ const CTA = () => {
                   className="bg-white text-primary hover:bg-white/90 shadow-xl"
                   asChild
                 >
-                  <Link to="/signup">
+                  <Link to="/login">
                     Get Started Free
                     <ArrowRight className="w-5 h-5" />
                   </Link>

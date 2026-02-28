@@ -42,6 +42,15 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     useEffect(() => {
         let mounted = true;
 
+        // CATCH-ALL TIMEOUT to prevent infinite buffering
+        // If auth state doesn't resolve in 8 seconds, we must show the app anyway
+        const authTimeout = setTimeout(() => {
+            if (mounted) {
+                console.warn("Auth check timed out. Forcing loading to false.");
+                setLoading(false);
+            }
+        }, 8000);
+
         // Check for legacy/manual user persistence first
         const storedToken = localStorage.getItem('token');
         const storedUser = localStorage.getItem('user_data');
@@ -53,6 +62,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
                     // Optimization: If we have a cached user, we can stop loading early 
                     // while Firebase synchronizes in the background.
                     setLoading(false);
+                    clearTimeout(authTimeout);
                 }
             } catch (e) {
                 console.error("Failed to parse stored user", e);
@@ -62,38 +72,57 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
         const { setAuth, logout: storeLogout } = useAuthStore.getState();
 
         // PART 1: Listener must exist ONLY ONCE
-        const unsubscribe = onAuthStateChanged(auth, async (firebaseUser) => {
-            if (firebaseUser) {
+        let unsubscribe: () => void;
+
+        if (!auth) {
+            console.warn("Firebase Auth not initialized. Unblocking UI.");
+            if (mounted) setLoading(false);
+            clearTimeout(authTimeout);
+        } else {
+            unsubscribe = onAuthStateChanged(auth, async (firebaseUser) => {
+                if (!firebaseUser) {
+                    clearTimeout(authTimeout);
+                    if (!localStorage.getItem('token')) {
+                        if (mounted) {
+                            setUser(null);
+                            setLoading(false);
+                        }
+                        storeLogout();
+                    } else {
+                        // We have a manual token but no firebase context
+                        if (mounted) setLoading(false);
+                    }
+                    return;
+                }
+
                 try {
-                    // Sync with backend in background
+                    // Sync with backend
                     const idToken = await firebaseUser.getIdToken();
-                    const res = await api.post("/auth/google", { idToken });
-                    if (res.data.token) {
+                    const res = await api.post("/auth/google", { idToken }, { timeout: 8000 });
+                    
+                    if (res.data?.token) {
                         localStorage.setItem('token', res.data.token);
                         localStorage.setItem('user_data', JSON.stringify(res.data.user || firebaseUser));
-                        // SYNC: Update the global store for legacy components
                         setAuth(res.data.user || firebaseUser, res.data.token);
+                        if (mounted) setUser(res.data.user || firebaseUser);
+                    } else {
+                        if (mounted) setUser(firebaseUser);
                     }
-                    if (mounted) setUser(res.data.user || firebaseUser);
-                } catch (error) {
-                    console.error("Backend sync failed:", error);
-                    if (mounted) setUser(firebaseUser); // Fallback to firebase user
+                } catch (error: any) {
+                    console.error("Backend sync failed:", error.message);
+                    // Fallback to firebase user so dashboard at least tries to load
+                    if (mounted) setUser(firebaseUser);
+                } finally {
+                    clearTimeout(authTimeout);
+                    if (mounted) setLoading(false);
                 }
-            } else {
-                if (!localStorage.getItem('token')) {
-                    if (mounted) setUser(null);
-                    // SYNC: Clear legacy store
-                    storeLogout();
-                }
-            }
-
-            // If we didn't have a cached session, we must stop loading now
-            if (mounted) setLoading(false);
-        });
+            });
+        }
 
         return () => {
             mounted = false;
-            unsubscribe();
+            clearTimeout(authTimeout);
+            if (unsubscribe) unsubscribe();
         };
     }, []);
 

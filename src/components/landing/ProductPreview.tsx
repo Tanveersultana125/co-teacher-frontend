@@ -34,8 +34,8 @@ const ProductPreview = () => {
                                 >
                                     <div className="mb-6 transform group-hover:scale-105 transition-transform duration-500 overflow-hidden rounded-xl bg-white shadow-sm">
                                         <img
-                                            src="/features/lessons_card_mockup.png"
-                                            alt="Lessons Card"
+                                            src="/features/premium_export_slides.png"
+                                            alt="Resource Generation"
                                             className="w-full h-auto object-cover"
                                         />
                                     </div>
@@ -43,7 +43,6 @@ const ProductPreview = () => {
                                     <p className="text-slate-600 text-sm leading-relaxed mb-4 flex-grow">
                                         Create fun, accurate, and classroom-ready slides. Instantly align to Common Core or your specific state standards.
                                     </p>
-                                    <div className="text-indigo-600 font-bold text-sm cursor-pointer hover:underline">Learn more &gt;</div>
                                 </motion.div>
 
                                 {/* Card 2: Lesson Series */}
@@ -55,8 +54,8 @@ const ProductPreview = () => {
                                 >
                                     <div className="mb-6 transform group-hover:scale-105 transition-transform duration-500 overflow-hidden rounded-xl bg-white shadow-sm">
                                         <img
-                                            src="/features/lesson_series_mockup.png"
-                                            alt="Lesson Series Stack"
+                                            src="/features/premium_export_slides.png"
+                                            alt="Resource Generation"
                                             className="w-full h-auto object-cover"
                                         />
                                     </div>
@@ -64,7 +63,6 @@ const ProductPreview = () => {
                                     <p className="text-slate-600 text-sm leading-relaxed mb-4 flex-grow">
                                         Want to plan an entire unit? Create an ordered series of lessons on complex topics complete with recaps and quizzes.
                                     </p>
-                                    <div className="text-indigo-600 font-bold text-sm cursor-pointer hover:underline">Learn more &gt;</div>
                                 </motion.div>
 
                                 {/* Card 3: Activity Sheets */}
@@ -85,7 +83,10 @@ const ProductPreview = () => {
                                     <p className="text-slate-600 text-sm leading-relaxed mb-4 flex-grow">
                                         Generate engaging activities to go with your lessons. Ready to share, export or print.
                                     </p>
-                                    <div className="text-indigo-600 font-bold text-sm cursor-pointer hover:underline">Learn more &gt;</div>
+                                    <Link to="/login" className="text-indigo-600 font-bold text-sm hover:underline flex items-center gap-1 group/btn">
+                                        Learn more <span className="transition-transform group-hover/btn:translate-x-1">&gt;</span>
+                                    </Link>
+
                                 </motion.div>
                             </div>
                         </div>

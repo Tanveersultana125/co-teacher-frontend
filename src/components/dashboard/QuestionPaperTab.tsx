@@ -157,7 +157,22 @@ export function QuestionPaperTab() {
                     <Button
                         className="w-full h-12 bg-[#4F46E5] font-bold rounded-xl"
                         disabled={!formData.subject || generateMutation.isPending}
-                        onClick={() => generateMutation.mutate(formData)}
+                        onClick={async () => {
+                            // Trial Limit Check: Block if user has already created something
+                            try {
+                                const statsRes = await api.get('/dashboard/stats');
+                                const lessonsCount = statsRes.data.lessonsCreated || 0;
+                                if (lessonsCount >= 1) {
+                                    toast.error("Free trial limit reached (1 resource). Upgrade to create more!", {
+                                        description: "You've used your 1 free AI generation.",
+                                    });
+                                    return;
+                                }
+                            } catch (err) {
+                                console.error("Stats check failed", err);
+                            }
+                            generateMutation.mutate(formData);
+                        }}
                     >
                         {generateMutation.isPending ? <Loader2 className="w-5 h-5 animate-spin" /> : <Sparkles className="w-5 h-5 mr-2" />}
                         Generate Paper

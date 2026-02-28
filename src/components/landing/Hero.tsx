@@ -8,7 +8,7 @@ const Hero = () => {
   const navigate = useNavigate();
 
   const handleGenerate = () => {
-    navigate("/for-teachers");
+    navigate("/login");
   };
 
   return (

@@ -34,30 +34,30 @@ const Footer = () => {
           <div className="xs:col-span-1">
             <h4 className="font-bold text-white mb-6 uppercase tracking-[0.2em] text-[10px]">Product</h4>
             <ul className="space-y-4 font-semibold text-sm">
-              <li><Link to="/features" className="hover:text-white transition-colors">Features</Link></li>
-              <li><Link to="/pricing" className="hover:text-white transition-colors">Pricing</Link></li>
-              <li><Link to="/app/lesson-plans" className="hover:text-white transition-colors">Lesson Planner</Link></li>
-              <li><a href="#" className="hover:text-white transition-colors">School Solutions</a></li>
+              <li><Link to="/login" className="hover:text-white transition-colors">Features</Link></li>
+              <li><Link to="/login" className="hover:text-white transition-colors">Pricing</Link></li>
+              <li><Link to="/login" className="hover:text-white transition-colors">Lesson Planner</Link></li>
+              <li><Link to="/login" className="hover:text-white transition-colors">School Solutions</Link></li>
             </ul>
           </div>
 
           <div className="xs:col-span-1">
             <h4 className="font-bold text-white mb-6 uppercase tracking-[0.2em] text-[10px]">Company</h4>
             <ul className="space-y-4 font-semibold text-sm">
-              <li><a href="#" className="hover:text-white transition-colors">About</a></li>
-              <li><a href="#" className="hover:text-white transition-colors">Contact</a></li>
-              <li><a href="#" className="hover:text-white transition-colors">Careers</a></li>
-              <li><a href="#" className="hover:text-white transition-colors">Blog</a></li>
+              <li><Link to="/login" className="hover:text-white transition-colors">About</Link></li>
+              <li><Link to="/login" className="hover:text-white transition-colors">Contact</Link></li>
+              <li><Link to="/login" className="hover:text-white transition-colors">Careers</Link></li>
+              <li><Link to="/login" className="hover:text-white transition-colors">Blog</Link></li>
             </ul>
           </div>
 
           <div className="xs:col-span-1">
             <h4 className="font-bold text-white mb-6 uppercase tracking-[0.2em] text-[10px]">Legal</h4>
             <ul className="space-y-4 font-semibold text-sm">
-              <li><a href="#" className="hover:text-white transition-colors">Privacy</a></li>
-              <li><a href="#" className="hover:text-white transition-colors">Terms</a></li>
-              <li><a href="#" className="hover:text-white transition-colors">Cookie Policy</a></li>
-              <li><a href="#" className="hover:text-white transition-colors">Security</a></li>
+              <li><Link to="/login" className="hover:text-white transition-colors">Privacy</Link></li>
+              <li><Link to="/login" className="hover:text-white transition-colors">Terms</Link></li>
+              <li><Link to="/login" className="hover:text-white transition-colors">Cookie Policy</Link></li>
+              <li><Link to="/login" className="hover:text-white transition-colors">Security</Link></li>
             </ul>
           </div>
         </div>

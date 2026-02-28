@@ -55,6 +55,20 @@ export function LessonSummarizerTab() {
             return;
         }
 
+        // Trial Limit Check: Block if user has already created something
+        try {
+            const statsRes = await api.get('/dashboard/stats');
+            const lessonsCount = statsRes.data.lessonsCreated || 0;
+            if (lessonsCount >= 1) {
+                toast.error("Free trial limit reached (1 resource). Upgrade to create more!", {
+                    description: "You've used your 1 free AI generation.",
+                });
+                return;
+            }
+        } catch (err) {
+            console.error("Stats check failed", err);
+        }
+
         setIsGenerating(true);
         setResult(null);
 

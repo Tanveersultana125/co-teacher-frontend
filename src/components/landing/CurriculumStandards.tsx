@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
 import { Check, ChevronDown, BookOpen } from "lucide-react";
+import { Link } from "react-router-dom";
 
 const CurriculumStandards = () => {
     return (
@@ -90,9 +91,13 @@ const CurriculumStandards = () => {
                                     </div>
 
                                     <div className="relative">
-                                        <div className="absolute right-0 top-0 text-xs font-bold text-indigo-600 bg-indigo-50 px-2 py-1 rounded cursor-pointer">
+                                        <Link
+                                            to="/login"
+                                            className="absolute right-0 top-0 text-xs font-bold text-indigo-600 bg-indigo-50 px-2 py-1 rounded cursor-pointer hover:bg-indigo-100 transition-colors"
+                                        >
                                             Can't see a standard?
-                                        </div>
+                                        </Link>
+
                                         <div className="text-xs font-bold text-slate-400 uppercase tracking-wider mb-4 mt-2">
                                             Selected Standards (2)
                                         </div>

@@ -8,7 +8,7 @@ const RESOURCES = [
         category: "Lessons",
         description: "Create fun, accurate, and classroom-ready slides. Instantly align to Common Core or your specific state standards. Generate engaging activities to go with your lessons. Ready to share, export or print.",
         type: "Lesson Plan",
-        image: "/heart-quiz-card.png", // Fallback Asset
+        image: "/features/premium_export_slides.png",
         theme: "rose",
         bg: "bg-[#A5C89E]", // Sage Green
         accent: "text-rose-600",
@@ -20,11 +20,11 @@ const RESOURCES = [
         category: "Lesson series",
         description: "Want to plan an entire unit? Create an ordered series of lessons on complex topics complete with recaps and quizzes.",
         type: "Unit Plan",
-        image: "/osmosis-card.png", // Fallback Asset
+        image: "/features/premium_resource_export.png",
         theme: "orange",
-        bg: "bg-[#FFDAC1]", // Peach/Orange
+        bg: "bg-[#FFDAC1]",
         accent: "text-orange-900",
-        style: "stacked"
+        style: "floating-ui"
     },
     {
         title: "The Future of AI Knowledge Check",
@@ -184,9 +184,6 @@ const ResourceShowcase = () => {
                                 <p className="text-slate-600 leading-relaxed mb-4">
                                     {resource.description}
                                 </p>
-                                <div className={`flex items-center ${resource.accent} font-bold text-sm cursor-pointer group/link`}>
-                                    Learn more <ArrowRight className="w-4 h-4 ml-1 transition-transform group-hover/link:translate-x-1" />
-                                </div>
                             </div>
                         </motion.div>
                     ))}

@@ -42,7 +42,7 @@ const UniqueValueProp = () => {
                                     <div className="space-y-4">
                                         <div className="bg-white p-4 rounded-xl border border-slate-200 shadow-sm flex gap-4">
                                             <div className="w-24 h-24 bg-slate-100 rounded-lg overflow-hidden shrink-0">
-                                                <img src="/osmosis_diffusion_worksheet_card_1769609373988.png" alt="Osmosis" className="w-full h-full object-cover" />
+                                                <img src="/features/premium_export_slides.png" alt="Education Content" className="w-full h-full object-cover" />
                                             </div>
                                             <div className="flex-1">
                                                 <div className="h-4 bg-slate-100 rounded w-3/4 mb-2" />
