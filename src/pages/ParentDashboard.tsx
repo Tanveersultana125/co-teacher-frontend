@@ -15,7 +15,9 @@ import {
     TrendingUp,
     Clock,
     CheckCircle2,
-    Loader2
+    Loader2,
+    Menu,
+    X
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
@@ -25,6 +27,7 @@ import api from "@/api/client";
 
 const ParentDashboard = () => {
     const [activeTab, setActiveTab] = useState("overview");
+    const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
     const navigate = useNavigate();
 
     const { data: parentData, isLoading } = useQuery({
@@ -53,13 +56,32 @@ const ParentDashboard = () => {
 
     return (
         <div className="flex h-screen bg-[#F8FAFC]">
+            {/* Sidebar Overlay */}
+            {isMobileMenuOpen && (
+                <div
+                    className="fixed inset-0 bg-slate-900/50 backdrop-blur-sm z-50 lg:hidden"
+                    onClick={() => setIsMobileMenuOpen(false)}
+                />
+            )}
+
             {/* Sidebar */}
-            <aside className="w-64 bg-white border-r border-slate-100 hidden lg:flex flex-col fixed h-full z-40">
-                <div className="p-8 flex items-center gap-3">
-                    <div className="w-10 h-10 bg-[#4F46E5] rounded-xl flex items-center justify-center text-white shadow-lg shadow-indigo-200">
-                        <GraduationCap className="w-6 h-6" />
+            <aside className={`
+                fixed inset-y-0 left-0 z-[60] w-64 bg-white border-r border-slate-100 flex flex-col transition-all duration-300
+                ${isMobileMenuOpen ? "translate-x-0" : "-translate-x-full lg:translate-x-0"}
+            `}>
+                <div className="p-6 lg:p-8 flex items-center justify-between">
+                    <div className="flex items-center gap-3">
+                        <div className="w-10 h-10 bg-[#4F46E5] rounded-xl flex items-center justify-center text-white shadow-lg shadow-indigo-200">
+                            <GraduationCap className="w-6 h-6" />
+                        </div>
+                        <span className="text-xl font-bold text-slate-900 font-display tracking-tight">Co-Teacher</span>
                     </div>
-                    <span className="text-xl font-bold text-slate-900 font-display tracking-tight">Co-Teacher</span>
+                    <button
+                        onClick={() => setIsMobileMenuOpen(false)}
+                        className="lg:hidden p-2 text-slate-400 hover:text-slate-600 hover:bg-slate-100 rounded-lg"
+                    >
+                        <X className="w-5 h-5" />
+                    </button>
                 </div>
 
                 <nav className="flex-1 px-4 space-y-1 mt-4">
@@ -71,10 +93,13 @@ const ParentDashboard = () => {
                     ].map((item) => (
                         <button
                             key={item.id}
-                            onClick={() => setActiveTab(item.id)}
+                            onClick={() => {
+                                setActiveTab(item.id);
+                                setIsMobileMenuOpen(false);
+                            }}
                             className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-200 font-medium ${activeTab === item.id
-                                    ? "bg-[#EEF2FF] text-[#4F46E5]"
-                                    : "text-slate-500 hover:bg-slate-50 hover:text-slate-900"
+                                ? "bg-[#EEF2FF] text-[#4F46E5]"
+                                : "text-slate-500 hover:bg-slate-50 hover:text-slate-900"
                                 }`}
                         >
                             <item.icon className={`w-5 h-5 ${activeTab === item.id ? "text-[#4F46E5]" : "text-slate-400"}`} />
@@ -99,12 +124,20 @@ const ParentDashboard = () => {
             </aside>
 
             {/* Main Content */}
-            <main className="flex-1 lg:ml-64 overflow-auto">
-                <header className="bg-white/80 backdrop-blur-md sticky top-0 z-30 border-b border-slate-100 px-8 py-4">
-                    <div className="flex items-center justify-between">
-                        <div>
-                            <h1 className="text-2xl font-bold text-slate-900 font-display">Parent Portal</h1>
-                            <p className="text-slate-500 text-sm mt-0.5 font-medium">Tracking {child?.user.name}'s progress</p>
+            <main className="flex-1 lg:ml-64 overflow-auto min-w-0">
+                <header className="bg-white/80 backdrop-blur-md sticky top-0 z-30 border-b border-slate-100 px-4 sm:px-8 py-3 sm:py-4">
+                    <div className="flex items-center justify-between gap-4">
+                        <div className="flex items-center gap-3">
+                            <button
+                                onClick={() => setIsMobileMenuOpen(true)}
+                                className="lg:hidden p-2 text-slate-600 hover:bg-slate-100 rounded-lg transition-colors"
+                            >
+                                <Menu className="w-6 h-6" />
+                            </button>
+                            <div>
+                                <h1 className="text-lg sm:text-2xl font-bold text-slate-900 font-display truncate max-w-[150px] sm:max-none">Parent Portal</h1>
+                                <p className="text-slate-500 text-[10px] sm:text-sm mt-0.5 font-medium truncate max-w-[150px] sm:max-none">Tracking {child?.user.name}'s progress</p>
+                            </div>
                         </div>
                         <div className="flex items-center gap-4">
                             <button className="relative w-10 h-10 flex items-center justify-center rounded-xl bg-slate-50 text-slate-500 hover:bg-slate-100 transition-colors">
@@ -118,7 +151,7 @@ const ParentDashboard = () => {
                     </div>
                 </header>
 
-                <div className="p-8 space-y-8">
+                <div className="p-4 sm:p-8 space-y-6 sm:space-y-8">
                     {/* Child Focus Stats */}
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                         {stats.map((stat, index) => (

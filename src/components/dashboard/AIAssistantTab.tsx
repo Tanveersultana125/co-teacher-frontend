@@ -511,14 +511,14 @@ window.onload = function() {
     return (
         <div className="flex flex-col bg-slate-50 min-h-[calc(100vh-140px)] relative">
             {/* Sticky Horizontal Config Bar */}
-            <div className="sticky top-0 z-50 bg-white/80 backdrop-blur-xl border-b border-slate-200 px-6 py-4 shadow-sm print:hidden">
-                <div className="max-w-[1600px] mx-auto flex flex-wrap items-end gap-4">
+            <div className="sticky top-[56px] sm:top-[73px] z-50 bg-white/80 backdrop-blur-xl border-b border-slate-200 px-4 sm:px-6 py-3 sm:py-4 shadow-sm print:hidden">
+                <div className="max-w-[1600px] mx-auto flex flex-col md:flex-row items-stretch md:items-end gap-3 sm:gap-4">
                     {/* Selectors Group - Using Flex for stability */}
-                    <div className="flex flex-wrap items-end gap-3 flex-1 overflow-visible">
-                        <div className="flex flex-col gap-1.5 min-w-[120px]">
+                    <div className="grid grid-cols-2 sm:flex sm:flex-wrap items-end gap-2 sm:gap-3 flex-1 overflow-visible">
+                        <div className="flex flex-col gap-1.5 col-span-1">
                             <label className="text-[10px] font-black uppercase tracking-widest text-slate-400 ml-1">Type</label>
                             <Select value={mode} onValueChange={(v: any) => setMode(v)}>
-                                <SelectTrigger className="bg-slate-50 border-slate-200 h-11 rounded-xl text-xs font-bold ring-offset-white focus:ring-2 ring-indigo-500/10">
+                                <SelectTrigger className="bg-slate-50 border-slate-200 h-10 sm:h-11 rounded-xl text-xs font-bold ring-offset-white focus:ring-2 ring-indigo-500/10">
                                     <SelectValue placeholder="Type" />
                                 </SelectTrigger>
                                 <SelectContent>
@@ -530,10 +530,10 @@ window.onload = function() {
                             </Select>
                         </div>
 
-                        <div className="flex flex-col gap-1.5 min-w-[100px]">
+                        <div className="flex flex-col gap-1.5 col-span-1">
                             <label className="text-[10px] font-black uppercase tracking-widest text-slate-400 ml-1">Curriculum</label>
                             <Select value={board} onValueChange={setBoard}>
-                                <SelectTrigger className="bg-slate-50 border-slate-200 h-11 rounded-xl text-xs font-bold ring-offset-white focus:ring-2 ring-indigo-500/10">
+                                <SelectTrigger className="bg-slate-50 border-slate-200 h-10 sm:h-11 rounded-xl text-xs font-bold ring-offset-white focus:ring-2 ring-indigo-500/10">
                                     <SelectValue placeholder="Board" />
                                 </SelectTrigger>
                                 <SelectContent>
@@ -544,10 +544,10 @@ window.onload = function() {
                             </Select>
                         </div>
 
-                        <div className="flex flex-col gap-1.5 min-w-[100px]">
+                        <div className="flex flex-col gap-1.5 col-span-1">
                             <label className="text-[10px] font-black uppercase tracking-widest text-slate-400 ml-1">Grade</label>
                             <Select value={grade} onValueChange={setGrade}>
-                                <SelectTrigger className="bg-slate-50 border-slate-200 h-11 rounded-xl text-xs font-bold ring-offset-white focus:ring-2 ring-indigo-500/10">
+                                <SelectTrigger className="bg-slate-50 border-slate-200 h-10 sm:h-11 rounded-xl text-xs font-bold ring-offset-white focus:ring-2 ring-indigo-500/10">
                                     <SelectValue placeholder="Grade" />
                                 </SelectTrigger>
                                 <SelectContent>
@@ -558,7 +558,7 @@ window.onload = function() {
                             </Select>
                         </div>
 
-                        <div className="flex flex-col gap-1.5 min-w-[140px]">
+                        <div className="flex flex-col gap-1.5 col-span-1 sm:min-w-[140px]">
                             <label className="text-[10px] font-black uppercase tracking-widest text-slate-400 ml-1">Subject</label>
                             <Popover open={openSubject} onOpenChange={setOpenSubject}>
                                 <PopoverTrigger asChild>
@@ -567,7 +567,7 @@ window.onload = function() {
                                         role="combobox"
                                         aria-expanded={openSubject}
                                         disabled={!grade || isLoadingMetadata}
-                                        className="w-full h-11 flex items-center justify-between rounded-xl border border-slate-200 bg-slate-50 px-4 py-2 text-xs font-bold ring-offset-white focus:ring-2 ring-indigo-500/10 hover:bg-slate-50 text-slate-700 hover:text-slate-900"
+                                        className="w-full h-10 sm:h-11 flex items-center justify-between rounded-xl border border-slate-200 bg-slate-50 px-3 sm:px-4 py-2 text-xs font-bold ring-offset-white focus:ring-2 ring-indigo-500/10 hover:bg-slate-50 text-slate-700 hover:text-slate-900"
                                     >
                                         <span className="truncate flex-1 text-left">
                                             {subject || (isLoadingMetadata ? "Loading..." : "Select or type subject...")}
@@ -626,7 +626,7 @@ window.onload = function() {
                         </div>
 
                         {/* Topic - Combobox with Custom Input */}
-                        <div className="flex flex-col gap-1.5 min-w-[180px] lg:flex-1">
+                        <div className="flex flex-col gap-1.5 col-span-2 sm:flex-1">
                             <label className="text-[10px] font-black uppercase tracking-widest text-slate-400 ml-1">Topic</label>
                             <Popover open={openTopic} onOpenChange={setOpenTopic}>
                                 <PopoverTrigger asChild>
@@ -635,7 +635,7 @@ window.onload = function() {
                                         role="combobox"
                                         aria-expanded={openTopic}
                                         disabled={!subject || isLoadingMetadata}
-                                        className="w-full h-11 flex items-center justify-between rounded-xl border border-slate-200 bg-slate-50 px-4 py-2 text-xs font-bold ring-offset-white focus:ring-2 ring-indigo-500/10 hover:bg-slate-50 text-slate-700 hover:text-slate-900"
+                                        className="w-full h-10 sm:h-11 flex items-center justify-between rounded-xl border border-slate-200 bg-slate-50 px-3 sm:px-4 py-2 text-xs font-bold ring-offset-white focus:ring-2 ring-indigo-500/10 hover:bg-slate-50 text-slate-700 hover:text-slate-900"
                                     >
                                         <span className="truncate flex-1 text-left">
                                             {topic || (isLoadingMetadata ? "Loading..." : "Select or type topic...")}
@@ -1017,11 +1017,11 @@ window.onload = function() {
                             key="result"
                             initial={{ opacity: 0, y: 20 }}
                             animate={{ opacity: 1, y: 0 }}
-                            className="max-w-[95%] mx-auto bg-white rounded-3xl shadow-xl shadow-slate-200/50 border border-slate-100 min-h-full flex flex-col overflow-hidden print:max-w-full print:shadow-none print:border-none print:rounded-none"
+                            className="w-full md:max-w-[95%] mx-auto bg-white rounded-2xl md:rounded-3xl shadow-xl shadow-slate-200/50 border border-slate-100 min-h-full flex flex-col overflow-hidden print:max-w-full print:shadow-none print:border-none print:rounded-none"
                         >
                             {/* Result Header - Premium Glassmorphism style */}
                             {/* Result Header - Premium Glassmorphism style */}
-                            <div className="sticky top-0 z-20 bg-white/95 backdrop-blur-xl border-b border-slate-100 p-6 flex flex-col md:flex-row md:items-center justify-between gap-6 shadow-sm print:static print:shadow-none print:border-none print:bg-white">
+                            <div className="sticky top-[56px] sm:top-[73px] z-20 bg-white/95 backdrop-blur-xl border-b border-slate-100 p-4 md:p-6 flex flex-col md:flex-row md:items-center justify-between gap-4 md:gap-6 shadow-sm print:static print:shadow-none print:border-none print:bg-white">
                                 <div className="flex items-center gap-5">
                                     <div className={`w-16 h-16 rounded-2xl flex items-center justify-center shadow-lg ${mode === 'lesson' ? 'bg-[#0D5355] text-white shadow-teal-100' :
                                         mode === 'quiz' ? 'bg-amber-500 text-white shadow-amber-200' :
@@ -1041,16 +1041,16 @@ window.onload = function() {
                                                 </span>
                                             )}
                                         </div>
-                                        <h2 className="text-2xl font-black text-slate-900 font-display leading-tight">{result?.title || title || `Generated Content`}</h2>
-                                        <div className="flex items-center gap-3 mt-1.5">
-                                            {topic && <div className="flex items-center gap-1.5 text-slate-500 font-bold text-xs uppercase tracking-wider">
-                                                <BookOpen className="w-3.5 h-3.5" /> {topic}
+                                        <h2 className="text-xl sm:text-2xl font-black text-slate-900 font-display leading-tight line-clamp-2">{result?.title || title || `Generated Content`}</h2>
+                                        <div className="flex flex-wrap items-center gap-2 sm:gap-3 mt-1.5">
+                                            {topic && <div className="flex items-center gap-1 sm:gap-1.5 text-slate-500 font-bold text-[10px] sm:text-xs uppercase tracking-wider">
+                                                <BookOpen className="w-3 h-3 sm:w-3.5 sm:h-3.5" /> {topic}
                                             </div>}
                                             {grade && grade !== "General" && (
                                                 <>
-                                                    <span className="w-1 h-1 rounded-full bg-slate-300" />
-                                                    <div className="flex items-center gap-1.5 text-slate-500 font-bold text-xs uppercase tracking-wider">
-                                                        <GraduationCap className="w-3.5 h-3.5" /> Grade {grade}
+                                                    <span className="w-0.5 h-0.5 sm:w-1 sm:h-1 rounded-full bg-slate-300" />
+                                                    <div className="flex items-center gap-1 sm:gap-1.5 text-slate-500 font-bold text-[10px] sm:text-xs uppercase tracking-wider">
+                                                        <GraduationCap className="w-3 h-3 sm:w-3.5 sm:h-3.5" /> Grade {grade}
                                                     </div>
                                                 </>
                                             )}
@@ -1066,11 +1066,11 @@ window.onload = function() {
                                     </div>
                                 </div >
 
-                                <div className="flex items-center gap-2 print:hidden">
+                                <div className="flex flex-wrap items-center gap-2 print:hidden">
                                     <Button
                                         variant="ghost"
                                         onClick={() => setResult(null)}
-                                        className="rounded-xl h-12 font-bold text-slate-500 hover:text-indigo-600 hover:bg-indigo-50 transition-all px-6"
+                                        className="rounded-xl h-10 md:h-12 font-bold text-slate-500 hover:text-indigo-600 hover:bg-indigo-50 transition-all px-4 md:px-6"
                                     >
                                         <ArrowLeft className="w-4 h-4 mr-2" /> Back
                                     </Button>
@@ -1078,7 +1078,7 @@ window.onload = function() {
                                     {mode === 'lesson' && (
                                         <Button
                                             onClick={() => setShowQuickAction(true)}
-                                            className="rounded-xl h-12 px-4 font-bold bg-slate-900 text-white hover:bg-slate-800 shadow-lg border border-slate-800 transition-all"
+                                            className="rounded-xl h-10 md:h-12 px-3 md:px-4 font-bold bg-slate-900 text-white hover:bg-slate-800 shadow-lg border border-slate-800 transition-all"
                                         >
                                             <Sparkles className="w-4 h-4 mr-2 text-indigo-400" /> AI Tools
                                         </Button>
@@ -1095,9 +1095,9 @@ window.onload = function() {
                                     <Button
                                         variant="outline"
                                         onClick={() => handleDownloadPDF()}
-                                        className="rounded-xl h-12 px-6 font-bold border-2 border-indigo-100 text-indigo-600 hover:bg-indigo-50 transition-all gap-2"
+                                        className="rounded-xl h-10 md:h-12 px-4 md:px-6 font-bold border-2 border-indigo-100 text-indigo-600 hover:bg-indigo-50 transition-all gap-2"
                                     >
-                                        <Download className="w-4 h-4" /> Download PDF
+                                        <Download className="w-4 h-4" /> <span className="hidden sm:inline">Download PDF</span><span className="sm:hidden">PDF</span>
                                     </Button>
                                     <Button
                                         className={`rounded-xl h-12 px-8 font-bold shadow-lg transition-all ${result?.status === 'PUBLISHED' ? 'bg-emerald-50 text-emerald-600 border border-emerald-100 hover:bg-emerald-100' : 'bg-indigo-600 hover:bg-indigo-700 text-white shadow-indigo-100'} `}
@@ -1111,13 +1111,23 @@ window.onload = function() {
                                         ) : (
                                             <Sparkles className="w-4 h-4 mr-2" />
                                         )}
-                                        {result?.status === 'PUBLISHED' ? 'Saved' : 'Save to Library'}
+                                        {result?.status === 'PUBLISHED' ? 'Saved' : <><span className="hidden sm:inline">Save to Library</span><span className="sm:hidden">Save</span></>}
                                     </Button>
                                 </div>
                             </div >
 
-                            <div className="p-8 prose prose-slate max-w-none bg-slate-50/50 min-h-screen">
-                                {/* ... (Other rendering logic omitted for brevity, focusing on Quiz below) ... */}
+                            <div className="p-4 sm:p-8 prose prose-slate max-w-none bg-slate-50/50 min-h-screen">
+                                {/* AI Topic Hero Image (New) */}
+                                {generatedImage && (
+                                    <div className="mb-8 rounded-2xl overflow-hidden shadow-xl border-4 border-white">
+                                        <img
+                                            src={generatedImage}
+                                            alt={topic}
+                                            className="w-full h-[200px] sm:h-[400px] object-cover"
+                                        />
+                                    </div>
+                                )}
+                                {/* ... (Other rendering logic) ... */}
                                 {mode === 'assignment' ? (
                                     <div className="space-y-8">
                                         {/* Assignment Questions */}
@@ -1741,7 +1751,7 @@ window.onload = function() {
                                                 </div>
                                             )
                                         }
-                                    </div >
+                                    </div>
                                 ) : mode === 'quiz' ? (
                                     <div className="space-y-6">
                                         {(result?.questions || []).map((q: any, i: number) => {
@@ -1749,17 +1759,17 @@ window.onload = function() {
                                             const isAnswered = selectedAnswer !== undefined;
 
                                             return (
-                                                <div key={i} className="p-10 bg-white rounded-[2rem] border border-slate-200 shadow-xl shadow-slate-100/50 mb-8 last:mb-0 group hover:border-indigo-200 transition-all relative overflow-hidden">
+                                                <div key={i} className="p-6 sm:p-10 bg-white rounded-[1.5rem] sm:rounded-[2rem] border border-slate-200 shadow-xl shadow-slate-100/50 mb-6 sm:mb-8 last:mb-0 group hover:border-indigo-200 transition-all relative overflow-hidden">
                                                     <div className="absolute -top-6 -right-6 opacity-[0.02] rotate-12 transition-transform group-hover:rotate-0 group-hover:scale-110 pointer-events-none">
                                                         <Brain className="w-32 h-32 text-indigo-900" />
                                                     </div>
-                                                    <div className="flex items-start gap-6 relative z-10">
-                                                        <div className="w-12 h-12 rounded-2xl bg-indigo-50 text-indigo-600 flex items-center justify-center font-black text-lg border border-indigo-100 shadow-sm shrink-0">
+                                                    <div className="flex flex-col sm:flex-row items-start gap-4 sm:gap-6 relative z-10">
+                                                        <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-xl sm:rounded-2xl bg-indigo-50 text-indigo-600 flex items-center justify-center font-black text-base sm:text-lg border border-indigo-100 shadow-sm shrink-0">
                                                             {i + 1}
                                                         </div>
                                                         <div className="flex-1">
-                                                            <p className="text-xl font-bold text-slate-800 mb-6 leading-snug">{q.question}</p>
-                                                            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                                            <p className="text-lg sm:text-xl font-bold text-slate-800 mb-4 sm:mb-6 leading-snug">{q.question}</p>
+                                                            <div className="grid grid-cols-1 md:grid-cols-2 gap-3 sm:gap-4">
                                                                 {(q.options || []).map((opt: string, j: number) => {
                                                                     const isCorrect = opt === q.correctAnswer;
                                                                     const isSelected = selectedAnswer === opt;

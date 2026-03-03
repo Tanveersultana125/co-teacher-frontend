@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useAuth } from "@/contexts/AuthContext";
 import { useQuery } from "@tanstack/react-query";
 import api from "@/api/client";
 import { Card, CardContent } from "@/components/ui/card";
@@ -21,12 +22,15 @@ export function LessonsTab({ onLessonSelect }: LessonsTabProps) {
     const navigate = useNavigate();
     const [searchTerm, setSearchTerm] = useState("");
     const [timeFilter, setTimeFilter] = useState<"all" | "today" | "week" | "month">("all");
+    const { user } = useAuth();
     const { data: lessons, isLoading } = useQuery({
         queryKey: ['lessons'],
         queryFn: async () => {
             const res = await api.get('/lessons');
             return res.data;
-        }
+        },
+        enabled: !!user?.id,
+        staleTime: 1000 * 60 * 30, // Library data shouldn't change much
     });
 
     const filteredLessons = lessons?.filter((lesson: any) => {

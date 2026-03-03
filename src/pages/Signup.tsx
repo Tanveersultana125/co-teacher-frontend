@@ -27,7 +27,7 @@ const Signup = () => {
     try {
       const res = await api.post("/auth/register", { name, email, password, role: "TEACHER" });
       setAuth(res.data.user, res.data.token);
-      navigate("/");
+      navigate("/dashboard");
     } catch (err: any) {
       setError(err.response?.data?.error || "Registration failed. Try a different email.");
     } finally {

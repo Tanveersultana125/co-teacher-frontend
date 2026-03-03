@@ -20,7 +20,10 @@ const UniqueValueProp = () => {
                             <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[120%] h-[120%] bg-gradient-to-tr from-indigo-100/50 to-teal-100/50 rounded-full blur-3xl -z-10" />
 
                             {/* Main Interface Window */}
-                            <div className="bg-white rounded-2xl shadow-2xl border border-slate-200 overflow-hidden relative z-10">
+                            <div
+                                className="bg-white rounded-2xl shadow-2xl border border-slate-200 overflow-hidden relative z-10 cursor-pointer hover:shadow-indigo-100 transition-all"
+                                onClick={() => window.location.href = "/for-teachers"}
+                            >
                                 {/* Window Header */}
                                 <div className="h-10 border-b border-slate-100 bg-slate-50 flex items-center px-4 gap-2">
                                     <div className="w-3 h-3 rounded-full bg-red-400" />
