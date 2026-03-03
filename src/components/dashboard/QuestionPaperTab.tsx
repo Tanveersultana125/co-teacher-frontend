@@ -41,7 +41,9 @@ export function QuestionPaperTab() {
             return res.data;
         },
         onSuccess: (data) => {
-            setPaper(data);
+            const result = data?.questionPaper || data?.content || data;
+            setPaper(result);
+            setActiveView('paper');
             toast.success("Question paper generated!");
         }
     });
@@ -230,7 +232,7 @@ export function QuestionPaperTab() {
                                             <div key={qIdx} className="mb-4">
                                                 <p className="text-slate-700 leading-relaxed font-medium">
                                                     <span className="font-bold mr-2 text-slate-900">{q.id || `Q${qIdx + 1}`}.</span>
-                                                    {typeof q === 'string' ? q : q.q}
+                                                    {typeof q === 'string' ? q : (q.text || q.question || q.q)}
                                                     <span className="float-right text-xs font-bold text-slate-400">[{typeof q === 'string' ? '5' : q.marks} Marks]</span>
                                                 </p>
                                                 {q.options && (
@@ -252,14 +254,18 @@ export function QuestionPaperTab() {
                                 <div className="bg-slate-50 p-6 rounded-2xl border border-slate-100">
                                     <h3 className="text-lg font-bold text-slate-900 mb-6 font-display">Answer Key</h3>
                                     <div className="grid gap-4 max-h-[500px] overflow-y-auto pr-2">
-                                        {Object.entries(paper.answerKey || {}).map(([qId, ans]: any) => (
-                                            <div key={qId} className="flex gap-4 p-4 bg-white rounded-xl shadow-sm border border-slate-100/50">
-                                                <div className="flex-shrink-0 w-10 h-10 bg-emerald-50 text-emerald-600 rounded-lg flex items-center justify-center font-bold">
-                                                    {qId}
-                                                </div>
-                                                <div>
-                                                    <p className="font-bold text-slate-800 text-sm mb-1">Correct Answer</p>
-                                                    <p className="text-slate-600">{ans}</p>
+                                        {Object.entries(paper.answerKey || {}).map(([sectionName, answers]: any) => (
+                                            <div key={sectionName} className="space-y-3 p-6 bg-white rounded-2xl shadow-sm border border-slate-100">
+                                                <h4 className="font-black text-xs uppercase tracking-widest text-indigo-600 mb-4">{sectionName}</h4>
+                                                <div className="space-y-4">
+                                                    {(Array.isArray(answers) ? answers : [answers]).map((ans: string, aIdx: number) => (
+                                                        <div key={aIdx} className="flex gap-4">
+                                                            <div className="flex-shrink-0 w-8 h-8 bg-emerald-50 text-emerald-600 rounded-lg flex items-center justify-center font-bold text-xs">
+                                                                {aIdx + 1}
+                                                            </div>
+                                                            <p className="text-slate-600 text-sm leading-relaxed pt-1.5">{ans}</p>
+                                                        </div>
+                                                    ))}
                                                 </div>
                                             </div>
                                         ))}
@@ -277,8 +283,11 @@ export function QuestionPaperTab() {
                             )}
 
                             <div className="pt-8 flex justify-center border-t border-slate-50">
-                                <Button className="font-bold bg-slate-900 px-8 py-6 rounded-xl">
-                                    <Download className="w-5 h-5 mr-2" /> Download PDF for Print
+                                <Button
+                                    onClick={() => window.print()}
+                                    className="font-bold bg-slate-900 px-8 py-6 rounded-xl hover:bg-slate-800 transition-all hover:scale-[1.02] shadow-xl"
+                                >
+                                    <Download className="w-5 h-5 mr-2" /> Download/Print Paper
                                 </Button>
                             </div>
                         </div>

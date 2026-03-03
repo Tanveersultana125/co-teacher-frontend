@@ -96,6 +96,19 @@ export function AIAssistantTab({ initialMode = "lesson", preloadedResult }: AIAs
     const [isSaving, setIsSaving] = useState(false);
     const [result, setResult] = useState<any>(preloadedResult || null);
     const [activeActivityIndex, setActiveActivityIndex] = useState<number | null>(null);
+
+    const getSafeActivities = (res: any) => {
+        if (!res) return [];
+        const actsSource = res.activities || res.content?.activities || [];
+        try {
+            return typeof actsSource === 'string' ? JSON.parse(actsSource) : (Array.isArray(actsSource) ? actsSource : []);
+        } catch (e) {
+            console.error("Error parsing activities:", e);
+            return [];
+        }
+    };
+
+    const safeActivities = getSafeActivities(result);
     const [showAnswerKey, setShowAnswerKey] = useState(false);
     const [userAnswers, setUserAnswers] = useState<Record<number, string>>({});
     const [showQuickAction, setShowQuickAction] = useState(false);
@@ -132,9 +145,9 @@ export function AIAssistantTab({ initialMode = "lesson", preloadedResult }: AIAs
         }
     }, [preloadedResult]);
 
-    // Auto-fetch topic-relevant image from Unsplash when material result loads
+    // Auto-fetch topic-relevant image from Unsplash when result loads
     useEffect(() => {
-        if (mode === 'material' && result && topic) {
+        if ((mode === 'material' || mode === 'assignment' || mode === 'lesson') && result && topic) {
             setGeneratedImage(null); // reset first
             // Build a search query from topic + subject + illustration description
             const illustrationHint = result?.illustrationDescription || "";
@@ -368,6 +381,7 @@ export function AIAssistantTab({ initialMode = "lesson", preloadedResult }: AIAs
                 ${sections}
                 <div class="pdf-pagebreak"></div>
                 ${result.reviewQuestions?.length ? `<div class="pdf-section"><h3>Review Questions</h3><ol>${result.reviewQuestions.map((q: string) => `<li>${q}</li>`).join('')}</ol></div>` : ''}
+                ${result.answerKey?.length ? `<div class="pdf-section"><h3>Answer Key</h3><ol>${result.answerKey.map((a: string) => `<li>${a}</li>`).join('')}</ol></div>` : ''}
                 ${result.preparationTips?.length ? `<div class="pdf-section"><h3>Study Tips</h3><ul>${result.preparationTips.map((t: string) => `<li>${t}</li>`).join('')}</ul></div>` : ''}
                 ${result.learningObjectives?.length ? `<div class="pdf-section"><h3>Learning Objectives</h3><ul>${result.learningObjectives.map((o: string) => `<li>${o}</li>`).join('')}</ul></div>` : ''}`;
 
@@ -511,346 +525,348 @@ window.onload = function() {
     return (
         <div className="flex flex-col bg-slate-50 min-h-[calc(100vh-140px)] relative">
             {/* Sticky Horizontal Config Bar */}
-            <div className="sticky top-[56px] sm:top-[73px] z-50 bg-white/80 backdrop-blur-xl border-b border-slate-200 px-4 sm:px-6 py-3 sm:py-4 shadow-sm print:hidden">
-                <div className="max-w-[1600px] mx-auto flex flex-col md:flex-row items-stretch md:items-end gap-3 sm:gap-4">
-                    {/* Selectors Group - Using Flex for stability */}
-                    <div className="grid grid-cols-2 sm:flex sm:flex-wrap items-end gap-2 sm:gap-3 flex-1 overflow-visible">
-                        <div className="flex flex-col gap-1.5 col-span-1">
-                            <label className="text-[10px] font-black uppercase tracking-widest text-slate-400 ml-1">Type</label>
-                            <Select value={mode} onValueChange={(v: any) => setMode(v)}>
-                                <SelectTrigger className="bg-slate-50 border-slate-200 h-10 sm:h-11 rounded-xl text-xs font-bold ring-offset-white focus:ring-2 ring-indigo-500/10">
-                                    <SelectValue placeholder="Type" />
-                                </SelectTrigger>
-                                <SelectContent>
-                                    <SelectItem value="lesson" className="text-xs font-bold">Lesson Plan</SelectItem>
-                                    <SelectItem value="quiz" className="text-xs font-bold">Quiz</SelectItem>
-                                    <SelectItem value="material" className="text-xs font-bold">Material</SelectItem>
-                                    <SelectItem value="assignment" className="text-xs font-bold">Assignment</SelectItem>
-                                </SelectContent>
-                            </Select>
-                        </div>
+            {true && (
+                <div className="sticky top-[64px] sm:top-[80px] z-50 bg-white/80 backdrop-blur-xl border-b border-slate-200 px-4 sm:px-6 py-3 sm:py-4 shadow-sm print:hidden">
+                    <div className="max-w-[1600px] mx-auto flex flex-col md:flex-row items-stretch md:items-end gap-3 sm:gap-4">
+                        {/* Selectors Group - Using Flex for stability */}
+                        <div className="grid grid-cols-2 sm:flex sm:flex-wrap items-end gap-2 sm:gap-3 flex-1 overflow-visible">
+                            <div className="flex flex-col gap-1.5 col-span-1">
+                                <label className="text-[10px] font-black uppercase tracking-widest text-slate-400 ml-1">Type</label>
+                                <Select value={mode} onValueChange={(v: any) => setMode(v)}>
+                                    <SelectTrigger className="bg-slate-50 border-slate-200 h-10 sm:h-11 rounded-xl text-xs font-bold ring-offset-white focus:ring-2 ring-indigo-500/10">
+                                        <SelectValue placeholder="Type" />
+                                    </SelectTrigger>
+                                    <SelectContent>
+                                        <SelectItem value="lesson" className="text-xs font-bold">Lesson Plan</SelectItem>
+                                        <SelectItem value="quiz" className="text-xs font-bold">Quiz</SelectItem>
+                                        <SelectItem value="material" className="text-xs font-bold">Material</SelectItem>
+                                        <SelectItem value="assignment" className="text-xs font-bold">Assignment</SelectItem>
+                                    </SelectContent>
+                                </Select>
+                            </div>
 
-                        <div className="flex flex-col gap-1.5 col-span-1">
-                            <label className="text-[10px] font-black uppercase tracking-widest text-slate-400 ml-1">Curriculum</label>
-                            <Select value={board} onValueChange={setBoard}>
-                                <SelectTrigger className="bg-slate-50 border-slate-200 h-10 sm:h-11 rounded-xl text-xs font-bold ring-offset-white focus:ring-2 ring-indigo-500/10">
-                                    <SelectValue placeholder="Board" />
-                                </SelectTrigger>
-                                <SelectContent>
-                                    {["CBSE", "ICSE", "SSC"].map(b => (
-                                        <SelectItem key={b} value={b} className="text-xs font-bold">{b}</SelectItem>
-                                    ))}
-                                </SelectContent>
-                            </Select>
-                        </div>
+                            <div className="flex flex-col gap-1.5 col-span-1">
+                                <label className="text-[10px] font-black uppercase tracking-widest text-slate-400 ml-1">Curriculum</label>
+                                <Select value={board} onValueChange={setBoard}>
+                                    <SelectTrigger className="bg-slate-50 border-slate-200 h-10 sm:h-11 rounded-xl text-xs font-bold ring-offset-white focus:ring-2 ring-indigo-500/10">
+                                        <SelectValue placeholder="Board" />
+                                    </SelectTrigger>
+                                    <SelectContent>
+                                        {["CBSE", "ICSE", "SSC"].map(b => (
+                                            <SelectItem key={b} value={b} className="text-xs font-bold">{b}</SelectItem>
+                                        ))}
+                                    </SelectContent>
+                                </Select>
+                            </div>
 
-                        <div className="flex flex-col gap-1.5 col-span-1">
-                            <label className="text-[10px] font-black uppercase tracking-widest text-slate-400 ml-1">Grade</label>
-                            <Select value={grade} onValueChange={setGrade}>
-                                <SelectTrigger className="bg-slate-50 border-slate-200 h-10 sm:h-11 rounded-xl text-xs font-bold ring-offset-white focus:ring-2 ring-indigo-500/10">
-                                    <SelectValue placeholder="Grade" />
-                                </SelectTrigger>
-                                <SelectContent>
-                                    {Array.from({ length: 12 }, (_, i) => (i + 1).toString()).map(g => (
-                                        <SelectItem key={g} value={g} className="text-xs font-bold">Class {g}</SelectItem>
-                                    ))}
-                                </SelectContent>
-                            </Select>
-                        </div>
+                            <div className="flex flex-col gap-1.5 col-span-1">
+                                <label className="text-[10px] font-black uppercase tracking-widest text-slate-400 ml-1">Grade</label>
+                                <Select value={grade} onValueChange={setGrade}>
+                                    <SelectTrigger className="bg-slate-50 border-slate-200 h-10 sm:h-11 rounded-xl text-xs font-bold ring-offset-white focus:ring-2 ring-indigo-500/10">
+                                        <SelectValue placeholder="Grade" />
+                                    </SelectTrigger>
+                                    <SelectContent>
+                                        {Array.from({ length: 12 }, (_, i) => (i + 1).toString()).map(g => (
+                                            <SelectItem key={g} value={g} className="text-xs font-bold">Class {g}</SelectItem>
+                                        ))}
+                                    </SelectContent>
+                                </Select>
+                            </div>
 
-                        <div className="flex flex-col gap-1.5 col-span-1 sm:min-w-[140px]">
-                            <label className="text-[10px] font-black uppercase tracking-widest text-slate-400 ml-1">Subject</label>
-                            <Popover open={openSubject} onOpenChange={setOpenSubject}>
-                                <PopoverTrigger asChild>
-                                    <Button
-                                        variant="outline"
-                                        role="combobox"
-                                        aria-expanded={openSubject}
-                                        disabled={!grade || isLoadingMetadata}
-                                        className="w-full h-10 sm:h-11 flex items-center justify-between rounded-xl border border-slate-200 bg-slate-50 px-3 sm:px-4 py-2 text-xs font-bold ring-offset-white focus:ring-2 ring-indigo-500/10 hover:bg-slate-50 text-slate-700 hover:text-slate-900"
-                                    >
-                                        <span className="truncate flex-1 text-left">
-                                            {subject || (isLoadingMetadata ? "Loading..." : "Select or type subject...")}
-                                        </span>
-                                        <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
-                                    </Button>
-                                </PopoverTrigger>
-                                <PopoverContent className="w-[--radix-popover-trigger-width] p-0" align="start">
-                                    <Command>
-                                        <CommandInput placeholder="Search or type custom subject..." />
-                                        <CommandList>
-                                            <CommandEmpty>
-                                                <div className="p-2">
-                                                    <p className="text-xs text-muted-foreground mb-2">No subject found.</p>
-                                                </div>
-                                            </CommandEmpty>
-                                            <CommandGroup heading="Curriculum Subjects">
-                                                {subjectsList.map((s) => (
-                                                    <CommandItem
-                                                        key={s}
-                                                        value={s}
-                                                        onSelect={(val) => {
-                                                            setSubject(val === subject ? "" : val);
-                                                            setTopic("");
-                                                            setOpenSubject(false);
+                            <div className="flex flex-col gap-1.5 col-span-1 sm:min-w-[140px]">
+                                <label className="text-[10px] font-black uppercase tracking-widest text-slate-400 ml-1">Subject</label>
+                                <Popover open={openSubject} onOpenChange={setOpenSubject}>
+                                    <PopoverTrigger asChild>
+                                        <Button
+                                            variant="outline"
+                                            role="combobox"
+                                            aria-expanded={openSubject}
+                                            disabled={!grade || isLoadingMetadata}
+                                            className="w-full h-10 sm:h-11 flex items-center justify-between rounded-xl border border-slate-200 bg-slate-50 px-3 sm:px-4 py-2 text-xs font-bold ring-offset-white focus:ring-2 ring-indigo-500/10 hover:bg-slate-50 text-slate-700 hover:text-slate-900"
+                                        >
+                                            <span className="truncate flex-1 text-left">
+                                                {subject || (isLoadingMetadata ? "Loading..." : "Select or type subject...")}
+                                            </span>
+                                            <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+                                        </Button>
+                                    </PopoverTrigger>
+                                    <PopoverContent className="w-[--radix-popover-trigger-width] p-0" align="start">
+                                        <Command>
+                                            <CommandInput placeholder="Search or type custom subject..." />
+                                            <CommandList>
+                                                <CommandEmpty>
+                                                    <div className="p-2">
+                                                        <p className="text-xs text-muted-foreground mb-2">No subject found.</p>
+                                                    </div>
+                                                </CommandEmpty>
+                                                <CommandGroup heading="Curriculum Subjects">
+                                                    {subjectsList.map((s) => (
+                                                        <CommandItem
+                                                            key={s}
+                                                            value={s}
+                                                            onSelect={(val) => {
+                                                                setSubject(val === subject ? "" : val);
+                                                                setTopic("");
+                                                                setOpenSubject(false);
+                                                            }}
+                                                        >
+                                                            <Check className={cn("mr-2 h-4 w-4", subject === s ? "opacity-100" : "opacity-0")} />
+                                                            {s}
+                                                        </CommandItem>
+                                                    ))}
+                                                </CommandGroup>
+                                            </CommandList>
+                                            <div className="p-2 border-t border-slate-100 bg-slate-50">
+                                                <p className="text-[10px] text-slate-400 mb-1">Or type your own:</p>
+                                                <div className="flex gap-2">
+                                                    <input
+                                                        className="flex-1 bg-white border border-slate-200 rounded-md px-2 py-1 text-xs font-medium"
+                                                        placeholder="Custom subject..."
+                                                        value={subject}
+                                                        onChange={(e) => { setSubject(e.target.value); setTopic(""); }}
+                                                        onKeyDown={(e) => {
+                                                            e.stopPropagation();
+                                                            if (e.key === 'Enter') setOpenSubject(false);
                                                         }}
-                                                    >
-                                                        <Check className={cn("mr-2 h-4 w-4", subject === s ? "opacity-100" : "opacity-0")} />
-                                                        {s}
-                                                    </CommandItem>
-                                                ))}
-                                            </CommandGroup>
-                                        </CommandList>
+                                                    />
+                                                    <button
+                                                        onClick={() => setOpenSubject(false)}
+                                                        className="px-3 py-1 bg-indigo-600 text-white text-xs rounded-md font-bold hover:bg-indigo-700 transition-colors"
+                                                    >Set</button>
+                                                </div>
+                                            </div>
+                                        </Command>
+                                    </PopoverContent>
+                                </Popover>
+                            </div>
+
+                            {/* Topic - Combobox with Custom Input */}
+                            <div className="flex flex-col gap-1.5 col-span-2 sm:flex-1">
+                                <label className="text-[10px] font-black uppercase tracking-widest text-slate-400 ml-1">Topic</label>
+                                <Popover open={openTopic} onOpenChange={setOpenTopic}>
+                                    <PopoverTrigger asChild>
+                                        <Button
+                                            variant="outline"
+                                            role="combobox"
+                                            aria-expanded={openTopic}
+                                            disabled={!subject || isLoadingMetadata}
+                                            className="w-full h-10 sm:h-11 flex items-center justify-between rounded-xl border border-slate-200 bg-slate-50 px-3 sm:px-4 py-2 text-xs font-bold ring-offset-white focus:ring-2 ring-indigo-500/10 hover:bg-slate-50 text-slate-700 hover:text-slate-900"
+                                        >
+                                            <span className="truncate flex-1 text-left">
+                                                {topic || (isLoadingMetadata ? "Loading..." : "Select or type topic...")}
+                                            </span>
+                                            <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+                                        </Button>
+                                    </PopoverTrigger>
+                                    <PopoverContent className="w-[--radix-popover-trigger-width] p-0" align="start">
+                                        <Command>
+                                            <CommandInput
+                                                placeholder="Search or type new topic..."
+                                            />
+                                            <CommandList>
+                                                <CommandEmpty>
+                                                    <div className="p-2">
+                                                        <p className="text-xs text-muted-foreground mb-2">No topic found.</p>
+                                                    </div>
+                                                </CommandEmpty>
+
+                                                <CommandGroup heading="Curriculum Topics">
+                                                    {(topicsMap[subject] || []).map((t) => (
+                                                        <CommandItem
+                                                            key={t}
+                                                            value={t}
+                                                            onSelect={(currentValue) => {
+                                                                setTopic(currentValue === topic ? "" : currentValue);
+                                                                setOpenTopic(false);
+                                                            }}
+                                                        >
+                                                            <Check
+                                                                className={cn(
+                                                                    "mr-2 h-4 w-4",
+                                                                    topic === t ? "opacity-100" : "opacity-0"
+                                                                )}
+                                                            />
+                                                            {t}
+                                                        </CommandItem>
+                                                    ))}
+                                                </CommandGroup>
+                                            </CommandList>
+                                        </Command>
                                         <div className="p-2 border-t border-slate-100 bg-slate-50">
                                             <p className="text-[10px] text-slate-400 mb-1">Or type your own:</p>
                                             <div className="flex gap-2">
                                                 <input
-                                                    className="flex-1 bg-white border border-slate-200 rounded-md px-2 py-1 text-xs font-medium"
-                                                    placeholder="Custom subject..."
-                                                    value={subject}
-                                                    onChange={(e) => { setSubject(e.target.value); setTopic(""); }}
+                                                    className="flex-1 bg-white border border-slate-200 rounded-md px-2 py-1 text-xs"
+                                                    placeholder="Type custom topic..."
+                                                    value={topic}
+                                                    onChange={(e) => setTopic(e.target.value)}
                                                     onKeyDown={(e) => {
-                                                        e.stopPropagation();
-                                                        if (e.key === 'Enter') setOpenSubject(false);
+                                                        if (e.key === 'Enter') setOpenTopic(false);
                                                     }}
                                                 />
-                                                <button
-                                                    onClick={() => setOpenSubject(false)}
-                                                    className="px-3 py-1 bg-indigo-600 text-white text-xs rounded-md font-bold hover:bg-indigo-700 transition-colors"
-                                                >Set</button>
+                                                <Button size="sm" className="h-7 text-xs" onClick={() => setOpenTopic(false)}>Done</Button>
                                             </div>
                                         </div>
-                                    </Command>
-                                </PopoverContent>
-                            </Popover>
-                        </div>
+                                    </PopoverContent>
+                                </Popover>
+                            </div>
 
-                        {/* Topic - Combobox with Custom Input */}
-                        <div className="flex flex-col gap-1.5 col-span-2 sm:flex-1">
-                            <label className="text-[10px] font-black uppercase tracking-widest text-slate-400 ml-1">Topic</label>
-                            <Popover open={openTopic} onOpenChange={setOpenTopic}>
-                                <PopoverTrigger asChild>
-                                    <Button
-                                        variant="outline"
-                                        role="combobox"
-                                        aria-expanded={openTopic}
-                                        disabled={!subject || isLoadingMetadata}
-                                        className="w-full h-10 sm:h-11 flex items-center justify-between rounded-xl border border-slate-200 bg-slate-50 px-3 sm:px-4 py-2 text-xs font-bold ring-offset-white focus:ring-2 ring-indigo-500/10 hover:bg-slate-50 text-slate-700 hover:text-slate-900"
-                                    >
-                                        <span className="truncate flex-1 text-left">
-                                            {topic || (isLoadingMetadata ? "Loading..." : "Select or type topic...")}
-                                        </span>
-                                        <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
-                                    </Button>
-                                </PopoverTrigger>
-                                <PopoverContent className="w-[--radix-popover-trigger-width] p-0" align="start">
-                                    <Command>
-                                        <CommandInput
-                                            placeholder="Search or type new topic..."
-                                        />
-                                        <CommandList>
-                                            <CommandEmpty>
-                                                <div className="p-2">
-                                                    <p className="text-xs text-muted-foreground mb-2">No topic found.</p>
-                                                </div>
-                                            </CommandEmpty>
-
-                                            <CommandGroup heading="Curriculum Topics">
-                                                {(topicsMap[subject] || []).map((t) => (
-                                                    <CommandItem
-                                                        key={t}
-                                                        value={t}
-                                                        onSelect={(currentValue) => {
-                                                            setTopic(currentValue === topic ? "" : currentValue);
-                                                            setOpenTopic(false);
-                                                        }}
-                                                    >
-                                                        <Check
-                                                            className={cn(
-                                                                "mr-2 h-4 w-4",
-                                                                topic === t ? "opacity-100" : "opacity-0"
-                                                            )}
-                                                        />
-                                                        {t}
-                                                    </CommandItem>
-                                                ))}
-                                            </CommandGroup>
-                                        </CommandList>
-                                    </Command>
-                                    <div className="p-2 border-t border-slate-100 bg-slate-50">
-                                        <p className="text-[10px] text-slate-400 mb-1">Or type your own:</p>
-                                        <div className="flex gap-2">
-                                            <input
-                                                className="flex-1 bg-white border border-slate-200 rounded-md px-2 py-1 text-xs"
-                                                placeholder="Type custom topic..."
-                                                value={topic}
-                                                onChange={(e) => setTopic(e.target.value)}
-                                                onKeyDown={(e) => {
-                                                    if (e.key === 'Enter') setOpenTopic(false);
-                                                }}
-                                            />
-                                            <Button size="sm" className="h-7 text-xs" onClick={() => setOpenTopic(false)}>Done</Button>
-                                        </div>
-                                    </div>
-                                </PopoverContent>
-                            </Popover>
-                        </div>
-
-                        {/* Title Field - Made Wider */}
-                        <div className="flex flex-col gap-1.5 min-w-[200px] lg:flex-1">
-                            <label className="text-[10px] font-black uppercase tracking-widest text-slate-400 ml-1">
-                                {mode === 'quiz' ? 'Quiz Title' : 'Lesson Title'}
-                            </label>
-                            <input
-                                type="text"
-                                value={title}
-                                onChange={(e) => setTitle(e.target.value)}
-                                placeholder={mode === 'quiz' ? "e.g. Algebra Quiz 1" : "e.g. Intro to Trigonometry"}
-                                className="flex h-11 w-full rounded-xl border border-slate-200 bg-slate-50 px-3 py-2 text-xs font-bold placeholder:text-slate-400 focus:outline-none focus:ring-2 ring-indigo-500/10"
-                            />
-                        </div>
-
-                        {/* Institute Name - Only for Quiz - Made Wider */}
-                        {mode === 'quiz' && (
-                            <div className="space-y-1.5 lg:col-span-2">
-                                <label className="text-[10px] font-black uppercase tracking-widest text-slate-400 ml-1">Institute Name</label>
+                            {/* Title Field - Made Wider */}
+                            <div className="flex flex-col gap-1.5 min-w-[200px] lg:flex-1">
+                                <label className="text-[10px] font-black uppercase tracking-widest text-slate-400 ml-1">
+                                    {mode === 'quiz' ? 'Quiz Title' : 'Lesson Title'}
+                                </label>
                                 <input
                                     type="text"
-                                    value={instituteName}
-                                    onChange={(e) => setInstituteName(e.target.value)}
-                                    placeholder="e.g. Deccan Institute"
-                                    className="flex h-10 w-full rounded-xl border border-slate-200 bg-slate-50 px-3 py-2 text-xs font-bold placeholder:text-slate-400 focus:outline-none focus:ring-2 ring-indigo-500/10"
+                                    value={title}
+                                    onChange={(e) => setTitle(e.target.value)}
+                                    placeholder={mode === 'quiz' ? "e.g. Algebra Quiz 1" : "e.g. Intro to Trigonometry"}
+                                    className="flex h-11 w-full rounded-xl border border-slate-200 bg-slate-50 px-3 py-2 text-xs font-bold placeholder:text-slate-400 focus:outline-none focus:ring-2 ring-indigo-500/10"
                                 />
                             </div>
-                        )}
-                    </div>
 
-                    {/* Actions Group */}
-                    <div className="flex items-center gap-3">
-                        <div className="relative group">
-                            <input
-                                type="file"
-                                accept=".pdf"
-                                onChange={handleFileUpload}
-                                className="absolute inset-0 opacity-0 cursor-pointer z-10"
-                            />
+                            {/* Institute Name - Only for Quiz - Made Wider */}
+                            {mode === 'quiz' && (
+                                <div className="space-y-1.5 lg:col-span-2">
+                                    <label className="text-[10px] font-black uppercase tracking-widest text-slate-400 ml-1">Institute Name</label>
+                                    <input
+                                        type="text"
+                                        value={instituteName}
+                                        onChange={(e) => setInstituteName(e.target.value)}
+                                        placeholder="e.g. Deccan Institute"
+                                        className="flex h-10 w-full rounded-xl border border-slate-200 bg-slate-50 px-3 py-2 text-xs font-bold placeholder:text-slate-400 focus:outline-none focus:ring-2 ring-indigo-500/10"
+                                    />
+                                </div>
+                            )}
+                        </div>
+
+                        {/* Actions Group */}
+                        <div className="flex items-center gap-3">
+                            <div className="relative group">
+                                <input
+                                    type="file"
+                                    accept=".pdf"
+                                    onChange={handleFileUpload}
+                                    className="absolute inset-0 opacity-0 cursor-pointer z-10"
+                                />
+                                <Button
+                                    variant="outline"
+                                    className={`h-11 px-4 rounded-xl border-slate-200 font-bold text-xs transition-all ${pdfText ? 'bg-emerald-50 border-emerald-200 text-emerald-600' : 'bg-white hover:bg-slate-50'}`}
+                                >
+                                    {isUploading ? <Loader2 className="w-4 h-4 animate-spin mr-2" /> : <FileUp className="w-4 h-4 mr-2" />}
+                                    {pdfText ? 'PDF Added' : 'Add PDF'}
+                                </Button>
+                            </div>
+
                             <Button
-                                variant="outline"
-                                className={`h-11 px-4 rounded-xl border-slate-200 font-bold text-xs transition-all ${pdfText ? 'bg-emerald-50 border-emerald-200 text-emerald-600' : 'bg-white hover:bg-slate-50'}`}
+                                onClick={handleGenerate}
+                                disabled={isGenerating || !topic}
+                                className="h-11 px-6 bg-[#0D5355] hover:bg-[#083334] text-white rounded-xl font-black text-xs uppercase tracking-widest shadow-lg shadow-teal-100"
                             >
-                                {isUploading ? <Loader2 className="w-4 h-4 animate-spin mr-2" /> : <FileUp className="w-4 h-4 mr-2" />}
-                                {pdfText ? 'PDF Added' : 'Add PDF'}
+                                {isGenerating ? <Loader2 className="w-4 h-4 animate-spin" /> : <Sparkles className="w-4 h-4 mr-2" />}
+                                {isGenerating ? 'Generating...' : result ? 'Regenerate' : 'Generate'}
                             </Button>
                         </div>
 
-                        <Button
-                            onClick={handleGenerate}
-                            disabled={isGenerating || !topic}
-                            className="h-11 px-6 bg-[#0D5355] hover:bg-[#083334] text-white rounded-xl font-black text-xs uppercase tracking-widest shadow-lg shadow-teal-100"
-                        >
-                            {isGenerating ? <Loader2 className="w-4 h-4 animate-spin" /> : <Sparkles className="w-4 h-4 mr-2" />}
-                            {isGenerating ? 'Generating...' : 'Generate'}
-                        </Button>
-                    </div>
-
-                    {/* Extended Inputs */}
-                    <div className="flex-1 w-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3 mt-3 pt-3 border-t border-slate-100">
-                        {mode === 'lesson' && (
-                            <>
-                                <div className="lg:col-span-2 space-y-1.5">
-                                    <label className="text-[10px] font-black uppercase tracking-widest text-slate-400 ml-1">Unit Details</label>
-                                    <textarea
-                                        value={unitDetails}
-                                        onChange={(e) => setUnitDetails(e.target.value)}
-                                        placeholder="Provide details about the unit you want to teach..."
-                                        className="flex h-10 w-full rounded-xl border border-slate-200 bg-slate-50 px-3 py-2 text-xs font-bold placeholder:text-slate-400 focus:outline-none focus:ring-2 ring-indigo-500/10 resize-none"
-                                    />
-                                </div>
-                                <div className="space-y-1.5">
-                                    <label className="text-[10px] font-black uppercase tracking-widest text-slate-400 ml-1">Session Duration (Minutes)</label>
-                                    <input
-                                        type="number"
-                                        value={sessionDuration}
-                                        onChange={(e) => setSessionDuration(e.target.value)}
-                                        min="15"
-                                        max="180"
-                                        className="flex h-10 w-full rounded-xl border border-slate-200 bg-slate-50 px-3 py-2 text-xs font-bold placeholder:text-slate-400 focus:outline-none focus:ring-2 ring-indigo-500/10"
-                                    />
-                                </div>
-                                <div className="space-y-1.5">
-                                    <label className="text-[10px] font-black uppercase tracking-widest text-slate-400 ml-1">Number of Sessions</label>
-                                    <input
-                                        type="number"
-                                        value={numSessions}
-                                        onChange={(e) => setNumSessions(e.target.value)}
-                                        min="1"
-                                        max="20"
-                                        className="flex h-10 w-full rounded-xl border border-slate-200 bg-slate-50 px-3 py-2 text-xs font-bold placeholder:text-slate-400 focus:outline-none focus:ring-2 ring-indigo-500/10"
-                                    />
-                                </div>
-                            </>
-                        )}
-
-                        {mode === 'quiz' && (
-                            <>
-                                <div className="space-y-1.5">
-                                    <label className="text-[10px] font-black uppercase tracking-widest text-slate-400 ml-1">Difficulty</label>
-                                    <Select
-                                        value={quizDifficulty}
-                                        onValueChange={setQuizDifficulty}
-                                    >
-                                        <SelectTrigger className="bg-slate-50 border-slate-200 h-14 rounded-xl text-base font-bold">
-                                            <SelectValue placeholder="Difficulty" />
-                                        </SelectTrigger>
-                                        <SelectContent>
-                                            <SelectItem value="Beginner" className="text-sm font-bold">Beginner</SelectItem>
-                                            <SelectItem value="Intermediate" className="text-sm font-bold">Intermediate</SelectItem>
-                                            <SelectItem value="Advanced" className="text-sm font-bold">Advanced</SelectItem>
-                                            <SelectItem value="Mixed" className="text-sm font-bold">Mixed</SelectItem>
-                                        </SelectContent>
-                                    </Select>
-                                </div>
-                                <div className="space-y-1.5">
-                                    <label className="text-[10px] font-black uppercase tracking-widest text-slate-400 ml-1">No. of Questions</label>
-                                    <div className="flex items-center h-14 w-full min-w-[140px] rounded-xl border border-slate-200 bg-slate-50 overflow-hidden focus-within:ring-2 ring-indigo-500/10 transition-all">
-                                        <button
-                                            onClick={() => setQuizNumQuestions(prev => Math.max(1, (typeof prev === 'number' ? prev : 5) - 1))}
-                                            className="h-full w-10 shrink-0 flex items-center justify-center text-slate-400 hover:text-indigo-600 hover:bg-indigo-50 transition-colors border-r border-slate-200"
-                                        >
-                                            <span className="text-lg font-bold">-</span>
-                                        </button>
+                        {/* Extended Inputs */}
+                        <div className="flex-1 w-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3 mt-3 pt-3 border-t border-slate-100">
+                            {mode === 'lesson' && (
+                                <>
+                                    <div className="lg:col-span-2 space-y-1.5">
+                                        <label className="text-[10px] font-black uppercase tracking-widest text-slate-400 ml-1">Unit Details</label>
+                                        <textarea
+                                            value={unitDetails}
+                                            onChange={(e) => setUnitDetails(e.target.value)}
+                                            placeholder="Provide details about the unit you want to teach..."
+                                            className="flex h-10 w-full rounded-xl border border-slate-200 bg-slate-50 px-3 py-2 text-xs font-bold placeholder:text-slate-400 focus:outline-none focus:ring-2 ring-indigo-500/10 resize-none"
+                                        />
+                                    </div>
+                                    <div className="space-y-1.5">
+                                        <label className="text-[10px] font-black uppercase tracking-widest text-slate-400 ml-1">Session Duration (Minutes)</label>
                                         <input
                                             type="number"
-                                            value={quizNumQuestions}
-                                            onChange={(e) => {
-                                                const val = e.target.value;
-                                                if (val === "") {
-                                                    // @ts-ignore
-                                                    setQuizNumQuestions("");
-                                                    return;
-                                                }
-                                                const num = parseInt(val);
-                                                setQuizNumQuestions(isNaN(num) ? 5 : num);
-                                            }}
-                                            onBlur={() => {
-                                                if (!quizNumQuestions || quizNumQuestions < 1) setQuizNumQuestions(5);
-                                                if (quizNumQuestions > 20) setQuizNumQuestions(20);
-                                            }}
-                                            className="flex-1 h-full min-w-0 bg-transparent border-none text-center text-lg font-bold text-slate-700 focus:outline-none focus:ring-0 px-2 [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
+                                            value={sessionDuration}
+                                            onChange={(e) => setSessionDuration(e.target.value)}
+                                            min="15"
+                                            max="180"
+                                            className="flex h-10 w-full rounded-xl border border-slate-200 bg-slate-50 px-3 py-2 text-xs font-bold placeholder:text-slate-400 focus:outline-none focus:ring-2 ring-indigo-500/10"
                                         />
-                                        <button
-                                            onClick={() => setQuizNumQuestions(prev => Math.min(20, (typeof prev === 'number' ? prev : 5) + 1))}
-                                            className="h-full w-10 shrink-0 flex items-center justify-center text-slate-400 hover:text-indigo-600 hover:bg-indigo-50 transition-colors border-l border-slate-200"
-                                        >
-                                            <span className="text-lg font-bold">+</span>
-                                        </button>
                                     </div>
-                                </div>
-                            </>
-                        )}
+                                    <div className="space-y-1.5">
+                                        <label className="text-[10px] font-black uppercase tracking-widest text-slate-400 ml-1">Number of Sessions</label>
+                                        <input
+                                            type="number"
+                                            value={numSessions}
+                                            onChange={(e) => setNumSessions(e.target.value)}
+                                            min="1"
+                                            max="20"
+                                            className="flex h-10 w-full rounded-xl border border-slate-200 bg-slate-50 px-3 py-2 text-xs font-bold placeholder:text-slate-400 focus:outline-none focus:ring-2 ring-indigo-500/10"
+                                        />
+                                    </div>
+                                </>
+                            )}
+
+                            {mode === 'quiz' && (
+                                <>
+                                    <div className="space-y-1.5">
+                                        <label className="text-[10px] font-black uppercase tracking-widest text-slate-400 ml-1">Difficulty</label>
+                                        <Select
+                                            value={quizDifficulty}
+                                            onValueChange={setQuizDifficulty}
+                                        >
+                                            <SelectTrigger className="bg-slate-50 border-slate-200 h-14 rounded-xl text-base font-bold">
+                                                <SelectValue placeholder="Difficulty" />
+                                            </SelectTrigger>
+                                            <SelectContent>
+                                                <SelectItem value="Beginner" className="text-sm font-bold">Beginner</SelectItem>
+                                                <SelectItem value="Intermediate" className="text-sm font-bold">Intermediate</SelectItem>
+                                                <SelectItem value="Advanced" className="text-sm font-bold">Advanced</SelectItem>
+                                                <SelectItem value="Mixed" className="text-sm font-bold">Mixed</SelectItem>
+                                            </SelectContent>
+                                        </Select>
+                                    </div>
+                                    <div className="space-y-1.5">
+                                        <label className="text-[10px] font-black uppercase tracking-widest text-slate-400 ml-1">No. of Questions</label>
+                                        <div className="flex items-center h-14 w-full min-w-[140px] rounded-xl border border-slate-200 bg-slate-50 overflow-hidden focus-within:ring-2 ring-indigo-500/10 transition-all">
+                                            <button
+                                                onClick={() => setQuizNumQuestions(prev => Math.max(1, (typeof prev === 'number' ? prev : 5) - 1))}
+                                                className="h-full w-10 shrink-0 flex items-center justify-center text-slate-400 hover:text-indigo-600 hover:bg-indigo-50 transition-colors border-r border-slate-200"
+                                            >
+                                                <span className="text-lg font-bold">-</span>
+                                            </button>
+                                            <input
+                                                type="number"
+                                                value={quizNumQuestions}
+                                                onChange={(e) => {
+                                                    const val = e.target.value;
+                                                    if (val === "") {
+                                                        // @ts-ignore
+                                                        setQuizNumQuestions("");
+                                                        return;
+                                                    }
+                                                    const num = parseInt(val);
+                                                    setQuizNumQuestions(isNaN(num) ? 5 : num);
+                                                }}
+                                                onBlur={() => {
+                                                    if (!quizNumQuestions || quizNumQuestions < 1) setQuizNumQuestions(5);
+                                                    if (quizNumQuestions > 20) setQuizNumQuestions(20);
+                                                }}
+                                                className="flex-1 h-full min-w-0 bg-transparent border-none text-center text-lg font-bold text-slate-700 focus:outline-none focus:ring-0 px-2 [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
+                                            />
+                                            <button
+                                                onClick={() => setQuizNumQuestions(prev => Math.min(20, (typeof prev === 'number' ? prev : 5) + 1))}
+                                                className="h-full w-10 shrink-0 flex items-center justify-center text-slate-400 hover:text-indigo-600 hover:bg-indigo-50 transition-colors border-l border-slate-200"
+                                            >
+                                                <span className="text-lg font-bold">+</span>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </>
+                            )}
+                        </div>
                     </div>
                 </div>
-            </div>
+            )}
 
 
             {/* Content Area */}
@@ -924,7 +940,7 @@ window.onload = function() {
                                     <ArrowLeft className="w-4 h-4" /> Back to Lesson Plan
                                 </Button>
                                 <div className="flex gap-2">
-                                    {(typeof result.activities === 'string' ? JSON.parse(result.activities) : result.activities).map((_: any, idx: number) => (
+                                    {safeActivities.map((_: any, idx: number) => (
                                         <div
                                             key={idx}
                                             className={`h-1.5 w-8 rounded-full transition-all ${idx === activeActivityIndex ? 'bg-indigo-600' : 'bg-slate-200'}`}
@@ -950,14 +966,14 @@ window.onload = function() {
                                 </div>
 
                                 <div className="p-10 space-y-12">
-                                    {(typeof result.activities === 'string' ? JSON.parse(result.activities) : result.activities)[activeActivityIndex].recap && (
+                                    {safeActivities[activeActivityIndex]?.recap && (
                                         <div className="space-y-4">
                                             <div className="flex items-center gap-2 text-amber-600">
                                                 <Brain className="w-5 h-5" />
                                                 <span className="text-xs font-black uppercase tracking-[0.2em]">Concept Refresher</span>
                                             </div>
                                             <div className="text-xl text-slate-700 font-medium leading-relaxed italic border-l-4 border-amber-200 pl-6 py-2">
-                                                "{(typeof result.activities === 'string' ? JSON.parse(result.activities) : result.activities)[activeActivityIndex].recap}"
+                                                "{safeActivities[activeActivityIndex].recap}"
                                             </div>
                                         </div>
                                     )}
@@ -980,7 +996,7 @@ window.onload = function() {
                                             <GraduationCap className="w-5 h-5" /> Teacher's Pro Tip
                                         </h4>
                                         <p className="text-indigo-700 font-medium leading-relaxed relative z-10">
-                                            {(typeof result.activities === 'string' ? JSON.parse(result.activities) : result.activities)[activeActivityIndex].tip ||
+                                            {safeActivities[activeActivityIndex]?.tip ||
                                                 "Encourage students to ask \"Why?\" during this phase. If you notice the energy dipping, try a quick 30-second peer-discussion to re-activate the classroom environment."}
                                         </p>
                                     </div>
@@ -997,8 +1013,7 @@ window.onload = function() {
                                     </Button>
                                     <Button
                                         onClick={() => {
-                                            const acts = (typeof result.activities === 'string' ? JSON.parse(result.activities) : result.activities);
-                                            if (activeActivityIndex < acts.length - 1) {
+                                            if (activeActivityIndex !== null && activeActivityIndex < safeActivities.length - 1) {
                                                 setActiveActivityIndex(activeActivityIndex + 1);
                                             } else {
                                                 setActiveActivityIndex(null);
@@ -1007,7 +1022,7 @@ window.onload = function() {
                                         }}
                                         className="h-14 px-10 rounded-2xl font-bold bg-indigo-600 hover:bg-indigo-700 shadow-xl shadow-indigo-100"
                                     >
-                                        {activeActivityIndex === (typeof result.activities === 'string' ? JSON.parse(result.activities) : result.activities).length - 1 ? 'Finish Lesson' : 'Next Activity'} <ChevronRight className="w-4 h-4 ml-2" />
+                                        {activeActivityIndex === safeActivities.length - 1 ? 'Finish Lesson' : 'Next Activity'} <ChevronRight className="w-4 h-4 ml-2" />
                                     </Button>
                                 </div>
                             </Card>
@@ -1017,11 +1032,10 @@ window.onload = function() {
                             key="result"
                             initial={{ opacity: 0, y: 20 }}
                             animate={{ opacity: 1, y: 0 }}
-                            className="w-full md:max-w-[95%] mx-auto bg-white rounded-2xl md:rounded-3xl shadow-xl shadow-slate-200/50 border border-slate-100 min-h-full flex flex-col overflow-hidden print:max-w-full print:shadow-none print:border-none print:rounded-none"
+                            className="w-full md:max-w-[95%] mx-auto bg-white rounded-2xl md:rounded-3xl shadow-xl shadow-slate-200/50 border border-slate-100 min-h-full flex flex-col print:max-w-full print:shadow-none print:border-none print:rounded-none"
                         >
                             {/* Result Header - Premium Glassmorphism style */}
-                            {/* Result Header - Premium Glassmorphism style */}
-                            <div className="sticky top-[56px] sm:top-[73px] z-20 bg-white/95 backdrop-blur-xl border-b border-slate-100 p-4 md:p-6 flex flex-col md:flex-row md:items-center justify-between gap-4 md:gap-6 shadow-sm print:static print:shadow-none print:border-none print:bg-white">
+                            <div className="sticky top-0 z-50 bg-white/95 backdrop-blur-xl border-b border-slate-100 p-4 md:p-6 flex flex-col md:flex-row md:items-center justify-between gap-4 md:gap-6 shadow-sm print:static print:shadow-none print:border-none print:bg-white">
                                 <div className="flex items-center gap-5">
                                     <div className={`w-16 h-16 rounded-2xl flex items-center justify-center shadow-lg ${mode === 'lesson' ? 'bg-[#0D5355] text-white shadow-teal-100' :
                                         mode === 'quiz' ? 'bg-amber-500 text-white shadow-amber-200' :
@@ -1064,7 +1078,7 @@ window.onload = function() {
                                             )}
                                         </div>
                                     </div>
-                                </div >
+                                </div>
 
                                 <div className="flex flex-wrap items-center gap-2 print:hidden">
                                     <Button
@@ -1114,42 +1128,166 @@ window.onload = function() {
                                         {result?.status === 'PUBLISHED' ? 'Saved' : <><span className="hidden sm:inline">Save to Library</span><span className="sm:hidden">Save</span></>}
                                     </Button>
                                 </div>
-                            </div >
+                            </div>
 
-                            <div className="p-4 sm:p-8 prose prose-slate max-w-none bg-slate-50/50 min-h-screen">
-                                {/* AI Topic Hero Image (New) */}
-                                {generatedImage && (
-                                    <div className="mb-8 rounded-2xl overflow-hidden shadow-xl border-4 border-white">
-                                        <img
-                                            src={generatedImage}
-                                            alt={topic}
-                                            className="w-full h-[200px] sm:h-[400px] object-cover"
-                                        />
-                                    </div>
-                                )}
-                                {/* ... (Other rendering logic) ... */}
+                            <div className="p-4 sm:p-8 bg-white scroll-mt-20 relative z-10 w-full overflow-visible">
+
+
+
                                 {mode === 'assignment' ? (
-                                    <div className="space-y-8">
+                                    <div className="space-y-12">
+                                        {/* Assignment Header with Image and Key Points */}
+                                        <div className="flex flex-col lg:flex-row gap-10 border-b border-slate-100 pb-12">
+                                            <div className="flex-1 space-y-8">
+                                                <div>
+                                                    <h2 className="text-4xl font-black text-slate-900 mb-4">{result?.title || topic}</h2>
+                                                    <p className="text-lg text-slate-600 font-medium leading-relaxed max-w-2xl">
+                                                        {result?.intro || result?.content?.intro || `This assignment explores the core concepts of ${topic}. Complete all sections to evaluate your understanding.`}
+                                                    </p>
+                                                </div>
+
+                                                {(result?.keyPoints || result?.content?.keyPoints) && (
+                                                    <div className="bg-slate-50 rounded-3xl p-8 border border-slate-100">
+                                                        <h4 className="flex items-center gap-2 text-indigo-900 font-black text-lg mb-6 uppercase tracking-wider">
+                                                            <Target className="w-5 h-5" />
+                                                            Quick Review Points
+                                                        </h4>
+                                                        <ul className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                                            {(result?.keyPoints || result?.content?.keyPoints || []).map((kp: string, i: number) => (
+                                                                <li key={i} className="flex items-start gap-3 bg-white p-4 rounded-xl border border-slate-100 shadow-sm">
+                                                                    <span className="flex-shrink-0 w-6 h-6 rounded-full bg-indigo-600 text-white flex items-center justify-center text-[10px] font-black mt-0.5">{i + 1}</span>
+                                                                    <span className="text-sm font-bold text-slate-700 leading-tight">{kp}</span>
+                                                                </li>
+                                                            ))}
+                                                        </ul>
+                                                    </div>
+                                                )}
+                                            </div>
+
+                                            {generatedImage && (
+                                                <div className="w-full lg:w-80 group">
+                                                    <div className="bg-white p-4 rounded-[2.5rem] shadow-2xl shadow-indigo-100 border border-slate-100 group-hover:scale-105 transition-transform duration-500">
+                                                        <div className="flex items-center gap-2 mb-3 px-2">
+                                                            <div className="w-2 h-2 rounded-full bg-emerald-500" />
+                                                            <span className="text-[10px] font-black uppercase tracking-widest text-slate-400">Assignment Focus</span>
+                                                        </div>
+                                                        <img
+                                                            src={generatedImage}
+                                                            alt={topic}
+                                                            className="w-full aspect-square object-cover rounded-[1.75rem] shadow-sm mb-2"
+                                                        />
+                                                    </div>
+                                                </div>
+                                            )}
+                                        </div>
+                                        {/* Multiple Choice Questions */}
+                                        {(result?.mcqs || result?.content?.mcqs) && (result?.mcqs || result?.content?.mcqs).length > 0 && (
+                                            <div className="bg-indigo-950 rounded-[2.5rem] p-8 md:p-12 text-white shadow-2xl relative overflow-hidden group/mcq">
+                                                {/* Decorative background elements */}
+                                                <div className="absolute top-0 right-0 w-64 h-64 bg-indigo-500/10 rounded-full blur-3xl -mr-32 -mt-32 transition-transform duration-1000 group-hover/mcq:scale-110"></div>
+                                                <div className="absolute bottom-0 left-0 w-64 h-64 bg-violet-500/10 rounded-full blur-3xl -ml-32 -mb-32"></div>
+
+                                                <div className="relative flex flex-col md:flex-row md:items-center justify-between gap-6 mb-12">
+                                                    <div className="flex items-center gap-5">
+                                                        <div className="w-16 h-16 rounded-[1.25rem] bg-indigo-500 flex items-center justify-center text-white shadow-2xl shadow-indigo-500/40">
+                                                            <CheckCircle2 className="w-8 h-8" />
+                                                        </div>
+                                                        <div>
+                                                            <h3 className="text-3xl font-black tracking-tight leading-none mb-2">Multiple Choice</h3>
+                                                            <p className="text-indigo-300 font-medium">Test your knowledge with these selections</p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div className="relative space-y-8">
+                                                    {(result?.mcqs || result?.content?.mcqs).map((m: any, idx: number) => (
+                                                        <div key={idx} className="bg-white/5 backdrop-blur-sm rounded-[2rem] p-6 md:p-10 border border-white/10 hover:border-white/20 transition-all duration-300 group">
+                                                            <div className="flex gap-6 mb-8">
+                                                                <span className="flex-shrink-0 w-12 h-12 rounded-2xl bg-indigo-600 flex items-center justify-center font-black text-white text-xl shadow-lg ring-4 ring-indigo-900/50">{idx + 1}</span>
+                                                                <p className="text-2xl font-bold leading-tight pt-1">{m.question}</p>
+                                                            </div>
+                                                            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 pl-0 md:pl-[4.5rem]">
+                                                                {m.options.map((opt: string, oi: number) => (
+                                                                    <div key={oi} className="group/opt relative p-5 bg-white/5 rounded-2xl border border-white/5 text-slate-100 font-medium hover:bg-white hover:text-indigo-950 hover:shadow-2xl transition-all duration-300 cursor-default flex items-center gap-5">
+                                                                        <span className="w-10 h-10 rounded-xl bg-white/10 flex items-center justify-center text-sm font-black group-hover/opt:bg-indigo-50 group-hover/opt:text-indigo-600 transition-all uppercase italic tracking-tighter shadow-sm">{String.fromCharCode(65 + oi)}</span>
+                                                                        <span className="text-lg leading-snug">{opt}</span>
+                                                                    </div>
+                                                                ))}
+                                                            </div>
+                                                        </div>
+                                                    ))}
+                                                </div>
+                                            </div>
+                                        )}
+
+                                        {/* Match the Following */}
+                                        {(result?.matchFollowing || result?.content?.matchFollowing) && (result?.matchFollowing || result?.content?.matchFollowing).length > 0 && (
+                                            <div className="bg-white rounded-[2.5rem] p-10 border border-slate-200 shadow-xl shadow-slate-200/50 relative group/match">
+                                                <div className="flex items-center gap-3 mb-12">
+                                                    <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-emerald-400 to-teal-600 flex items-center justify-center text-white shadow-2xl shadow-emerald-200">
+                                                        <RotateCcw className="w-7 h-7" />
+                                                    </div>
+                                                    <div>
+                                                        <h3 className="text-3xl font-black text-slate-900 tracking-tight leading-none mb-1">Match Items</h3>
+                                                        <p className="text-slate-500 font-medium">Relate Column A with correct Column B matches</p>
+                                                    </div>
+                                                </div>
+                                                <div className="grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-24 relative">
+                                                    {/* Center divider dashed line */}
+                                                    <div className="hidden md:block absolute left-1/2 top-4 bottom-4 w-px border-l-2 border-dashed border-slate-200 -translate-x-1/2" />
+
+                                                    <div className="space-y-6">
+                                                        <div className="flex items-center justify-between mb-4">
+                                                            <h4 className="text-[10px] font-black uppercase tracking-[0.3em] text-emerald-600 bg-emerald-50 px-3 py-1 rounded-full">Column A</h4>
+                                                            <span className="w-1.5 h-1.5 rounded-full bg-emerald-300 animate-pulse"></span>
+                                                        </div>
+                                                        {(result?.matchFollowing || result?.content?.matchFollowing).map((m: any, idx: number) => (
+                                                            <div key={idx} className="p-6 bg-slate-50 rounded-2xl border border-slate-200 font-bold text-slate-700 flex items-center group/item hover:bg-emerald-50 hover:border-emerald-200 transition-all duration-300">
+                                                                <span className="w-10 h-10 rounded-xl bg-white shadow-sm border border-slate-200 flex items-center justify-center text-sm text-slate-400 mr-5 group-hover/item:text-emerald-600 group-hover/item:border-emerald-100 transition-all font-black uppercase">0{idx + 1}</span>
+                                                                <span className="text-lg leading-tight">{m.left}</span>
+                                                            </div>
+                                                        ))}
+                                                    </div>
+                                                    <div className="space-y-6">
+                                                        <div className="flex items-center justify-between mb-4">
+                                                            <h4 className="text-[10px] font-black uppercase tracking-[0.3em] text-violet-600 bg-violet-50 px-3 py-1 rounded-full">Column B</h4>
+                                                            <span className="w-1.5 h-1.5 rounded-full bg-violet-300 animate-pulse"></span>
+                                                        </div>
+                                                        {(result?.matchFollowing || result?.content?.matchFollowing).map((m: any, idx: number, arr: any[]) => {
+                                                            // Stable logic for displaying B column (stable shift)
+                                                            const itemIdx = (idx + 3) % arr.length;
+                                                            return (
+                                                                <div key={idx} className="p-6 bg-slate-50 rounded-2xl border border-slate-200 font-bold text-slate-700 flex items-center group/item hover:bg-violet-50 hover:border-violet-200 transition-all duration-300">
+                                                                    <span className="w-10 h-10 rounded-xl bg-white shadow-sm border border-slate-200 flex items-center justify-center text-sm text-slate-400 mr-5 group-hover/item:text-violet-600 group-hover/item:border-violet-100 transition-all font-black uppercase italic tracking-tighter">{String.fromCharCode(65 + idx)}</span>
+                                                                    <span className="text-lg leading-tight">{arr[itemIdx].right}</span>
+                                                                </div>
+                                                            );
+                                                        })}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        )}
+
                                         {/* Assignment Questions */}
-                                        <div className="bg-slate-50 rounded-2xl p-6 md:p-8">
+                                        <div className="bg-white/50 rounded-2xl p-6 md:p-8 border border-slate-100">
                                             <div className="flex items-center gap-3 mb-6">
                                                 <div className="w-10 h-10 rounded-xl bg-violet-600 flex items-center justify-center text-white shadow-lg shadow-violet-200">
                                                     <FileText className="w-5 h-5" />
                                                 </div>
-                                                <h3 className="text-xl font-bold text-slate-900">Assignment Questions</h3>
+                                                <h3 className="text-xl font-bold text-slate-900">Descriptive Questions</h3>
                                             </div>
                                             <ul className="space-y-4">
-                                                {(result?.assignmentQuestions || result?.content?.questions || result?.content?.sectionD_ShortAnswers || []).map((q: string, idx: number) => (
+                                                {(result?.assignmentQuestions || result?.content?.assignmentQuestions || result?.content?.questions || result?.content?.sectionD_ShortAnswers || []).map((q: any, idx: number) => (
                                                     <li key={idx} className="flex gap-4 p-4 bg-white rounded-xl border border-slate-200 shadow-sm hover:border-violet-200 transition-colors">
                                                         <span className="flex-shrink-0 w-8 h-8 rounded-full bg-slate-100 flex items-center justify-center font-black text-slate-500 text-sm">{idx + 1}</span>
-                                                        <p className="pt-1 text-slate-700 font-medium leading-relaxed">{q}</p>
+                                                        <p className="pt-1 text-slate-700 font-medium leading-relaxed">{typeof q === 'string' ? q : String(q || "")}</p>
                                                     </li>
                                                 ))}
                                             </ul>
                                         </div>
 
                                         {/* Fill in the Blanks Section */}
-                                        {(result?.fillInTheBlanks || result?.content?.sectionB_FillBlanks) && (result?.fillInTheBlanks || result?.content?.sectionB_FillBlanks).length > 0 && (
+                                        {(result?.fillInTheBlanks || result?.content?.fillInTheBlanks || result?.content?.sectionB_FillBlanks) && (result?.fillInTheBlanks || result?.content?.fillInTheBlanks || result?.content?.sectionB_FillBlanks).length > 0 && (
                                             <div className="bg-amber-50/50 rounded-2xl p-6 md:p-8 border border-amber-100">
                                                 <div className="flex items-center gap-3 mb-6">
                                                     <div className="w-10 h-10 rounded-xl bg-amber-500 flex items-center justify-center text-white shadow-lg shadow-amber-200">
@@ -1158,10 +1296,10 @@ window.onload = function() {
                                                     <h3 className="text-xl font-bold text-slate-900">Fill in the Blanks</h3>
                                                 </div>
                                                 <ul className="space-y-4">
-                                                    {(result?.fillInTheBlanks || result?.content?.sectionB_FillBlanks).map((q: string, idx: number) => (
+                                                    {(result?.fillInTheBlanks || result?.content?.fillInTheBlanks || result?.content?.sectionB_FillBlanks).map((q: any, idx: number) => (
                                                         <li key={idx} className="flex gap-4 p-4 bg-white/80 rounded-xl border border-amber-100/50 shadow-sm hover:border-amber-200 transition-colors">
                                                             <span className="flex-shrink-0 w-8 h-8 rounded-full bg-amber-100 flex items-center justify-center font-black text-amber-600 text-sm">F{idx + 1}</span>
-                                                            <p className="pt-1 text-slate-800 font-medium leading-relaxed">{q}</p>
+                                                            <p className="pt-1 text-slate-800 font-medium leading-relaxed">{typeof q === 'string' ? q : String(q || "")}</p>
                                                         </li>
                                                     ))}
                                                 </ul>
@@ -1174,17 +1312,37 @@ window.onload = function() {
                                                 <div className="w-10 h-10 rounded-xl bg-indigo-600 flex items-center justify-center text-white shadow-lg shadow-indigo-200">
                                                     <Sparkles className="w-5 h-5" />
                                                 </div>
-                                                <h3 className="text-xl font-bold text-slate-900">Activity Questions</h3>
+                                                <h3 className="text-xl font-bold text-slate-900">Activity & Assessment Projects</h3>
                                             </div>
                                             <ul className="space-y-4">
-                                                {(result?.activityQuestions || result?.content?.activities || []).map((q: string, idx: number) => (
+                                                {(result?.activityQuestions || result?.content?.activityQuestions || result?.content?.activities || []).map((q: any, idx: number) => (
                                                     <li key={idx} className="flex gap-4 p-4 bg-white/80 rounded-xl border border-indigo-100/50 shadow-sm">
                                                         <span className="flex-shrink-0 w-8 h-8 rounded-full bg-indigo-100 flex items-center justify-center font-black text-indigo-600 text-sm">A{idx + 1}</span>
-                                                        <p className="pt-1 text-slate-800 font-medium leading-relaxed">{q}</p>
+                                                        <p className="pt-1 text-slate-800 font-medium leading-relaxed">{typeof q === 'string' ? q : String(q || "")}</p>
                                                     </li>
                                                 ))}
                                             </ul>
                                         </div>
+
+                                        {/* Project Ideas */}
+                                        {(result?.projectIdeas || result?.content?.projectIdeas) && (result?.projectIdeas || result?.content?.projectIdeas).length > 0 && (
+                                            <div className="bg-emerald-50/50 rounded-2xl p-6 md:p-8 border border-emerald-100">
+                                                <div className="flex items-center gap-3 mb-6">
+                                                    <div className="w-10 h-10 rounded-xl bg-emerald-600 flex items-center justify-center text-white shadow-lg shadow-emerald-200">
+                                                        <Lightbulb className="w-5 h-5" />
+                                                    </div>
+                                                    <h3 className="text-xl font-bold text-slate-900">Project Based Assessments</h3>
+                                                </div>
+                                                <ul className="space-y-4">
+                                                    {(result?.projectIdeas || result?.content?.projectIdeas).map((q: any, idx: number) => (
+                                                        <li key={idx} className="flex gap-4 p-4 bg-white/80 rounded-xl border border-emerald-100/50 shadow-sm">
+                                                            <span className="flex-shrink-0 w-8 h-8 rounded-full bg-emerald-100 flex items-center justify-center font-black text-emerald-600 text-sm">P{idx + 1}</span>
+                                                            <p className="pt-1 text-slate-800 font-medium leading-relaxed">{typeof q === 'string' ? q : String(q || "")}</p>
+                                                        </li>
+                                                    ))}
+                                                </ul>
+                                            </div>
+                                        )}
 
                                         {/* Answers Section (Toggle) */}
                                         <div className="border-t-2 border-dashed border-slate-200 pt-8 mt-12">
@@ -1213,21 +1371,51 @@ window.onload = function() {
                                                             </div>
 
                                                             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                                                                {/* MCQ Answers */}
+                                                                {(result?.mcqs || result?.content?.mcqs || result?.answers?.mcqs) && (
+                                                                    <div>
+                                                                        <h4 className="font-bold text-emerald-800 mb-4 uppercase tracking-wider text-xs">MCQ Answers</h4>
+                                                                        <ul className="space-y-3">
+                                                                            {(result?.answers?.mcqs || (result?.mcqs || result?.content?.mcqs || []).map((m: any) => m.correct)).map((ans: string, i: number) => (
+                                                                                <li key={i} className="text-sm text-emerald-900/80 bg-white/50 p-3 rounded-lg flex items-center gap-3">
+                                                                                    <span className="w-6 h-6 rounded-full bg-emerald-600 text-white flex items-center justify-center text-[10px] font-black">{i + 1}</span>
+                                                                                    {ans}
+                                                                                </li>
+                                                                            ))}
+                                                                        </ul>
+                                                                    </div>
+                                                                )}
+
+                                                                {/* Match Following Answers */}
+                                                                {(result?.matchFollowing || result?.content?.matchFollowing || result?.answers?.matchFollowing) && (
+                                                                    <div>
+                                                                        <h4 className="font-bold text-emerald-800 mb-4 uppercase tracking-wider text-xs">Match Following Answers</h4>
+                                                                        <ul className="space-y-3">
+                                                                            {(result?.answers?.matchFollowing || (result?.matchFollowing || result?.content?.matchFollowing || []).map((m: any) => `${m.left} → ${m.right}`)).map((ans: string, i: number) => (
+                                                                                <li key={i} className="text-sm text-emerald-900/80 bg-white/50 p-3 rounded-lg">
+                                                                                    {ans}
+                                                                                </li>
+                                                                            ))}
+                                                                        </ul>
+                                                                    </div>
+                                                                )}
+
                                                                 <div>
-                                                                    <h4 className="font-bold text-emerald-800 mb-4 uppercase tracking-wider text-xs">Assignment Answers</h4>
+                                                                    <h4 className="font-bold text-emerald-800 mb-4 uppercase tracking-wider text-xs">Descriptive Answers</h4>
                                                                     <ul className="space-y-4">
-                                                                        {(result?.answers?.assignmentQuestions || result?.answerKey?.Questions || result?.answerKey?.questions || result?.answerKey?.["Section D (Short Answers)"] || []).map((a: string, idx: number) => (
+                                                                        {(result?.answers?.assignmentQuestions || result?.answerKey?.Questions || result?.answerKey?.questions || result?.answerKey?.["Section D (Short Answers)"] || result?.content?.answers?.assignmentQuestions || []).map((a: string, idx: number) => (
                                                                             <li key={idx} className="text-sm text-emerald-900/80 bg-white/50 p-3 rounded-lg">
                                                                                 <span className="font-bold mr-2 text-emerald-600">Q{idx + 1}.</span> {a}
                                                                             </li>
                                                                         ))}
                                                                     </ul>
                                                                 </div>
-                                                                {(result?.answers?.fillInTheBlanks || result?.answerKey?.["Section B (Fill in the Blanks)"]) && (
+
+                                                                {(result?.answers?.fillInTheBlanks || result?.answerKey?.["Section B (Fill in the Blanks)"] || result?.content?.answers?.fillInTheBlanks) && (
                                                                     <div>
                                                                         <h4 className="font-bold text-emerald-800 mb-4 uppercase tracking-wider text-xs">Fill in the Blanks Answers</h4>
                                                                         <ul className="space-y-4">
-                                                                            {(result?.answers?.fillInTheBlanks || result?.answerKey?.["Section B (Fill in the Blanks)"] || []).map((a: string, idx: number) => (
+                                                                            {(result?.answers?.fillInTheBlanks || result?.answerKey?.["Section B (Fill in the Blanks)"] || result?.content?.answers?.fillInTheBlanks || []).map((a: string, idx: number) => (
                                                                                 <li key={idx} className="text-sm text-emerald-900/80 bg-white/50 p-3 rounded-lg">
                                                                                     <span className="font-bold mr-2 text-emerald-600">F{idx + 1}.</span> {a}
                                                                                 </li>
@@ -1235,12 +1423,13 @@ window.onload = function() {
                                                                         </ul>
                                                                     </div>
                                                                 )}
+
                                                                 <div>
-                                                                    <h4 className="font-bold text-emerald-800 mb-4 uppercase tracking-wider text-xs">Activity Answers</h4>
+                                                                    <h4 className="font-bold text-emerald-800 mb-4 uppercase tracking-wider text-xs">Activity & Project Guides</h4>
                                                                     <ul className="space-y-4">
-                                                                        {(result?.answers?.activityQuestions || result?.answerKey?.Activities || result?.answerKey?.activities || []).map((a: string, idx: number) => (
+                                                                        {(result?.answers?.activityQuestions || result?.answerKey?.Activities || result?.answerKey?.activities || result?.content?.answers?.activityQuestions || result?.answers?.projectIdeas || []).map((a: string, idx: number) => (
                                                                             <li key={idx} className="text-sm text-emerald-900/80 bg-white/50 p-3 rounded-lg">
-                                                                                <span className="font-bold mr-2">A{idx + 1}.</span> {a}
+                                                                                <span className="font-bold mr-2 text-emerald-600">G{idx + 1}.</span> {a}
                                                                             </li>
                                                                         ))}
                                                                     </ul>
@@ -1255,31 +1444,41 @@ window.onload = function() {
                                 ) : mode === 'lesson' ? (
                                     <div className="space-y-8 text-slate-800">
                                         {/* Header Section */}
-                                        <div className="border-b border-slate-200 pb-6">
-                                            <h2 className="text-3xl font-black text-slate-900 mb-4">Lesson Plan</h2>
-                                            <div className="flex flex-wrap items-center gap-x-6 gap-y-2 text-sm font-medium text-slate-600">
-                                                <span><span className="font-bold text-indigo-700">Unit:</span> {unitDetails || title || topic}</span>
-                                                <span className="w-1.5 h-1.5 rounded-full bg-slate-300" />
-                                                <span><span className="font-bold text-indigo-700">Duration:</span> {sessionDuration} Min</span>
-                                                <span className="w-1.5 h-1.5 rounded-full bg-slate-300" />
-                                                <span><span className="font-bold text-indigo-700">Sessions:</span> {numSessions}</span>
-                                                {result?.groupSize && (
-                                                    <>
-                                                        <span className="w-1.5 h-1.5 rounded-full bg-slate-300" />
-                                                        <span><span className="font-bold text-indigo-700">Group Size:</span> {result.groupSize}</span>
-                                                    </>
-                                                )}
-                                                {result?.standardsAlignment && (
-                                                    <>
-                                                        <span className="w-1.5 h-1.5 rounded-full bg-slate-300" />
-                                                        <span><span className="font-bold text-rose-600">Standards:</span> {result.standardsAlignment}</span>
-                                                    </>
-                                                )}
-                                            </div >
-                                        </div >
+                                        <div className="flex flex-col md:flex-row gap-8 border-b border-slate-200 pb-8">
+                                            <div className="flex-1">
+                                                <h2 className="text-4xl font-black text-slate-900 mb-6 font-display">Lesson Plan</h2>
+                                                <div className="flex flex-wrap items-center gap-x-6 gap-y-3 text-sm font-bold text-slate-500 uppercase tracking-tight">
+                                                    <div className="flex items-center gap-2">
+                                                        <div className="w-1.5 h-1.5 rounded-full bg-indigo-500" />
+                                                        <span><span className="text-slate-400">Unit:</span> {String(unitDetails || result?.unitDetails || result?.title || result?.content?.title || title || topic || "N/A")}</span>
+                                                    </div>
+                                                    <div className="flex items-center gap-2">
+                                                        <div className="w-1.5 h-1.5 rounded-full bg-indigo-500" />
+                                                        <span><span className="text-slate-400">Duration:</span> {String(sessionDuration || "60")} Min</span>
+                                                    </div>
+                                                    <div className="flex items-center gap-2">
+                                                        <div className="w-1.5 h-1.5 rounded-full bg-indigo-500" />
+                                                        <span><span className="text-slate-400">Sessions:</span> {String(numSessions || "1")}</span>
+                                                    </div>
+                                                    {(result?.groupSize || result?.content?.groupSize) && (
+                                                        <div className="flex items-center gap-2">
+                                                            <div className="w-1.5 h-1.5 rounded-full bg-indigo-500" />
+                                                            <span><span className="text-slate-400">Groups:</span> {String(result.groupSize || result.content?.groupSize)}</span>
+                                                        </div>
+                                                    )}
+                                                </div>
+                                            </div>
+                                            {generatedImage && (
+                                                <div className="shrink-0">
+                                                    <div className="w-32 h-32 rounded-3xl overflow-hidden border-4 border-white shadow-xl rotate-3 hover:rotate-0 transition-all duration-500">
+                                                        <img src={generatedImage} alt={topic} className="w-full h-full object-cover" />
+                                                    </div>
+                                                </div>
+                                            )}
+                                        </div>
 
                                         {/* Learning Outcomes */}
-                                        < div >
+                                        <div className="bg-slate-50/50 p-6 rounded-2xl border border-slate-100">
                                             <div className="flex items-center gap-2 mb-4">
                                                 <div className="w-8 h-8 rounded-lg bg-indigo-50 flex items-center justify-center text-indigo-600">
                                                     <Target className="w-4 h-4" />
@@ -1287,17 +1486,19 @@ window.onload = function() {
                                                 <h4 className="font-bold text-lg text-slate-900">Learning Outcomes:</h4>
                                             </div>
                                             {
-                                                Array.isArray(result?.objective) ? (
+                                                (Array.isArray(result?.objective || result?.content?.objective)) ? (
                                                     <ol className="list-decimal pl-5 space-y-2 marker:text-indigo-600 marker:font-bold">
-                                                        {result.objective.map((obj: string, i: number) => (
-                                                            <li key={i} className="text-slate-700 leading-relaxed pl-2">{obj}</li>
+                                                        {(result.objective || result.content?.objective).map((obj: string, i: number) => (
+                                                            <li key={i} className="text-slate-700 leading-relaxed pl-2">{String(obj)}</li>
                                                         ))}
                                                     </ol>
                                                 ) : (
-                                                    <p className="text-slate-700 leading-relaxed pl-2 border-l-4 border-indigo-100 bg-slate-50/50 p-4 rounded-r-xl">{result?.objective}</p>
+                                                    <p className="text-slate-700 leading-relaxed pl-2 border-l-4 border-indigo-100 bg-white p-4 rounded-r-xl shadow-sm">
+                                                        {String(result?.objective || result?.content?.objective || result?.learningOutcomes || result?.content?.learningOutcomes || "Ready to view learning objectives.")}
+                                                    </p>
                                                 )
                                             }
-                                        </div >
+                                        </div>
 
                                         {/* Materials Needed */}
                                         {
@@ -1310,8 +1511,8 @@ window.onload = function() {
                                                         <h4 className="font-bold text-lg text-slate-900">Materials Needed:</h4>
                                                     </div>
                                                     <ul className="list-disc pl-5 space-y-1 marker:text-slate-400">
-                                                        {(Array.isArray(result.materials) ? result.materials : [result.materials]).map((m: string, i: number) => (
-                                                            <li key={i} className="text-slate-700 leading-relaxed pl-2">{m}</li>
+                                                        {(Array.isArray(result.materials) ? result.materials : [result.materials]).map((m: any, i: number) => (
+                                                            <li key={i} className="text-slate-700 leading-relaxed pl-2">{typeof m === 'string' ? m : String(m || "")}</li>
                                                         ))}
                                                     </ul>
                                                 </div>
@@ -1319,55 +1520,54 @@ window.onload = function() {
                                         }
 
                                         {/* Core Concept Explanation */}
-                                        {
-                                            (result?.explanation || result?.content?.explanation) && (
-                                                <div className="bg-white rounded-2xl border border-slate-100 p-6 shadow-sm">
-                                                    <div className="flex items-center gap-2 mb-4">
-                                                        <div className="w-8 h-8 rounded-lg bg-indigo-50 flex items-center justify-center text-indigo-600">
-                                                            <Brain className="w-4 h-4" />
-                                                        </div>
-                                                        <h4 className="font-bold text-lg text-slate-900">Concept Explanation:</h4>
-                                                    </div>
-                                                    <div className="text-slate-700 leading-relaxed whitespace-pre-wrap text-sm font-medium">
-                                                        {result?.explanation || result?.content?.explanation}
-                                                    </div>
+                                        <div className="bg-white rounded-2xl border border-slate-100 p-6 shadow-sm">
+                                            <div className="flex items-center gap-2 mb-4">
+                                                <div className="w-8 h-8 rounded-lg bg-indigo-50 flex items-center justify-center text-indigo-600">
+                                                    <Brain className="w-4 h-4" />
                                                 </div>
-                                            )
-                                        }
+                                                <h4 className="font-bold text-lg text-slate-900">Concept Explanation:</h4>
+                                            </div>
+                                            <div className="text-slate-700 leading-relaxed whitespace-pre-wrap text-sm font-medium">
+                                                {String(
+                                                    result?.explanation ||
+                                                    result?.content?.explanation ||
+                                                    result?.conceptExplanation ||
+                                                    result?.content?.conceptExplanation ||
+                                                    result?.overview ||
+                                                    "Detailed explanation will be displayed here."
+                                                )}
+                                            </div>
+                                        </div>
 
                                         {/* Pedagogy */}
-                                        {
-                                            result?.pedagogy && (
-                                                <div>
-                                                    <div className="flex items-center gap-2 mb-4">
-                                                        <div className="w-8 h-8 rounded-lg bg-indigo-50 flex items-center justify-center text-indigo-600">
-                                                            <GraduationCap className="w-4 h-4" />
-                                                        </div>
-                                                        <h4 className="font-bold text-lg text-slate-900">Pedagogy:</h4>
+                                        {(result?.pedagogy || result?.content?.pedagogy) && (
+                                            <div>
+                                                <div className="flex items-center gap-2 mb-4">
+                                                    <div className="w-8 h-8 rounded-lg bg-indigo-50 flex items-center justify-center text-indigo-600">
+                                                        <GraduationCap className="w-4 h-4" />
                                                     </div>
-                                                    <div className="text-slate-700 leading-relaxed pl-2 border-l-4 border-indigo-100 bg-slate-50/50 p-4 rounded-r-xl whitespace-pre-wrap text-sm font-medium">
-                                                        {result.pedagogy}
-                                                    </div>
+                                                    <h4 className="font-bold text-lg text-slate-900">Pedagogy:</h4>
                                                 </div>
-                                            )
-                                        }
+                                                <div className="text-slate-700 leading-relaxed pl-2 border-l-4 border-indigo-100 bg-slate-50/50 p-4 rounded-r-xl whitespace-pre-wrap text-sm font-medium">
+                                                    {String(result.pedagogy || result.content?.pedagogy || "")}
+                                                </div>
+                                            </div>
+                                        )}
 
                                         {/* Inquiry based learning */}
-                                        {
-                                            result?.inquiryBasedLearning && (
-                                                <div className="bg-white rounded-2xl border border-dashed border-indigo-200 p-6">
-                                                    <div className="flex items-center gap-2 mb-4">
-                                                        <div className="w-8 h-8 rounded-lg bg-indigo-50 flex items-center justify-center text-indigo-600">
-                                                            <BookOpen className="w-4 h-4" />
-                                                        </div>
-                                                        <h4 className="font-bold text-lg text-indigo-900">Inquiry based learning:</h4>
+                                        {(result?.inquiryBasedLearning || result?.content?.inquiryBasedLearning) && (
+                                            <div className="bg-white rounded-2xl border border-dashed border-indigo-200 p-6">
+                                                <div className="flex items-center gap-2 mb-4">
+                                                    <div className="w-8 h-8 rounded-lg bg-indigo-50 flex items-center justify-center text-indigo-600">
+                                                        <BookOpen className="w-4 h-4" />
                                                     </div>
-                                                    <div className="text-slate-700 leading-relaxed whitespace-pre-wrap text-sm font-medium">
-                                                        {result.inquiryBasedLearning}
-                                                    </div>
+                                                    <h4 className="font-bold text-lg text-indigo-900">Inquiry based learning:</h4>
                                                 </div>
-                                            )
-                                        }
+                                                <div className="text-slate-700 leading-relaxed whitespace-pre-wrap text-sm font-medium">
+                                                    {String(result.inquiryBasedLearning || result.content?.inquiryBasedLearning || "")}
+                                                </div>
+                                            </div>
+                                        )}
 
                                         {/* Lesson Activities and Descriptions */}
                                         <div className="space-y-6">
@@ -1380,19 +1580,7 @@ window.onload = function() {
                                             <div className="space-y-4">
                                                 {
                                                     (() => {
-                                                        let acts = [];
-                                                        try {
-                                                            // @preloadedResult or result are already partially merged in useEffects but we check again here
-                                                            const actsSource = result?.activities || result?.content?.activities || [];
-                                                            acts = typeof actsSource === 'string'
-                                                                ? JSON.parse(actsSource)
-                                                                : (Array.isArray(actsSource) ? actsSource : []);
-                                                        } catch (e) {
-                                                            console.error("Error parsing activities:", e);
-                                                            acts = [];
-                                                        }
-
-                                                        if (!Array.isArray(acts)) acts = [];
+                                                        const acts = safeActivities;
 
                                                         if (acts.length === 0) return <p className="text-slate-400 italic">No activities listed.</p>;
 
@@ -1442,7 +1630,7 @@ window.onload = function() {
                                         </div>
 
                                         {/* Closure Activity */}
-                                        {result?.closure && (
+                                        {(result?.closure || result?.content?.closure) && (
                                             <div className="p-8 bg-indigo-50/40 rounded-3xl border border-indigo-100 border-dashed relative overflow-hidden mt-8">
                                                 <div className="absolute -right-4 -bottom-4 opacity-5">
                                                     <RotateCcw className="w-24 h-24 text-indigo-900" />
@@ -1454,7 +1642,7 @@ window.onload = function() {
                                                     <h4 className="font-bold text-lg text-indigo-900">Closure & Reflection:</h4>
                                                 </div>
                                                 <div className="text-slate-700 leading-relaxed whitespace-pre-wrap text-sm font-bold italic pl-13">
-                                                    {result.closure}
+                                                    {String(result.closure || result.content?.closure || "")}
                                                 </div>
                                             </div>
                                         )}
@@ -1478,40 +1666,38 @@ window.onload = function() {
                                         }
 
                                         {/* Assessment Breakdown */}
-                                        {
-                                            result?.assessment ? (
-                                                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-8">
-                                                    <div className="p-6 bg-slate-50 rounded-2xl border border-slate-200">
-                                                        <h5 className="font-bold text-slate-900 mb-2 flex items-center gap-2">
-                                                            <Eye className="w-4 h-4 text-indigo-600" />
-                                                            Formative Assessment:
-                                                        </h5>
-                                                        <p className="text-sm text-slate-700 leading-relaxed font-medium">{result.assessment.formative}</p>
-                                                    </div>
-                                                    <div className="p-6 bg-slate-50 rounded-2xl border border-slate-200">
-                                                        <h5 className="font-bold text-slate-900 mb-2 flex items-center gap-2">
-                                                            <UserCheck className="w-4 h-4 text-emerald-600" />
-                                                            Individual Assessment:
-                                                        </h5>
-                                                        <p className="text-sm text-slate-700 leading-relaxed font-medium">{result.assessment.individual}</p>
-                                                    </div>
+                                        {(result?.assessment || result?.content?.assessment) ? (
+                                            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-8">
+                                                <div className="p-6 bg-slate-50 rounded-2xl border border-slate-200">
+                                                    <h5 className="font-bold text-slate-900 mb-2 flex items-center gap-2">
+                                                        <Eye className="w-4 h-4 text-indigo-600" />
+                                                        Formative Assessment:
+                                                    </h5>
+                                                    <p className="text-sm text-slate-700 leading-relaxed font-medium">{String((result.assessment || result.content?.assessment)?.formative || "")}</p>
                                                 </div>
-                                            ) : result?.assessmentMethods && result.assessmentMethods.length > 0 && (
-                                                <div>
-                                                    <div className="flex items-center gap-2 mb-4">
-                                                        <div className="w-8 h-8 rounded-lg bg-indigo-50 flex items-center justify-center text-indigo-600">
-                                                            <ShieldCheck className="w-4 h-4" />
-                                                        </div>
-                                                        <h4 className="font-bold text-lg text-slate-900">Assessment Methods:</h4>
-                                                    </div>
-                                                    <ul className="list-disc pl-5 space-y-2 marker:text-slate-400">
-                                                        {(Array.isArray(result.assessmentMethods) ? result.assessmentMethods : []).map((m: string, i: number) => (
-                                                            <li key={i} className="text-slate-700 leading-relaxed pl-2">{m}</li>
-                                                        ))}
-                                                    </ul>
+                                                <div className="p-6 bg-slate-50 rounded-2xl border border-slate-200">
+                                                    <h5 className="font-bold text-slate-900 mb-2 flex items-center gap-2">
+                                                        <UserCheck className="w-4 h-4 text-emerald-600" />
+                                                        Individual Assessment:
+                                                    </h5>
+                                                    <p className="text-sm text-slate-700 leading-relaxed font-medium">{String((result.assessment || result.content?.assessment)?.individual || "")}</p>
                                                 </div>
-                                            )
-                                        }
+                                            </div>
+                                        ) : (result?.assessmentMethods || result?.content?.assessmentMethods) && (result.assessmentMethods || result.content?.assessmentMethods).length > 0 && (
+                                            <div>
+                                                <div className="flex items-center gap-2 mb-4">
+                                                    <div className="w-8 h-8 rounded-lg bg-indigo-50 flex items-center justify-center text-indigo-600">
+                                                        <ShieldCheck className="w-4 h-4" />
+                                                    </div>
+                                                    <h4 className="font-bold text-lg text-slate-900">Assessment Methods:</h4>
+                                                </div>
+                                                <ul className="list-disc pl-5 space-y-2 marker:text-slate-400">
+                                                    {(Array.isArray(result.assessmentMethods || result.content?.assessmentMethods) ? (result.assessmentMethods || result.content?.assessmentMethods) : []).map((m: any, i: number) => (
+                                                        <li key={i} className="text-slate-700 leading-relaxed pl-2">{String(m)}</li>
+                                                    ))}
+                                                </ul>
+                                            </div>
+                                        )}
 
                                         {/* Homework */}
                                         {
@@ -1522,7 +1708,7 @@ window.onload = function() {
                                                         Homework Assignment:
                                                     </h4>
                                                     <div className="text-slate-700 leading-relaxed whitespace-pre-wrap text-sm font-medium">
-                                                        {result.homework}
+                                                        {String(result.homework || result.content?.homework || "")}
                                                     </div>
                                                 </div>
                                             )
@@ -1563,35 +1749,33 @@ window.onload = function() {
                                         }
 
                                         {/* Differentiation */}
-                                        {
-                                            result?.differentiation && (
-                                                <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-8">
-                                                    <div className="p-6 bg-emerald-50 rounded-2xl border border-emerald-100">
-                                                        <h5 className="font-bold text-emerald-900 mb-2 flex items-center gap-2">
-                                                            <Sparkles className="w-4 h-4" />
-                                                            Advanced:
-                                                        </h5>
-                                                        <p className="text-xs text-emerald-800 leading-relaxed font-medium">{result.differentiation.advanced}</p>
-                                                    </div>
-                                                    <div className="p-6 bg-amber-50 rounded-2xl border border-amber-100">
-                                                        <h5 className="font-bold text-amber-900 mb-2 flex items-center gap-2">
-                                                            <Settings2 className="w-4 h-4" />
-                                                            Struggling:
-                                                        </h5>
-                                                        <p className="text-xs text-amber-800 leading-relaxed font-medium">{result.differentiation.struggling}</p>
-                                                    </div>
-                                                    {result.differentiation.ell && (
-                                                        <div className="p-6 bg-blue-50 rounded-2xl border border-blue-100">
-                                                            <h5 className="font-bold text-blue-900 mb-2 flex items-center gap-2">
-                                                                <Languages className="w-4 h-4" />
-                                                                ELL Support:
-                                                            </h5>
-                                                            <p className="text-xs text-blue-800 leading-relaxed font-medium">{result.differentiation.ell}</p>
-                                                        </div>
-                                                    )}
+                                        {(result?.differentiation || result?.content?.differentiation) && (
+                                            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-8">
+                                                <div className="p-6 bg-emerald-50 rounded-2xl border border-emerald-100">
+                                                    <h5 className="font-bold text-emerald-900 mb-2 flex items-center gap-2">
+                                                        <Sparkles className="w-4 h-4" />
+                                                        Advanced:
+                                                    </h5>
+                                                    <p className="text-xs text-emerald-800 leading-relaxed font-medium">{String((result.differentiation || result.content?.differentiation)?.advanced || "")}</p>
                                                 </div>
-                                            )
-                                        }
+                                                <div className="p-6 bg-amber-50 rounded-2xl border border-amber-100">
+                                                    <h5 className="font-bold text-amber-900 mb-2 flex items-center gap-2">
+                                                        <Settings2 className="w-4 h-4" />
+                                                        Struggling:
+                                                    </h5>
+                                                    <p className="text-xs text-amber-800 leading-relaxed font-medium">{String((result.differentiation || result.content?.differentiation)?.struggling || "")}</p>
+                                                </div>
+                                                {(result.differentiation || result.content?.differentiation)?.ell && (
+                                                    <div className="p-6 bg-blue-50 rounded-2xl border border-blue-100">
+                                                        <h5 className="font-bold text-blue-900 mb-2 flex items-center gap-2">
+                                                            <Languages className="w-4 h-4" />
+                                                            ELL Support:
+                                                        </h5>
+                                                        <p className="text-xs text-blue-800 leading-relaxed font-medium">{String((result.differentiation || result.content?.differentiation)?.ell || "")}</p>
+                                                    </div>
+                                                )}
+                                            </div>
+                                        )}
 
                                         {/* Estimated Time Breakdown */}
                                         {
@@ -1857,21 +2041,74 @@ window.onload = function() {
                                                     exit={{ opacity: 0, x: 20 }}
                                                     className="flex flex-col bg-[#FAF9F6] rounded-[2.5rem] overflow-hidden border border-slate-200"
                                                 >
-                                                    <div className="p-10 border-b border-slate-200 bg-white flex-1">
-                                                        <div className="prose prose-slate max-w-none">
-                                                            <ReactMarkdown>{result?.intro || ""}</ReactMarkdown>
-                                                            {result?.pedagogy && (
-                                                                <div className="mt-8 p-6 bg-indigo-50 rounded-2xl border border-indigo-100 italic font-medium">
-                                                                    {result.pedagogy}
+                                                    <div className="p-10 border-b border-slate-200 bg-white">
+                                                        <div className="flex flex-col lg:flex-row gap-10">
+                                                            {/* Main Content Area */}
+                                                            <div className="flex-1 prose prose-slate max-w-none">
+                                                                <h1 className="text-4xl font-black text-slate-900 mb-6">{result?.title || topic}</h1>
+
+                                                                <div className="text-lg leading-relaxed text-slate-700 mb-8 font-medium">
+                                                                    <ReactMarkdown>{result?.intro || ""}</ReactMarkdown>
                                                                 </div>
-                                                            )}
-                                                            <div className="mt-8 space-y-6">
-                                                                {result?.sections?.map((s: any, idx: number) => (
-                                                                    <div key={idx} className="pb-8 border-b border-slate-100 last:border-none">
-                                                                        <h3 className="text-xl font-black text-slate-800 mb-4">{s.heading}</h3>
-                                                                        <div className="text-slate-600 leading-relaxed">{s.content}</div>
+
+                                                                {/* Key Points - Desktop Side / Mobile Top */}
+                                                                {(result?.keyPoints || result?.content?.keyPoints) && (
+                                                                    <div className="bg-indigo-50/50 rounded-3xl p-8 border border-indigo-100 mb-10">
+                                                                        <h4 className="text-indigo-900 font-black text-xl mb-4 flex items-center gap-2">
+                                                                            <Target className="w-5 h-5" />
+                                                                            Key Points to Remember:
+                                                                        </h4>
+                                                                        <ul className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                                                            {(result?.keyPoints || result?.content?.keyPoints || []).map((kp: string, i: number) => (
+                                                                                <li key={i} className="flex items-start gap-3 text-sm font-bold text-slate-700">
+                                                                                    <div className="w-5 h-5 rounded-full bg-indigo-600 flex-shrink-0 flex items-center justify-center text-[10px] text-white mt-0.5">{i + 1}</div>
+                                                                                    {kp}
+                                                                                </li>
+                                                                            ))}
+                                                                        </ul>
                                                                     </div>
-                                                                ))}
+                                                                )}
+
+                                                                <div className="space-y-12">
+                                                                    {(result?.sections || result?.content?.sections || []).map((s: any, idx: number) => (
+                                                                        <div key={idx} className="group">
+                                                                            <h3 className="text-2xl font-black text-slate-800 mb-4 border-l-4 border-indigo-600 pl-4">{s.heading}</h3>
+                                                                            <div className="text-slate-600 leading-relaxed text-base font-medium mb-6">
+                                                                                <ReactMarkdown>{s.content}</ReactMarkdown>
+                                                                            </div>
+                                                                            {s.bulletPoints && s.bulletPoints.length > 0 && (
+                                                                                <ul className="grid grid-cols-1 md:grid-cols-2 gap-3 mb-4">
+                                                                                    {s.bulletPoints.map((bp: string, bi: number) => (
+                                                                                        <li key={bi} className="bg-white p-4 rounded-xl border border-slate-100 flex items-start gap-3 shadow-sm group-hover:border-indigo-100 transition-all">
+                                                                                            <CheckCircle2 className="w-4 h-4 text-emerald-500 mt-0.5 flex-shrink-0" />
+                                                                                            <span className="text-sm font-bold text-slate-700">{bp}</span>
+                                                                                        </li>
+                                                                                    ))}
+                                                                                </ul>
+                                                                            )}
+                                                                        </div>
+                                                                    ))}
+                                                                </div>
+                                                            </div>
+
+                                                            {/* Sidebar - Diagram and Stats */}
+                                                            <div className="w-full lg:w-80 space-y-6">
+                                                                {generatedImage && (
+                                                                    <div className="bg-white p-4 rounded-3xl shadow-xl shadow-slate-200 border border-slate-100 sticky top-10">
+                                                                        <div className="flex items-center gap-2 mb-3 px-2">
+                                                                            <div className="w-2 h-2 rounded-full bg-rose-500 animate-pulse" />
+                                                                            <span className="text-[10px] font-black uppercase tracking-widest text-slate-400">Educational Diagram</span>
+                                                                        </div>
+                                                                        <img
+                                                                            src={generatedImage}
+                                                                            alt="Topic Diagram"
+                                                                            className="w-full aspect-square object-cover rounded-2xl mb-4 border border-slate-100"
+                                                                        />
+                                                                        <p className="text-[11px] font-bold text-slate-500 text-center leading-relaxed px-2">
+                                                                            {result?.illustrationDescription || result?.content?.illustrationDescription || "Visual representation of the core concepts described in this lesson."}
+                                                                        </p>
+                                                                    </div>
+                                                                )}
                                                             </div>
                                                         </div>
                                                     </div>
@@ -1884,22 +2121,113 @@ window.onload = function() {
                                                     exit={{ opacity: 0, x: -20 }}
                                                     className="flex flex-col bg-white rounded-[2.5rem] overflow-hidden border border-slate-200 p-10"
                                                 >
-                                                    <h2 className="text-3xl font-black text-[#1A3263] mb-6">Review Questions</h2>
-                                                    <div className="space-y-6">
-                                                        {result?.reviewQuestions?.map((q: string, i: number) => (
-                                                            <div key={i} className="p-6 bg-slate-50 rounded-2xl border border-slate-100">
-                                                                <span className="font-black text-indigo-600 mr-2">{i + 1}.</span> {q}
+                                                    {/* Study Tips Section */}
+                                                    {(result?.preparationTips || result?.content?.preparationTips) && (result?.preparationTips || result?.content?.preparationTips).length > 0 && (
+                                                        <div className="mb-12">
+                                                            <div className="flex items-center gap-3 mb-6">
+                                                                <div className="w-10 h-10 rounded-xl bg-amber-500 flex items-center justify-center text-white shadow-lg shadow-amber-100">
+                                                                    <Lightbulb className="w-5 h-5" />
+                                                                </div>
+                                                                <h2 className="text-3xl font-black text-slate-800">Study Tips</h2>
+                                                            </div>
+                                                            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                                                {(result?.preparationTips || result?.content?.preparationTips).map((tip: string, i: number) => (
+                                                                    <div key={i} className="p-5 bg-amber-50/50 rounded-2xl border border-amber-100 flex items-start gap-3">
+                                                                        <div className="mt-1 text-amber-600 font-black text-lg">💡</div>
+                                                                        <p className="text-sm font-bold text-amber-900/80">{tip}</p>
+                                                                    </div>
+                                                                ))}
+                                                            </div>
+                                                        </div>
+                                                    )}
+
+                                                    <div className="flex items-center gap-3 mb-6">
+                                                        <div className="w-10 h-10 rounded-xl bg-[#1A3263] flex items-center justify-center text-white shadow-lg shadow-blue-100">
+                                                            <HelpCircle className="w-5 h-5" />
+                                                        </div>
+                                                        <h2 className="text-3xl font-black text-[#1A3263]">Review Questions</h2>
+                                                    </div>
+
+                                                    <div className="space-y-6 mb-12">
+                                                        {(result?.reviewQuestions || result?.content?.reviewQuestions || []).map((q: string, i: number) => (
+                                                            <div key={i} className="p-6 bg-slate-50 rounded-2xl border border-slate-100 flex items-start gap-4">
+                                                                <span className="font-black text-indigo-600 min-w-8">Q{i + 1}.</span>
+                                                                <p className="text-slate-800 font-bold leading-relaxed">{q}</p>
                                                             </div>
                                                         ))}
                                                     </div>
+
+                                                    {/* Answer Key for Material */}
+                                                    {(result?.answerKey || result?.content?.answerKey) && (result?.answerKey || result?.content?.answerKey).length > 0 && (
+                                                        <div className="mt-6 pt-10 border-t border-slate-100">
+                                                            <Button
+                                                                variant="outline"
+                                                                onClick={() => setShowAnswerKey(!showAnswerKey)}
+                                                                className={`w-full h-14 rounded-2xl border-2 transition-all flex items-center justify-center gap-2 font-black ${showAnswerKey ? 'bg-emerald-50 border-emerald-200 text-emerald-700' : 'bg-white border-slate-100 text-slate-600 hover:border-indigo-200 hover:text-indigo-600'}`}
+                                                            >
+                                                                {showAnswerKey ? <ChevronRight className="w-5 h-5 rotate-90" /> : <ChevronRight className="w-5 h-5" />}
+                                                                {showAnswerKey ? "Hide Answer Key" : "View Answers for Questions"}
+                                                            </Button>
+
+                                                            <AnimatePresence>
+                                                                {showAnswerKey && (
+                                                                    <motion.div
+                                                                        initial={{ opacity: 0, height: 0 }}
+                                                                        animate={{ opacity: 1, height: 'auto' }}
+                                                                        exit={{ opacity: 0, height: 0 }}
+                                                                        className="overflow-hidden"
+                                                                    >
+                                                                        <div className="mt-6 space-y-4">
+                                                                            {(result?.answerKey || result?.content?.answerKey).map((ans: string, i: number) => (
+                                                                                <div key={i} className="p-6 bg-emerald-50/50 rounded-2xl border border-emerald-100 flex items-start gap-4">
+                                                                                    <span className="font-black text-emerald-600 min-w-8">A{i + 1}.</span>
+                                                                                    <p className="text-emerald-900 font-bold leading-relaxed">{ans}</p>
+                                                                                </div>
+                                                                            ))}
+                                                                        </div>
+                                                                    </motion.div>
+                                                                )}
+                                                            </AnimatePresence>
+                                                        </div>
+                                                    )}
                                                 </motion.div>
                                             )}
                                         </AnimatePresence>
                                     </div>
+                                ) : mode === 'presentation' ? (
+                                    <div className="space-y-12">
+                                        <div className="bg-slate-900 rounded-[2rem] p-10 text-white relative overflow-hidden group">
+                                            <div className="absolute top-0 right-0 p-8 opacity-20 rotate-12 transition-transform group-hover:rotate-0">
+                                                <Presentation className="w-32 h-32" />
+                                            </div>
+                                            <h2 className="text-4xl font-black mb-4 relative z-10">{result?.title || "Presentation Slides"}</h2>
+                                            <p className="text-slate-400 text-lg font-medium relative z-10">{result?.explanation || "A comprehensive slide deck for your lesson."}</p>
+                                        </div>
+
+                                        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                                            {(result?.slides || []).map((slide: any, i: number) => (
+                                                <div key={i} className="bg-white rounded-[2rem] border-2 border-slate-100 p-8 shadow-xl shadow-slate-100/50 hover:border-indigo-100 transition-all flex flex-col min-h-[300px]">
+                                                    <div className="flex items-center gap-3 mb-6">
+                                                        <div className="w-10 h-10 rounded-xl bg-indigo-600 flex items-center justify-center text-white font-black">
+                                                            {i + 1}
+                                                        </div>
+                                                        <h3 className="text-xl font-bold text-slate-900">{slide.title || slide.heading}</h3>
+                                                    </div>
+                                                    <div className="flex-1 text-slate-700 font-medium leading-relaxed">
+                                                        <ReactMarkdown>{slide.content || (Array.isArray(slide.points) ? slide.points.join('\n') : "")}</ReactMarkdown>
+                                                    </div>
+                                                </div>
+                                            ))}
+                                        </div>
+                                    </div>
                                 ) : (
                                     <div className="bg-slate-50/50 rounded-2xl border border-slate-100 p-10">
                                         <div className="prose prose-slate prose-indigo max-w-none">
-                                            <ReactMarkdown>{result?.content || result?.explanation || ""}</ReactMarkdown>
+                                            <ReactMarkdown>
+                                                {typeof (result?.content || result?.explanation) === 'string'
+                                                    ? (result?.content || result?.explanation)
+                                                    : String(result?.content || result?.explanation || "")}
+                                            </ReactMarkdown>
                                         </div>
                                     </div>
                                 )}
