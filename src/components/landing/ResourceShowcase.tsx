@@ -71,7 +71,8 @@ const ResourceShowcase = () => {
                             whileInView={{ opacity: 1, y: 0 }}
                             viewport={{ once: true }}
                             transition={{ delay: index * 0.1 }}
-                            className="group flex flex-col"
+                            className="group flex flex-col cursor-pointer"
+                            onClick={() => window.location.href = "/for-teachers"}
                         >
                             {/* Visual Card Area */}
                             <div className={`${resource.bg} rounded-[2rem] p-8 aspect-[4/5] relative overflow-hidden transition-transform duration-500 hover:-translate-y-2 mb-6 flex items-center justify-center`}>

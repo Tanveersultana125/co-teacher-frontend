@@ -122,8 +122,8 @@ export function QuizGeneratorTab() {
                     <div className="w-20 h-20 bg-emerald-100 rounded-full flex items-center justify-center mx-auto mb-6">
                         <CheckCircle2 className="w-10 h-10 text-emerald-600" />
                     </div>
-                    <h2 className="text-4xl font-black font-display text-slate-900">Quiz Generated Successfully!</h2>
-                    <p className="text-xl text-slate-500 max-w-2xl mx-auto">
+                    <h2 className="text-2xl sm:text-4xl font-black font-display text-slate-900">Quiz Generated Successfully!</h2>
+                    <p className="text-base sm:text-xl text-slate-500 max-w-2xl mx-auto px-4">
                         Your AI quiz on <span className="font-bold text-indigo-600">{topicId}</span> is ready.
                         How would you like to proceed?
                     </p>
@@ -134,7 +134,7 @@ export function QuizGeneratorTab() {
                         className="group hover:ring-2 hover:ring-indigo-600 cursor-pointer transition-all hover:shadow-xl border-dashed border-2 border-slate-200"
                         onClick={() => setIsReviewMode(true)}
                     >
-                        <CardContent className="p-8 flex flex-col items-center text-center h-full justify-center space-y-4">
+                        <CardContent className="p-4 sm:p-8 flex flex-col items-center text-center h-full justify-center space-y-4">
                             <div className="w-16 h-16 bg-slate-100 rounded-2xl flex items-center justify-center group-hover:bg-indigo-50 transition-colors">
                                 <Textarea className="w-8 h-8 text-slate-500 group-hover:text-indigo-600 border-none shadow-none pointer-events-none" />
                                 {/* Using icon abstractly */}
@@ -154,7 +154,7 @@ export function QuizGeneratorTab() {
                         onClick={() => setShowPreview(true)}
                     >
                         <div className="absolute top-0 right-0 -mr-16 -mt-16 w-64 h-64 bg-white/10 rounded-full blur-3xl"></div>
-                        <CardContent className="p-8 flex flex-col items-center text-center h-full justify-center space-y-4 relative z-10">
+                        <CardContent className="p-4 sm:p-8 flex flex-col items-center text-center h-full justify-center space-y-4 relative z-10">
                             <div className="w-16 h-16 bg-white/20 rounded-2xl flex items-center justify-center backdrop-blur-sm">
                                 <Sparkles className="w-8 h-8 text-yellow-300" />
                             </div>
@@ -181,7 +181,7 @@ export function QuizGeneratorTab() {
                     <p className="text-slate-500 font-medium">Create interactive assessments in seconds</p>
                 </div>
 
-                <Card className="border-none shadow-sm bg-white p-8">
+                <Card className="border-none shadow-sm bg-white p-4 sm:p-8">
                     <div className="space-y-6 max-w-2xl mx-auto">
                         {/* Institute Name */}
                         <div className="space-y-2">
@@ -326,23 +326,23 @@ export function QuizGeneratorTab() {
                             </div>
                         </div>
 
-                        <div className="flex items-center justify-between">
+                        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
                             <h3 className="text-xl font-bold text-slate-800">Generated Questions (Editor)</h3>
-                            <div className="flex gap-3">
+                            <div className="flex flex-wrap gap-2 sm:gap-3">
                                 <Button
-                                    className="font-bold bg-indigo-600 hover:bg-indigo-700 text-white shadow-lg shadow-indigo-200"
+                                    className="font-bold bg-indigo-600 hover:bg-indigo-700 text-white shadow-lg shadow-indigo-200 text-xs sm:text-sm h-9 sm:h-10"
                                     onClick={() => setShowPreview(true)}
                                 >
-                                    <Send className="w-4 h-4 mr-2" />
-                                    Play Quiz (Student View)
+                                    <Send className="w-3.5 h-3.5 sm:w-4 sm:h-4 mr-1.5 sm:mr-2" />
+                                    Play Quiz
                                 </Button>
                                 <Button
                                     onClick={() => saveMutation.mutate({ title: "New Quiz", topicId, questions })}
-                                    className="bg-emerald-600 hover:bg-emerald-700 font-bold"
+                                    className="bg-emerald-600 hover:bg-emerald-700 font-bold text-xs sm:text-sm h-9 sm:h-10"
                                     disabled={saveMutation.isPending}
                                 >
-                                    {saveMutation.isPending ? <Loader2 className="w-4 h-4 animate-spin" /> : <Save className="w-4 h-4 mr-2" />}
-                                    Save to Library
+                                    {saveMutation.isPending ? <Loader2 className="w-3.5 h-3.5 animate-spin" /> : <Save className="w-3.5 h-3.5 sm:w-4 sm:h-4 mr-1.5 sm:mr-2" />}
+                                    Save
                                 </Button>
                             </div>
                         </div>
@@ -569,30 +569,30 @@ function QuizPreview({ questions, topic, onClose }: { questions: any[], topic: s
                     <div className="absolute top-0 right-0 w-96 h-96 bg-indigo-600/20 rounded-full blur-3xl opacity-50"></div>
                     <div className="absolute bottom-0 left-0 w-96 h-96 bg-cyan-600/20 rounded-full blur-3xl opacity-50"></div>
 
-                    <CardContent className="p-12 text-center relative z-10">
+                    <CardContent className="p-6 sm:p-12 text-center relative z-10">
                         <div className="mb-8">
-                            <h2 className="text-4xl font-black font-display mb-2 tracking-tight">QUIZ RESULT</h2>
-                            <p className="text-slate-400 text-lg uppercase tracking-widest font-bold">Performance Summary</p>
+                            <h2 className="text-3xl sm:text-4xl font-black font-display mb-2 tracking-tight">QUIZ RESULT</h2>
+                            <p className="text-slate-400 text-sm sm:text-lg uppercase tracking-widest font-bold">Performance Summary</p>
                         </div>
 
-                        <div className="grid grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
-                            <div className="bg-white/10 border border-white/10 rounded-2xl p-6 backdrop-blur-sm">
-                                <div className="text-slate-400 font-bold mb-2">SCORE</div>
-                                <div className="text-5xl font-black text-yellow-400">{score} / {questions.length}</div>
+                        <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 mb-12">
+                            <div className="bg-white/10 border border-white/10 rounded-2xl p-4 sm:p-6 backdrop-blur-sm text-center">
+                                <div className="text-slate-400 font-bold mb-2 text-[10px] sm:text-xs">SCORE</div>
+                                <div className="text-3xl sm:text-5xl font-black text-yellow-400">{score} / {questions.length}</div>
                             </div>
-                            <div className="bg-white/10 border border-white/10 rounded-2xl p-6 backdrop-blur-sm">
-                                <div className="text-slate-400 font-bold mb-2">ACCURACY</div>
-                                <div className="text-5xl font-black text-emerald-400">{Math.round((score / questions.length) * 100)}%</div>
+                            <div className="bg-white/10 border border-white/10 rounded-2xl p-4 sm:p-6 backdrop-blur-sm text-center">
+                                <div className="text-slate-400 font-bold mb-2 text-[10px] sm:text-xs">ACCURACY</div>
+                                <div className="text-3xl sm:text-5xl font-black text-emerald-400">{Math.round((score / questions.length) * 100)}%</div>
                             </div>
-                            <div className="bg-white/10 border border-white/10 rounded-2xl p-6 backdrop-blur-sm">
-                                <div className="text-slate-400 font-bold mb-2">GRADE</div>
-                                <div className="text-5xl font-black text-indigo-400">
+                            <div className="bg-white/10 border border-white/10 rounded-2xl p-4 sm:p-6 backdrop-blur-sm text-center">
+                                <div className="text-slate-400 font-bold mb-2 text-[10px] sm:text-xs">GRADE</div>
+                                <div className="text-3xl sm:text-5xl font-black text-indigo-400">
                                     {(score / questions.length) >= 0.8 ? 'A' : (score / questions.length) >= 0.5 ? 'B' : 'C'}
                                 </div>
                             </div>
-                            <div className="bg-white/10 border border-white/10 rounded-2xl p-6 backdrop-blur-sm relative overflow-hidden group">
-                                <div className="text-slate-400 font-bold mb-2">MASTERY</div>
-                                <div className="text-3xl font-black text-cyan-400 uppercase tracking-tighter">
+                            <div className="bg-white/10 border border-white/10 rounded-2xl p-4 sm:p-6 backdrop-blur-sm relative overflow-hidden group text-center">
+                                <div className="text-slate-400 font-bold mb-2 text-[10px] sm:text-xs">MASTERY</div>
+                                <div className="text-xl sm:text-3xl font-black text-cyan-400 uppercase tracking-tighter">
                                     {(score / questions.length) >= 0.9 ? 'Master' :
                                         (score / questions.length) >= 0.7 ? 'Advanced' :
                                             (score / questions.length) >= 0.5 ? 'Proficient' :
@@ -606,8 +606,8 @@ function QuizPreview({ questions, topic, onClose }: { questions: any[], topic: s
                                             <div
                                                 key={lvl}
                                                 className={`h-2 w-full rounded-full transition-all duration-500 ${isActive
-                                                        ? 'bg-cyan-400 shadow-[0_0_8px_rgba(34,211,238,0.5)]'
-                                                        : 'bg-white/10'
+                                                    ? 'bg-cyan-400 shadow-[0_0_8px_rgba(34,211,238,0.5)]'
+                                                    : 'bg-white/10'
                                                     }`}
                                                 style={{ transitionDelay: `${lvl * 100}ms` }}
                                             />
@@ -667,7 +667,7 @@ function QuizPreview({ questions, topic, onClose }: { questions: any[], topic: s
     return (
         <div ref={topRef} className="max-w-5xl mx-auto pb-20 space-y-6 min-h-[600px] flex flex-col">
             {/* Game Header */}
-            <div className="flex items-center justify-between bg-[#547792] text-white p-4 rounded-2xl shadow-lg border border-white/10">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between bg-[#547792] text-white p-4 rounded-2xl shadow-lg border border-white/10 gap-4">
                 <div className="flex items-center gap-4">
                     <Button variant="ghost" onClick={onClose} className="text-slate-400 hover:text-white hover:bg-white/10 p-2 h-auto rounded-full">
                         ← Exit
@@ -679,7 +679,7 @@ function QuizPreview({ questions, topic, onClose }: { questions: any[], topic: s
                 </div>
 
                 {/* Progress & Score */}
-                <div className="flex items-center gap-8">
+                <div className="flex items-center justify-between sm:justify-end gap-4 sm:gap-8 border-t border-white/10 sm:border-none pt-2 sm:pt-0">
                     <div className="text-center">
                         <div className="text-xs text-slate-400 font-bold uppercase tracking-wider">Question</div>
                         <div className="font-mono text-2xl font-bold">{currentIndex + 1}<span className="text-slate-500 text-lg">/{questions.length}</span></div>
@@ -705,8 +705,8 @@ function QuizPreview({ questions, topic, onClose }: { questions: any[], topic: s
             {/* Question Area */}
             <div className="flex-1 flex flex-col justify-center animate-in fade-in slide-in-from-bottom-8 duration-500">
                 <Card className="border-none shadow-xl overflow-hidden bg-white ring-1 ring-slate-200 mb-6">
-                    <CardContent className="p-8 md:p-12 text-center">
-                        <h3 className="text-2xl md:text-3xl font-bold text-slate-900 leading-snug">
+                    <CardContent className="p-6 sm:p-10 md:p-12 text-center">
+                        <h3 className="text-xl sm:text-2xl md:text-3xl font-bold text-slate-900 leading-snug">
                             {currentQuestion.question}
                         </h3>
                     </CardContent>
@@ -786,13 +786,13 @@ function QuizPreview({ questions, topic, onClose }: { questions: any[], topic: s
                                 key={i}
                                 disabled={isLocked}
                                 onClick={() => handleOptionSelect(opt)}
-                                className={`group relative w-full text-left p-6 rounded-2xl font-bold text-lg transition-all duration-200 flex items-center gap-4 ${containerClass}`}
+                                className={`group relative w-full text-left p-4 sm:p-6 rounded-2xl font-bold text-base sm:text-lg transition-all duration-200 flex items-center gap-3 sm:gap-4 ${containerClass}`}
                             >
                                 {/* Option Label Badge (A, B, C, D) */}
-                                <div className={`w-10 h-10 rounded-lg flex items-center justify-center text-sm font-black shrink-0 transition-colors ${badgeClass}`}>
+                                <div className={`w-8 h-8 sm:w-10 sm:h-10 rounded-lg flex items-center justify-center text-xs sm:text-sm font-black shrink-0 transition-colors ${badgeClass}`}>
                                     {label}
                                 </div>
-                                <span className="leading-snug">{opt}</span>
+                                <span className="leading-snug text-sm sm:text-base">{opt}</span>
                             </button>
                         );
                     })}
@@ -800,7 +800,7 @@ function QuizPreview({ questions, topic, onClose }: { questions: any[], topic: s
             </div>
 
             {/* Footer / Controls */}
-            <div className="flex items-center justify-between pt-4">
+            <div className="flex flex-col sm:flex-row items-center justify-between gap-4 pt-4">
                 {/* Lifelines */}
                 <div className="flex gap-3">
                     <Button

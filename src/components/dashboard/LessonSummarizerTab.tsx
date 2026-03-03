@@ -132,16 +132,16 @@ export function LessonSummarizerTab() {
     const canSubmit = mode === "upload" ? !!file : !!textInput.trim();
 
     return (
-        <div className="w-full min-h-full bg-[#F8FAFC] text-slate-900 p-8">
-            <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12 items-start min-h-[80vh]">
+        <div className="w-full min-h-full bg-[#F8FAFC] text-slate-900 p-4 sm:p-8">
+            <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-start min-h-[80vh]">
 
                 {/* Left Side - Input UI */}
                 <div className="space-y-8 sticky top-8">
                     <div className="space-y-2">
-                        <h1 className="text-4xl lg:text-5xl font-display font-bold tracking-tight text-slate-900 leading-tight">
+                        <h1 className="text-3xl sm:text-4xl lg:text-5xl font-display font-bold tracking-tight text-slate-900 leading-tight">
                             AI Lesson Summarizer
                         </h1>
-                        <p className="text-slate-500 text-lg font-medium">
+                        <p className="text-slate-500 text-base sm:text-lg font-medium">
                             Upload a PDF or paste text to get an instant AI-powered lesson summary.
                         </p>
                     </div>
@@ -150,7 +150,7 @@ export function LessonSummarizerTab() {
                     <div className="flex p-1 bg-white rounded-xl w-fit border border-slate-200 shadow-sm">
                         <button
                             onClick={() => setMode("upload")}
-                            className={`flex items-center gap-2 px-6 py-2.5 rounded-lg text-sm font-bold transition-all ${mode === "upload"
+                            className={`flex items-center gap-2 px-4 sm:px-6 py-2.5 rounded-lg text-xs sm:text-sm font-bold transition-all ${mode === "upload"
                                 ? "bg-[#36656B] text-white shadow-md"
                                 : "text-slate-500 hover:text-slate-800 hover:bg-slate-50"}`}
                         >
@@ -158,7 +158,7 @@ export function LessonSummarizerTab() {
                         </button>
                         <button
                             onClick={() => setMode("text")}
-                            className={`flex items-center gap-2 px-6 py-2.5 rounded-lg text-sm font-bold transition-all ${mode === "text"
+                            className={`flex items-center gap-2 px-4 sm:px-6 py-2.5 rounded-lg text-xs sm:text-sm font-bold transition-all ${mode === "text"
                                 ? "bg-[#36656B] text-white shadow-md"
                                 : "text-slate-500 hover:text-slate-800 hover:bg-slate-50"}`}
                         >
@@ -281,9 +281,9 @@ export function LessonSummarizerTab() {
                             >
                                 {/* Card Header */}
                                 <div className="bg-white rounded-3xl border border-slate-200 shadow-xl overflow-hidden">
-                                    <div className="p-6 border-b border-slate-100 flex items-center justify-between">
-                                        <h3 className="text-xl font-bold text-slate-900">Summarize</h3>
-                                        <div className="flex items-center gap-1 bg-slate-100 rounded-xl p-1">
+                                    <div className="p-4 sm:p-6 border-b border-slate-100 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                                        <h3 className="text-xl font-bold text-slate-900">Summary Result</h3>
+                                        <div className="flex items-center gap-1 bg-slate-100 rounded-xl p-1 w-fit">
                                             <button
                                                 onClick={() => setDisplayMode("bullets")}
                                                 className={`flex items-center gap-1.5 px-4 py-2 rounded-lg text-sm font-bold transition-all ${displayMode === "bullets"

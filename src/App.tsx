@@ -20,7 +20,17 @@ const Contact = lazy(() => import("./pages/Contact"));
 const NotFound = lazy(() => import("./pages/NotFound"));
 const ForTeachers = lazy(() => import("./pages/ForTeachers"));
 
-const queryClient = new QueryClient();
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      staleTime: 1000 * 60 * 15, // 15 minutes of "freshness"
+      gcTime: 1000 * 60 * 60,    // Keep in cache for 1 hour
+      refetchOnWindowFocus: false, // Don't refetch when switching tabs
+      refetchOnReconnect: false,   // Don't refetch on net reconnect
+      retry: 1,                    // Only retry once if failed
+    }
+  }
+});
 
 // PART 2: Block UI until Auth Resolves & PART 3: Routing Logic
 const AppRoutes = () => {

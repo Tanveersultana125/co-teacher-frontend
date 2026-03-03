@@ -23,7 +23,8 @@ import {
   TrendingUp,
   MessageSquare,
   Sparkles,
-  Presentation
+  Presentation,
+  Menu
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
@@ -89,12 +90,14 @@ const TeacherDashboard = () => {
     { icon: FileText, label: "Assignments", color: "emerald", bgColor: "bg-emerald-50", iconColor: "text-emerald-600", mode: "lesson" },
   ];
 
+  const { user } = useAuth();
   const { data: dashboardStats, isLoading: statsLoading } = useQuery({
     queryKey: ['dashboard-stats'],
     queryFn: async () => {
       const res = await api.get('/dashboard/stats');
       return res.data;
-    }
+    },
+    enabled: !!user?.id
   });
 
   const { data: lessons, isLoading: lessonsLoading } = useQuery({
@@ -102,7 +105,8 @@ const TeacherDashboard = () => {
     queryFn: async () => {
       const res = await api.get('/lessons', { params: { limit: 5 } });
       return res.data;
-    }
+    },
+    enabled: !!user?.id
   });
 
 
@@ -192,8 +196,8 @@ const TeacherDashboard = () => {
       </aside>
 
       {/* Main Content */}
-      <main className="flex-1 lg:ml-64 overflow-x-hidden min-h-screen">
-        <header className="bg-white/80 backdrop-blur-md sticky top-0 z-30 border-b border-slate-100 px-4 lg:px-8 py-4 print:hidden">
+      <main className="flex-1 lg:ml-64 overflow-x-hidden min-h-screen bg-slate-50">
+        <header className="bg-white/80 backdrop-blur-md sticky top-0 z-30 border-b border-slate-100 px-3 sm:px-6 lg:px-8 py-3 sm:py-4 print:hidden">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-4">
               <button
@@ -201,11 +205,11 @@ const TeacherDashboard = () => {
                 className="lg:hidden p-2 text-slate-600 hover:bg-slate-100 rounded-lg transition-colors"
                 aria-label="Toggle Menu"
               >
-                <Plus className="w-6 h-6" />
+                <Menu className="w-6 h-6" />
               </button>
               <div>
-                <h1 className="text-xl lg:text-2xl font-bold text-slate-900 font-display transition-all">Welcome back!</h1>
-                <p className="text-slate-500 text-xs lg:text-sm mt-0.5 font-medium hidden xs:block">Manage your classes and AI content</p>
+                <h1 className="text-lg lg:text-2xl font-bold text-slate-900 font-display transition-all">Welcome back!</h1>
+                <p className="text-slate-500 text-[10px] lg:text-sm mt-0.5 font-medium hidden xs:block">Manage your classes and AI content</p>
               </div>
             </div>
           </div>

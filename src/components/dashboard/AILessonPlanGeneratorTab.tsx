@@ -43,13 +43,13 @@ export function AILessonPlanGeneratorTab({ initialMode = "lesson", preloadedLess
             </div>
 
             {/* Modern Sub-Tab Switcher */}
-            <div className="flex p-1.5 bg-slate-100/80 rounded-2xl w-fit border border-slate-200 shadow-inner print:hidden">
+            <div className="flex p-1.5 bg-slate-100/80 rounded-2xl w-full sm:w-fit border border-slate-200 shadow-inner overflow-x-auto no-scrollbar print:hidden">
                 <button
                     onClick={() => {
                         setActiveSubTab("generate");
                         setPreloadedLesson(null); // Clear when manually switching back? 
                     }}
-                    className={`flex items-center gap-2 px-6 py-2.5 rounded-xl text-sm font-bold transition-all ${activeSubTab === "generate"
+                    className={`flex items-center gap-2 px-4 sm:px-6 py-2.5 rounded-xl text-xs sm:text-sm font-bold transition-all whitespace-nowrap ${activeSubTab === "generate"
                         ? "bg-white text-indigo-600 shadow-sm border border-slate-200"
                         : "text-slate-500 hover:text-slate-700"
                         }`}
@@ -59,7 +59,7 @@ export function AILessonPlanGeneratorTab({ initialMode = "lesson", preloadedLess
                 </button>
                 <button
                     onClick={() => setActiveSubTab("library")}
-                    className={`flex items-center gap-2 px-6 py-2.5 rounded-xl text-sm font-bold transition-all ${activeSubTab === "library"
+                    className={`flex items-center gap-2 px-4 sm:px-6 py-2.5 rounded-xl text-xs sm:text-sm font-bold transition-all whitespace-nowrap ${activeSubTab === "library"
                         ? "bg-white text-indigo-600 shadow-sm border border-slate-200"
                         : "text-slate-500 hover:text-slate-700"
                         }`}

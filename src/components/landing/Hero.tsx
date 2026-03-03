@@ -25,17 +25,24 @@ const Hero = () => {
 
           <div className="flex justify-center relative z-20">
             <button
-              className="bg-white hover:bg-white/95 text-slate-900 rounded-full px-8 sm:px-12 h-14 sm:h-16 flex items-center justify-center gap-3 font-bold text-lg sm:text-xl shadow-xl hover:scale-[1.02] active:scale-[0.98] transition-all border border-slate-100"
-              onClick={handleGenerate}
+              className="bg-white hover:bg-white/95 text-slate-900 rounded-full px-8 sm:px-12 h-14 sm:h-16 flex items-center justify-center gap-3 font-bold text-lg sm:text-xl shadow-xl hover:scale-[1.05] active:scale-[0.95] transition-all border border-slate-100 group"
+              onClick={() => {
+                const user = localStorage.getItem('user_data');
+                if (user) {
+                  navigate("/dashboard");
+                } else {
+                  navigate("/for-teachers");
+                }
+              }}
             >
-              <Sparkles className="w-5 h-5 sm:w-6 sm:h-6" />
+              <Sparkles className="w-5 h-5 sm:w-6 sm:h-6 text-[#FF7444] group-hover:rotate-12 transition-transform" />
               Generate Resources
             </button>
           </div>
 
         </div>
 
-        <div className="mt-12 sm:mt-16 relative z-10 pointer-events-none select-none h-[400px] sm:h-[500px] w-full">
+        <div className="mt-8 sm:mt-16 relative z-10 pointer-events-none select-none h-[450px] sm:h-[600px] w-full">
           <ScrollingShowcase />
         </div>
 

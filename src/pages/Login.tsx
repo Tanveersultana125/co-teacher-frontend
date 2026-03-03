@@ -17,7 +17,7 @@ const Login = () => {
   const [error, setError] = useState("");
 
   const { manualLogin } = useAuth(); // Use context
-  // const navigate = useNavigate(); // REMOVED: Navigation handled by App.tsx based on auth state
+  const navigate = useNavigate();
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -28,7 +28,7 @@ const Login = () => {
       const res = await api.post("/auth/login", { email, password });
       // PART 4: AuthProvider will update state. For manual login, we inform the provider.
       manualLogin(res.data.user, res.data.token);
-      // No navigate('/') call needed. App.tsx will detect 'user' and redirect.
+      navigate("/dashboard");
     } catch (err: any) {
       setError(err.response?.data?.error || "Login failed. Please check your credentials.");
       setIsLoading(false);
