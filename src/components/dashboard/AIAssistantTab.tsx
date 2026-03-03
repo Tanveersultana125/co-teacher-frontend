@@ -234,22 +234,24 @@ export function AIAssistantTab({ initialMode = "lesson", preloadedResult }: AIAs
             return;
         }
 
-        // Trial Limit Check: Block if user has already created a lesson
-        try {
-            const statsRes = await api.get('/dashboard/stats');
-            const lessonsCount = statsRes.data.lessonsCreated || 0;
-            if (lessonsCount >= 1) {
-                toast.error("Free trial limit reached (1 lesson). Upgrade to create more!", {
-                    description: "You've used your 1 free lesson plan.",
-                    duration: 5000,
-                });
-                return;
-            }
-        } catch (err) {
-            console.error("Stats check failed", err);
-            // If it's a 401, the interceptor will handle it, but we should stop here too
-            if ((err as any).response?.status === 401) return;
-        }
+        // Trial Limit Check: Removed for testing as per user request
+        /*
+                try {
+                    const statsRes = await api.get('/dashboard/stats');
+                    const lessonsCount = statsRes.data.lessonsCreated || 0;
+                    if (lessonsCount >= 1) {
+                        toast.error("Free trial limit reached (1 lesson). Upgrade to create more!", {
+                            description: "You've used your 1 free lesson plan.",
+                            duration: 5000,
+                        });
+                        return;
+                    }
+                } catch (err) {
+                    console.error("Stats check failed", err);
+                    // If it's a 401, the interceptor will handle it, but we should stop here too
+                    if ((err as any).response?.status === 401) return;
+                }
+        */
 
         setIsGenerating(true);
         setGenerationProgress(0);

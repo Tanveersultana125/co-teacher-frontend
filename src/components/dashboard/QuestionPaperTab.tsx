@@ -158,19 +158,21 @@ export function QuestionPaperTab() {
                         className="w-full h-12 bg-[#4F46E5] font-bold rounded-xl"
                         disabled={!formData.subject || generateMutation.isPending}
                         onClick={async () => {
-                            // Trial Limit Check: Block if user has already created something
-                            try {
-                                const statsRes = await api.get('/dashboard/stats');
-                                const lessonsCount = statsRes.data.lessonsCreated || 0;
-                                if (lessonsCount >= 1) {
-                                    toast.error("Free trial limit reached (1 resource). Upgrade to create more!", {
-                                        description: "You've used your 1 free AI generation.",
-                                    });
-                                    return;
-                                }
-                            } catch (err) {
-                                console.error("Stats check failed", err);
-                            }
+                            // Trial Limit Check: Removed for testing as per user request
+                            /*
+                                                        try {
+                                                            const statsRes = await api.get('/dashboard/stats');
+                                                            const lessonsCount = statsRes.data.lessonsCreated || 0;
+                                                            if (lessonsCount >= 1) {
+                                                                toast.error("Free trial limit reached (1 resource). Upgrade to create more!", {
+                                                                    description: "You've used your 1 free AI generation.",
+                                                                });
+                                                                return;
+                                                            }
+                                                        } catch (err) {
+                                                            console.error("Stats check failed", err);
+                                                        }
+                            */
                             generateMutation.mutate(formData);
                         }}
                     >

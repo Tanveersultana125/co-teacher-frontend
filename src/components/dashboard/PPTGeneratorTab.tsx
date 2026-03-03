@@ -51,20 +51,22 @@ export function PPTGeneratorTab() {
             return;
         }
 
-        // Trial Limit Check: Block if user has already created something
-        try {
-            const statsRes = await api.get('/dashboard/stats');
-            const lessonsCount = statsRes.data.lessonsCreated || 0;
-            if (lessonsCount >= 1) {
-                toast.error("Free trial limit reached (1 resource). Upgrade to create more!", {
-                    description: "You've used your 1 free AI generation.",
-                });
-                return;
-            }
-        } catch (err) {
-            console.error("Stats check failed", err);
-            if ((err as any).response?.status === 401) return;
-        }
+        // Trial Limit Check: Removed for testing as per user request
+        /*
+                try {
+                    const statsRes = await api.get('/dashboard/stats');
+                    const lessonsCount = statsRes.data.lessonsCreated || 0;
+                    if (lessonsCount >= 1) {
+                        toast.error("Free trial limit reached (1 resource). Upgrade to create more!", {
+                            description: "You've used your 1 free AI generation.",
+                        });
+                        return;
+                    }
+                } catch (err) {
+                    console.error("Stats check failed", err);
+                    if ((err as any).response?.status === 401) return;
+                }
+        */
 
         setIsGenerating(true);
         setGeneratedPPT(null);

@@ -100,7 +100,7 @@ const TeacherDashboard = () => {
   const { data: lessons, isLoading: lessonsLoading } = useQuery({
     queryKey: ['lessons'],
     queryFn: async () => {
-      const res = await api.get('/lessons', { params: { limit: 5 } });
+      const res = await api.get('/lessons');
       return res.data;
     }
   });
