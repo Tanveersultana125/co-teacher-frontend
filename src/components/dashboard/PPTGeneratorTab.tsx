@@ -39,7 +39,10 @@ export function PPTGeneratorTab() {
         setIsGenerating(true);
         try {
             const token = localStorage.getItem('token');
-            const response = await fetch(`${import.meta.env.VITE_API_URL || 'http://localhost:5000/api'}/ppt/generate-ppt`, {
+            const baseUrl = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
+            const apiBase = baseUrl.endsWith('/api') || baseUrl.endsWith('/api/') ? baseUrl : (baseUrl.endsWith('/') ? `${baseUrl}api` : `${baseUrl}/api`);
+
+            const response = await fetch(`${apiBase}/ppt/generate-ppt`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
@@ -78,7 +81,10 @@ export function PPTGeneratorTab() {
     const handleDownloadExisting = async (ppt: any) => {
         try {
             const token = localStorage.getItem('token');
-            const response = await fetch(`${import.meta.env.VITE_API_URL || 'http://localhost:5000/api'}/ppt/generate-ppt`, {
+            const baseUrl = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
+            const apiBase = baseUrl.endsWith('/api') || baseUrl.endsWith('/api/') ? baseUrl : (baseUrl.endsWith('/') ? `${baseUrl}api` : `${baseUrl}/api`);
+
+            const response = await fetch(`${apiBase}/ppt/generate-ppt`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
