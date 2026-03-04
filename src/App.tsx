@@ -19,6 +19,7 @@ const PricingPage = lazy(() => import("./pages/PricingPage"));
 const Contact = lazy(() => import("./pages/Contact"));
 const NotFound = lazy(() => import("./pages/NotFound"));
 const ForTeachers = lazy(() => import("./pages/ForTeachers"));
+const PPTGenerator = lazy(() => import("./pages/PPTGenerator"));
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -67,6 +68,7 @@ const AppRoutes = () => {
         <Route path="/student" element={user ? <StudentDashboard /> : <Navigate to="/login" replace />} />
         <Route path="/parent" element={user ? <ParentDashboard /> : <Navigate to="/login" replace />} />
         <Route path="/quiz/:id" element={user ? <QuizPage /> : <Navigate to="/login" replace />} />
+        <Route path="/ppt-generator" element={user ? <PPTGenerator /> : <Navigate to="/login" replace />} />
 
         <Route path="*" element={<NotFound />} />
       </Routes>
