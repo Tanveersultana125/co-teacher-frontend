@@ -38,25 +38,10 @@ export function PPTGeneratorTab() {
 
         setIsGenerating(true);
         try {
-            const token = localStorage.getItem('token');
-            const baseUrl = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
-            const apiBase = baseUrl.endsWith('/api') || baseUrl.endsWith('/api/') ? baseUrl : (baseUrl.endsWith('/') ? `${baseUrl}api` : `${baseUrl}/api`);
-
-            const response = await fetch(`${apiBase}/ppt/generate-ppt`, {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                    "Authorization": `Bearer ${token}`
-                },
-                body: JSON.stringify({ topic })
+            const response = await api.post('/ppt/generate-ppt', { topic }, {
+                responseType: 'blob'
             });
-
-            if (!response.ok) {
-                const errorData = await response.json();
-                throw new Error(errorData.error || "Failed to generate presentation");
-            }
-
-            const blob = await response.blob();
+            const blob = new Blob([response.data], { type: 'application/vnd.openxmlformats-officedocument.presentationml.presentation' });
             const url = window.URL.createObjectURL(blob);
 
             const a = document.createElement('a');
@@ -72,7 +57,21 @@ export function PPTGeneratorTab() {
             setTopic("");
         } catch (error: any) {
             console.error("PPT Generation Error:", error);
-            toast({ title: "Generation Failed", description: error.message, variant: "destructive" });
+            let errorMessage = "Failed to generate presentation";
+
+            if (error.response?.data instanceof Blob) {
+                const text = await error.response.data.text();
+                try {
+                    const json = JSON.parse(text);
+                    errorMessage = json.error || errorMessage;
+                } catch (e) {
+                    errorMessage = "Server error (500). Please check if your API keys are valid.";
+                }
+            } else if (error.message) {
+                errorMessage = error.message;
+            }
+
+            toast({ title: "Generation Failed", description: errorMessage, variant: "destructive" });
         } finally {
             setIsGenerating(false);
         }
@@ -80,25 +79,14 @@ export function PPTGeneratorTab() {
 
     const handleDownloadExisting = async (ppt: any) => {
         try {
-            const token = localStorage.getItem('token');
-            const baseUrl = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
-            const apiBase = baseUrl.endsWith('/api') || baseUrl.endsWith('/api/') ? baseUrl : (baseUrl.endsWith('/') ? `${baseUrl}api` : `${baseUrl}/api`);
-
-            const response = await fetch(`${apiBase}/ppt/generate-ppt`, {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                    "Authorization": `Bearer ${token}`
-                },
-                body: JSON.stringify({
-                    topic: ppt.title.replace(' Presentation', ''),
-                    slides: ppt.content.slides
-                })
+            const response = await api.post('/ppt/generate-ppt', {
+                topic: ppt.title.replace(' Presentation', ''),
+                slides: ppt.content.slides
+            }, {
+                responseType: 'blob'
             });
 
-            if (!response.ok) throw new Error("Export failed");
-
-            const blob = await response.blob();
+            const blob = new Blob([response.data], { type: 'application/vnd.openxmlformats-officedocument.presentationml.presentation' });
             const url = window.URL.createObjectURL(blob);
             const a = document.createElement('a');
             a.href = url;
@@ -110,7 +98,7 @@ export function PPTGeneratorTab() {
 
             toast({ title: "Downloaded", description: "Presentation file is ready." });
         } catch (error: any) {
-            toast({ title: "Error", description: error.message, variant: "destructive" });
+            toast({ title: "Error", description: "Export failed. Please try again.", variant: "destructive" });
         }
     };
 
