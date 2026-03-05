@@ -79,11 +79,9 @@ export function LessonSummarizerTab() {
             if (mode === "upload" && file) {
                 const formData = new FormData();
                 formData.append('file', file);
-                // Using new production-grade analysis route
+                // DO NOT set Content-Type manually — Axios auto-sets it with boundary for FormData
                 console.log("[FRONTEND] Sending PDF to analysis/pdf...");
-                res = await api.post('/analysis/pdf', formData, {
-                    headers: { 'Content-Type': 'multipart/form-data' },
-                });
+                res = await api.post('/analysis/pdf', formData, { timeout: 60000 });
             } else {
                 console.log("[FRONTEND] Sending text to lessons/summarize...");
                 res = await api.post('/lessons/summarize', { text: textInput });
