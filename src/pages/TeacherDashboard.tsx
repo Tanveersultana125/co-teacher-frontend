@@ -97,16 +97,20 @@ const TeacherDashboard = () => {
       const res = await api.get('/dashboard/stats');
       return res.data;
     },
-    enabled: !!user?.id
+    enabled: !!user?.id,
+    staleTime: 1000 * 60 * 30, // 30 minutes - stats are not real-time
+    retry: 0, // Don't retry on failure (quota exhausted)
   });
 
   const { data: lessons, isLoading: lessonsLoading } = useQuery({
-    queryKey: ['lessons'],
+    queryKey: ['lessons', 'dashboard-preview'],
     queryFn: async () => {
-      const res = await api.get('/lessons');
+      // Only fetch 10 for the dashboard preview (we only show 5)
+      const res = await api.get('/lessons?limit=10');
       return res.data;
     },
-    enabled: !!user?.id
+    enabled: !!user?.id,
+    staleTime: 1000 * 60 * 20, // 20 minutes - lessons don't change that often
   });
 
 
