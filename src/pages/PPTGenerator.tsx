@@ -9,7 +9,7 @@ const PPTGenerator = () => {
     const navigate = useNavigate();
 
     return (
-        <div className="min-h-screen bg-[#F8FAFC] p-4 md:p-8">
+        <div className="min-h-screen mesh-gradient p-4 md:p-8">
             <div className="max-w-7xl mx-auto">
                 <Button
                     variant="ghost"

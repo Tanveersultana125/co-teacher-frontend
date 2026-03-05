@@ -33,7 +33,8 @@ import {
     RotateCcw,
     Eye,
     UserCheck,
-    Languages
+    Languages,
+    Bookmark
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
@@ -81,6 +82,7 @@ export function AIAssistantTab({ initialMode = "lesson", preloadedResult }: AIAs
     const [instituteName, setInstituteName] = useState("");
     const [openTopic, setOpenTopic] = useState(false);
     const [openSubject, setOpenSubject] = useState(false);
+    const [responseLanguage, setResponseLanguage] = useState("auto");
     // Quiz Config
     const [quizDifficulty, setQuizDifficulty] = useState("Mixed");
     const [quizNumQuestions, setQuizNumQuestions] = useState(5);
@@ -95,7 +97,12 @@ export function AIAssistantTab({ initialMode = "lesson", preloadedResult }: AIAs
     const [isUploading, setIsUploading] = useState(false);
     const [isSaving, setIsSaving] = useState(false);
     const [result, setResult] = useState<any>(preloadedResult || null);
+    const [subjectSearch, setSubjectSearch] = useState("");
+    const [topicSearch, setTopicSearch] = useState("");
     const [activeActivityIndex, setActiveActivityIndex] = useState<number | null>(null);
+    const [generatedImage, setGeneratedImage] = useState<string | null>(null);
+    const [visualImages, setVisualImages] = useState<string[]>([]);
+    const [isPrinting, setIsPrinting] = useState(false);
 
     const getSafeActivities = (res: any) => {
         if (!res) return [];
@@ -113,10 +120,8 @@ export function AIAssistantTab({ initialMode = "lesson", preloadedResult }: AIAs
     const [userAnswers, setUserAnswers] = useState<Record<number, string>>({});
     const [showQuickAction, setShowQuickAction] = useState(false);
     const [currentPage, setCurrentPage] = useState(1);
-    const [generatedImage, setGeneratedImage] = useState<string | null>(null);
     const [isEditingLink, setIsEditingLink] = useState(false);
     const [tempLink, setTempLink] = useState({ title: "", url: "" });
-    const [isPrinting, setIsPrinting] = useState(false);
 
     const queryClient = useQueryClient();
 
@@ -148,24 +153,38 @@ export function AIAssistantTab({ initialMode = "lesson", preloadedResult }: AIAs
     // Auto-fetch topic-relevant image from Unsplash when result loads
     useEffect(() => {
         if ((mode === 'material' || mode === 'assignment' || mode === 'lesson') && result && topic) {
-            setGeneratedImage(null); // reset first
-            // Build a search query from topic + subject + illustration description
-            const illustrationHint = result?.illustrationDescription || "";
-            const searchQuery = encodeURIComponent(
-                `${topic} ${subject} ${illustrationHint}`.trim().substring(0, 60)
-            );
-            // Use Unsplash Source API (no key needed) with a random seed per topic
-            const seed = encodeURIComponent(topic + subject);
-            const unsplashUrl = `https://source.unsplash.com/800x800/?${searchQuery}&sig=${seed}`;
-            // Verify it loads
-            const img = new Image();
-            img.onload = () => setGeneratedImage(unsplashUrl);
-            img.onerror = () => {
-                // Fallback: use picsum with topic-based seed
-                const fallback = `https://picsum.photos/seed/${seed}/800/800`;
-                setGeneratedImage(fallback);
-            };
-            img.src = unsplashUrl;
+            setGeneratedImage(null);
+            setVisualImages([]);
+
+            // Use visualAids from AI if available (usually in English for better search)
+            const prompts = result?.visualAids || [];
+
+            if (prompts.length > 0) {
+                // Fetch multiple images
+                const imageUrls: string[] = [];
+                prompts.forEach((prompt: string, idx: number) => {
+                    const searchQuery = encodeURIComponent(prompt.trim().substring(0, 60));
+                    const seed = encodeURIComponent(topic + subject + idx);
+                    imageUrls.push(`https://source.unsplash.com/800x800/?${searchQuery}&sig=${seed}`);
+                });
+                setVisualImages(imageUrls);
+                setGeneratedImage(imageUrls[0]); // Primary image
+            } else {
+                // Legacy single-image fallback
+                const illustrationHint = result?.illustrationDescription || "";
+                const searchQuery = encodeURIComponent(
+                    `${topic} ${subject}`.trim().substring(0, 40)
+                );
+                const seed = encodeURIComponent(topic + subject);
+                const unsplashUrl = `https://source.unsplash.com/800x800/?${searchQuery}&sig=${seed}`;
+                const img = new Image();
+                img.onload = () => setGeneratedImage(unsplashUrl);
+                img.onerror = () => {
+                    const fallback = `https://picsum.photos/seed/${seed}/800/800`;
+                    setGeneratedImage(fallback);
+                };
+                img.src = unsplashUrl;
+            }
         }
     }, [mode, result, topic, subject]);
 
@@ -225,12 +244,13 @@ export function AIAssistantTab({ initialMode = "lesson", preloadedResult }: AIAs
 
     const handleGenerate = async () => {
         // Validation: For non-quiz modes, strict check. For quiz, allow if topic is present.
-        if (mode !== 'quiz' && (!grade || !subject || !topic)) {
-            toast.error("Please select all required fields");
+        // If PDF is uploaded, we allow topic to be missing as AI can infer it.
+        if (mode !== 'quiz' && !pdfText && (!grade || !subject || !topic)) {
+            toast.error("Please select all required fields or upload a PDF");
             return;
         }
-        if (mode === 'quiz' && !topic) {
-            toast.error("Please enter a topic");
+        if (mode === 'quiz' && !topic && !pdfText) {
+            toast.error("Please enter a topic or upload a PDF");
             return;
         }
 
@@ -287,7 +307,7 @@ export function AIAssistantTab({ initialMode = "lesson", preloadedResult }: AIAs
             let endpoint = '';
             // If quiz mode and fields are missing, provide defaults
             const effectiveGrade = grade || "10";
-            const effectiveSubject = subject || "General";
+            const effectiveSubject = subject || (pdfText ? "Context from PDF" : "General");
 
             let payload: any = {
                 curriculum: board,
@@ -299,7 +319,8 @@ export function AIAssistantTab({ initialMode = "lesson", preloadedResult }: AIAs
 
                 duration: sessionDuration,
                 unitDetails,
-                numSessions
+                numSessions,
+                language: responseLanguage
             };
 
             if (mode === 'lesson') {
@@ -326,6 +347,7 @@ export function AIAssistantTab({ initialMode = "lesson", preloadedResult }: AIAs
             }
 
             const res = await api.post(endpoint, payload);
+            console.log("[DEBUG] API Response data:", JSON.stringify(res.data, null, 2));
             setResult({ ...res.data, instituteName });
             if (res.data.generatedImage) {
                 setGeneratedImage(res.data.generatedImage);
@@ -523,17 +545,17 @@ window.onload = function() {
 
 
     return (
-        <div className="flex flex-col bg-slate-50 min-h-[calc(100vh-140px)] relative">
-            {/* Sticky Horizontal Config Bar */}
+        <div className="flex flex-col bg-transparent min-h-[calc(100vh-140px)] relative">
+            {/* Sticky Horizontal Config Bar - Compact Version */}
             {true && (
-                <div className="sticky top-[64px] sm:top-[80px] z-50 bg-white/80 backdrop-blur-xl border-b border-slate-200 px-4 sm:px-6 py-3 sm:py-4 shadow-sm print:hidden">
-                    <div className="max-w-[1600px] mx-auto flex flex-col md:flex-row items-stretch md:items-end gap-3 sm:gap-4">
-                        {/* Selectors Group - Using Flex for stability */}
-                        <div className="grid grid-cols-2 sm:flex sm:flex-wrap items-end gap-2 sm:gap-3 flex-1 overflow-visible">
-                            <div className="flex flex-col gap-1.5 col-span-1">
-                                <label className="text-[10px] font-black uppercase tracking-widest text-slate-400 ml-1">Type</label>
+                <div className="sticky top-[64px] md:top-[70px] z-40 bg-white/95 backdrop-blur-xl border-b border-slate-200 px-4 sm:px-6 py-1.5 shadow-md print:hidden">
+                    <div className="max-w-[1600px] mx-auto flex flex-col items-stretch gap-1.5">
+                        {/* Row 1: Selectors - Higher Z-index for dropdowns */}
+                        <div className="flex flex-wrap items-end gap-2 flex-1 overflow-visible relative z-20">
+                            <div className="flex flex-col gap-1">
+                                <label className="text-[9px] font-black uppercase tracking-widest text-slate-400 ml-1">Type</label>
                                 <Select value={mode} onValueChange={(v: any) => setMode(v)}>
-                                    <SelectTrigger className="bg-slate-50 border-slate-200 h-10 sm:h-11 rounded-xl text-xs font-bold ring-offset-white focus:ring-2 ring-indigo-500/10">
+                                    <SelectTrigger className="bg-slate-50 border-slate-200 h-9 rounded-lg text-[11px] font-bold ring-offset-white focus:ring-2 ring-indigo-500/10 min-w-[110px]">
                                         <SelectValue placeholder="Type" />
                                     </SelectTrigger>
                                     <SelectContent>
@@ -545,10 +567,10 @@ window.onload = function() {
                                 </Select>
                             </div>
 
-                            <div className="flex flex-col gap-1.5 col-span-1">
-                                <label className="text-[10px] font-black uppercase tracking-widest text-slate-400 ml-1">Curriculum</label>
+                            <div className="flex flex-col gap-1">
+                                <label className="text-[9px] font-black uppercase tracking-widest text-slate-400 ml-1">Curriculum</label>
                                 <Select value={board} onValueChange={setBoard}>
-                                    <SelectTrigger className="bg-slate-50 border-slate-200 h-10 sm:h-11 rounded-xl text-xs font-bold ring-offset-white focus:ring-2 ring-indigo-500/10">
+                                    <SelectTrigger className="bg-slate-50 border-slate-200 h-9 rounded-lg text-[11px] font-bold ring-offset-white focus:ring-2 ring-indigo-500/10 min-w-[80px]">
                                         <SelectValue placeholder="Board" />
                                     </SelectTrigger>
                                     <SelectContent>
@@ -559,10 +581,10 @@ window.onload = function() {
                                 </Select>
                             </div>
 
-                            <div className="flex flex-col gap-1.5 col-span-1">
-                                <label className="text-[10px] font-black uppercase tracking-widest text-slate-400 ml-1">Grade</label>
+                            <div className="flex flex-col gap-1">
+                                <label className="text-[9px] font-black uppercase tracking-widest text-slate-400 ml-1">Grade</label>
                                 <Select value={grade} onValueChange={setGrade}>
-                                    <SelectTrigger className="bg-slate-50 border-slate-200 h-10 sm:h-11 rounded-xl text-xs font-bold ring-offset-white focus:ring-2 ring-indigo-500/10">
+                                    <SelectTrigger className="bg-slate-50 border-slate-200 h-9 rounded-lg text-[11px] font-bold ring-offset-white focus:ring-2 ring-indigo-500/10 min-w-[90px]">
                                         <SelectValue placeholder="Grade" />
                                     </SelectTrigger>
                                     <SelectContent>
@@ -573,30 +595,46 @@ window.onload = function() {
                                 </Select>
                             </div>
 
-                            <div className="flex flex-col gap-1.5 col-span-1 sm:min-w-[140px]">
-                                <label className="text-[10px] font-black uppercase tracking-widest text-slate-400 ml-1">Subject</label>
+                            <div className="flex flex-col gap-1 sm:min-w-[130px]">
+                                <label className="text-[9px] font-black uppercase tracking-widest text-slate-400 ml-1">Subject</label>
                                 <Popover open={openSubject} onOpenChange={setOpenSubject}>
                                     <PopoverTrigger asChild>
                                         <Button
                                             variant="outline"
                                             role="combobox"
                                             aria-expanded={openSubject}
-                                            disabled={!grade || isLoadingMetadata}
-                                            className="w-full h-10 sm:h-11 flex items-center justify-between rounded-xl border border-slate-200 bg-slate-50 px-3 sm:px-4 py-2 text-xs font-bold ring-offset-white focus:ring-2 ring-indigo-500/10 hover:bg-slate-50 text-slate-700 hover:text-slate-900"
+                                            disabled={isLoadingMetadata}
+                                            className="w-full h-9 flex items-center justify-between rounded-lg border border-slate-200 bg-slate-50 px-3 py-2 text-[11px] font-bold ring-offset-white focus:ring-2 ring-indigo-500/10 hover:bg-slate-50 text-slate-700 hover:text-slate-900"
                                         >
                                             <span className="truncate flex-1 text-left">
-                                                {subject || (isLoadingMetadata ? "Loading..." : "Select or type subject...")}
+                                                {subject || (isLoadingMetadata ? "Loading..." : "Select subject...")}
                                             </span>
-                                            <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+                                            <ChevronsUpDown className="ml-1 h-3 w-3 shrink-0 opacity-50" />
                                         </Button>
                                     </PopoverTrigger>
-                                    <PopoverContent className="w-[--radix-popover-trigger-width] p-0" align="start">
-                                        <Command>
+                                    <PopoverContent className="w-[--radix-popover-trigger-width] p-0 z-[110]" align="start">
+                                        <Command value={subjectSearch} onValueChange={setSubjectSearch}>
                                             <CommandInput placeholder="Search or type custom subject..." />
                                             <CommandList>
                                                 <CommandEmpty>
                                                     <div className="p-2">
                                                         <p className="text-xs text-muted-foreground mb-2">No subject found.</p>
+                                                        {subjectSearch && (
+                                                            <Button
+                                                                variant="ghost"
+                                                                size="sm"
+                                                                className="w-full justify-start text-xs font-bold text-indigo-600 hover:text-indigo-700 hover:bg-indigo-50"
+                                                                onClick={() => {
+                                                                    setSubject(subjectSearch);
+                                                                    setTopic("");
+                                                                    setOpenSubject(false);
+                                                                    setSubjectSearch("");
+                                                                }}
+                                                            >
+                                                                <Sparkles className="mr-2 h-3.5 w-3.5" />
+                                                                Add "{subjectSearch}"
+                                                            </Button>
+                                                        )}
                                                     </div>
                                                 </CommandEmpty>
                                                 <CommandGroup heading="Curriculum Subjects">
@@ -605,9 +643,10 @@ window.onload = function() {
                                                             key={s}
                                                             value={s}
                                                             onSelect={(val) => {
-                                                                setSubject(val === subject ? "" : val);
+                                                                setSubject(val);
                                                                 setTopic("");
                                                                 setOpenSubject(false);
+                                                                setSubjectSearch("");
                                                             }}
                                                         >
                                                             <Check className={cn("mr-2 h-4 w-4", subject === s ? "opacity-100" : "opacity-0")} />
@@ -615,51 +654,49 @@ window.onload = function() {
                                                         </CommandItem>
                                                     ))}
                                                 </CommandGroup>
+                                                {subjectSearch && !subjectsList.some(s => s.toLowerCase() === subjectSearch.toLowerCase()) && (
+                                                    <CommandGroup heading="Custom Content">
+                                                        <CommandItem
+                                                            value={subjectSearch}
+                                                            onSelect={() => {
+                                                                setSubject(subjectSearch);
+                                                                setTopic("");
+                                                                setOpenSubject(false);
+                                                                setSubjectSearch("");
+                                                            }}
+                                                            className="text-indigo-600 font-bold"
+                                                        >
+                                                            <Sparkles className="mr-2 h-4 w-4" />
+                                                            Add "{subjectSearch}"
+                                                        </CommandItem>
+                                                    </CommandGroup>
+                                                )}
                                             </CommandList>
-                                            <div className="p-2 border-t border-slate-100 bg-slate-50">
-                                                <p className="text-[10px] text-slate-400 mb-1">Or type your own:</p>
-                                                <div className="flex gap-2">
-                                                    <input
-                                                        className="flex-1 bg-white border border-slate-200 rounded-md px-2 py-1 text-xs font-medium"
-                                                        placeholder="Custom subject..."
-                                                        value={subject}
-                                                        onChange={(e) => { setSubject(e.target.value); setTopic(""); }}
-                                                        onKeyDown={(e) => {
-                                                            e.stopPropagation();
-                                                            if (e.key === 'Enter') setOpenSubject(false);
-                                                        }}
-                                                    />
-                                                    <button
-                                                        onClick={() => setOpenSubject(false)}
-                                                        className="px-3 py-1 bg-indigo-600 text-white text-xs rounded-md font-bold hover:bg-indigo-700 transition-colors"
-                                                    >Set</button>
-                                                </div>
-                                            </div>
                                         </Command>
                                     </PopoverContent>
                                 </Popover>
                             </div>
 
                             {/* Topic - Combobox with Custom Input */}
-                            <div className="flex flex-col gap-1.5 col-span-2 sm:flex-1">
-                                <label className="text-[10px] font-black uppercase tracking-widest text-slate-400 ml-1">Topic</label>
+                            <div className="flex flex-col gap-1 sm:min-w-[160px] flex-1">
+                                <label className="text-[9px] font-black uppercase tracking-widest text-slate-400 ml-1">Topic</label>
                                 <Popover open={openTopic} onOpenChange={setOpenTopic}>
                                     <PopoverTrigger asChild>
                                         <Button
                                             variant="outline"
                                             role="combobox"
                                             aria-expanded={openTopic}
-                                            disabled={!subject || isLoadingMetadata}
-                                            className="w-full h-10 sm:h-11 flex items-center justify-between rounded-xl border border-slate-200 bg-slate-50 px-3 sm:px-4 py-2 text-xs font-bold ring-offset-white focus:ring-2 ring-indigo-500/10 hover:bg-slate-50 text-slate-700 hover:text-slate-900"
+                                            disabled={isLoadingMetadata}
+                                            className="w-full h-9 flex items-center justify-between rounded-lg border border-slate-200 bg-slate-50 px-3 py-2 text-[11px] font-bold ring-offset-white focus:ring-2 ring-indigo-500/10 hover:bg-slate-50 text-slate-700 hover:text-slate-900"
                                         >
                                             <span className="truncate flex-1 text-left">
-                                                {topic || (isLoadingMetadata ? "Loading..." : "Select or type topic...")}
+                                                {topic || (isLoadingMetadata ? "Loading..." : "Select topic...")}
                                             </span>
-                                            <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+                                            <ChevronsUpDown className="ml-1 h-3 w-3 shrink-0 opacity-50" />
                                         </Button>
                                     </PopoverTrigger>
-                                    <PopoverContent className="w-[--radix-popover-trigger-width] p-0" align="start">
-                                        <Command>
+                                    <PopoverContent className="w-[--radix-popover-trigger-width] p-0 z-[110]" align="start">
+                                        <Command value={topicSearch} onValueChange={setTopicSearch}>
                                             <CommandInput
                                                 placeholder="Search or type new topic..."
                                             />
@@ -667,53 +704,90 @@ window.onload = function() {
                                                 <CommandEmpty>
                                                     <div className="p-2">
                                                         <p className="text-xs text-muted-foreground mb-2">No topic found.</p>
+                                                        {topicSearch && (
+                                                            <Button
+                                                                variant="ghost"
+                                                                size="sm"
+                                                                className="w-full justify-start text-xs font-bold text-indigo-600 hover:text-indigo-700 hover:bg-indigo-50"
+                                                                onClick={() => {
+                                                                    setTopic(topicSearch);
+                                                                    setOpenTopic(false);
+                                                                    setTopicSearch("");
+                                                                }}
+                                                            >
+                                                                <Sparkles className="mr-2 h-3.5 w-3.5" />
+                                                                Add "{topicSearch}"
+                                                            </Button>
+                                                        )}
                                                     </div>
                                                 </CommandEmpty>
 
-                                                <CommandGroup heading="Curriculum Topics">
-                                                    {(topicsMap[subject] || []).map((t) => (
+                                                {!subject ? (
+                                                    Object.entries(topicsMap).map(([subj, topics]) => (
+                                                        <CommandGroup key={subj} heading={subj}>
+                                                            {topics.map((t) => (
+                                                                <CommandItem
+                                                                    key={`${subj}-${t}`}
+                                                                    value={`${t} (${subj})`}
+                                                                    onSelect={() => {
+                                                                        setSubject(subj);
+                                                                        setTopic(t);
+                                                                        setOpenTopic(false);
+                                                                        setTopicSearch("");
+                                                                    }}
+                                                                >
+                                                                    <Check className={cn("mr-2 h-4 w-4 opacity-0")} />
+                                                                    {t} <span className="ml-2 text-[10px] text-slate-400 font-medium">({subj})</span>
+                                                                </CommandItem>
+                                                            ))}
+                                                        </CommandGroup>
+                                                    ))
+                                                ) : (
+                                                    <CommandGroup heading={`Topics for ${subject}`}>
+                                                        {(topicsMap[subject] || []).map((t) => (
+                                                            <CommandItem
+                                                                key={t}
+                                                                value={t}
+                                                                onSelect={(currentValue) => {
+                                                                    setTopic(currentValue);
+                                                                    setOpenTopic(false);
+                                                                    setTopicSearch("");
+                                                                }}
+                                                            >
+                                                                <Check className={cn("mr-2 h-4 w-4", topic === t ? "opacity-100" : "opacity-0")} />
+                                                                {t}
+                                                            </CommandItem>
+                                                        ))}
+                                                    </CommandGroup>
+                                                )}
+
+                                                {topicSearch && (
+                                                    <CommandGroup heading="Custom Content">
                                                         <CommandItem
-                                                            key={t}
-                                                            value={t}
-                                                            onSelect={(currentValue) => {
-                                                                setTopic(currentValue === topic ? "" : currentValue);
+                                                            value={topicSearch}
+                                                            onSelect={() => {
+                                                                setTopic(topicSearch);
                                                                 setOpenTopic(false);
+                                                                setTopicSearch("");
                                                             }}
+                                                            className="text-indigo-600 font-bold"
                                                         >
-                                                            <Check
-                                                                className={cn(
-                                                                    "mr-2 h-4 w-4",
-                                                                    topic === t ? "opacity-100" : "opacity-0"
-                                                                )}
-                                                            />
-                                                            {t}
+                                                            <Sparkles className="mr-2 h-4 w-4" />
+                                                            Add "{topicSearch}"
                                                         </CommandItem>
-                                                    ))}
-                                                </CommandGroup>
+                                                    </CommandGroup>
+                                                )}
                                             </CommandList>
                                         </Command>
-                                        <div className="p-2 border-t border-slate-100 bg-slate-50">
-                                            <p className="text-[10px] text-slate-400 mb-1">Or type your own:</p>
-                                            <div className="flex gap-2">
-                                                <input
-                                                    className="flex-1 bg-white border border-slate-200 rounded-md px-2 py-1 text-xs"
-                                                    placeholder="Type custom topic..."
-                                                    value={topic}
-                                                    onChange={(e) => setTopic(e.target.value)}
-                                                    onKeyDown={(e) => {
-                                                        if (e.key === 'Enter') setOpenTopic(false);
-                                                    }}
-                                                />
-                                                <Button size="sm" className="h-7 text-xs" onClick={() => setOpenTopic(false)}>Done</Button>
-                                            </div>
-                                        </div>
                                     </PopoverContent>
                                 </Popover>
                             </div>
+                        </div>
 
-                            {/* Title Field - Made Wider */}
-                            <div className="flex flex-col gap-1.5 min-w-[200px] lg:flex-1">
-                                <label className="text-[10px] font-black uppercase tracking-widest text-slate-400 ml-1">
+                        {/* Row 2: Secondary Controls - Lower Z-index */}
+                        <div className="flex flex-col lg:flex-row items-stretch lg:items-end gap-2 relative z-10 mt-1 sm:mt-0">
+                            <div className="flex flex-col gap-1 min-w-[180px] flex-1">
+                                <label className="text-[9px] font-black uppercase tracking-widest text-slate-400 ml-1">
                                     {mode === 'quiz' ? 'Quiz Title' : 'Lesson Title'}
                                 </label>
                                 <input
@@ -721,8 +795,27 @@ window.onload = function() {
                                     value={title}
                                     onChange={(e) => setTitle(e.target.value)}
                                     placeholder={mode === 'quiz' ? "e.g. Algebra Quiz 1" : "e.g. Intro to Trigonometry"}
-                                    className="flex h-11 w-full rounded-xl border border-slate-200 bg-slate-50 px-3 py-2 text-xs font-bold placeholder:text-slate-400 focus:outline-none focus:ring-2 ring-indigo-500/10"
+                                    className="flex h-9 w-full rounded-lg border border-slate-200 bg-slate-50 px-3 py-2 text-[11px] font-bold placeholder:text-slate-400 focus:outline-none focus:ring-2 ring-indigo-500/10"
                                 />
+                            </div>
+
+                            {/* Language Selector */}
+                            <div className="flex flex-col gap-1 min-w-[110px]">
+                                <label className="text-[9px] font-black uppercase tracking-widest text-slate-400 ml-1">Language</label>
+                                <Select value={responseLanguage} onValueChange={setResponseLanguage}>
+                                    <SelectTrigger className="bg-slate-50 border-slate-200 h-9 rounded-lg text-[11px] font-bold ring-offset-white focus:ring-2 ring-indigo-500/10">
+                                        <SelectValue placeholder="Lang" />
+                                    </SelectTrigger>
+                                    <SelectContent>
+                                        <SelectItem value="auto" className="text-xs font-bold flex items-center gap-2">
+                                            <Sparkles className="w-3 h-3 text-indigo-500" /> Auto
+                                        </SelectItem>
+                                        <SelectItem value="Urdu" className="text-xs font-bold">Urdu</SelectItem>
+                                        <SelectItem value="Hindi" className="text-xs font-bold">Hindi</SelectItem>
+                                        <SelectItem value="Telugu" className="text-xs font-bold">Telugu</SelectItem>
+                                        <SelectItem value="English" className="text-xs font-bold">English</SelectItem>
+                                    </SelectContent>
+                                </Select>
                             </div>
 
                             {/* Institute Name - Only for Quiz - Made Wider */}
@@ -741,136 +834,103 @@ window.onload = function() {
                         </div>
 
                         {/* Actions Group */}
-                        <div className="flex items-center gap-3">
-                            <div className="relative group">
-                                <input
-                                    type="file"
-                                    accept=".pdf"
-                                    onChange={handleFileUpload}
-                                    className="absolute inset-0 opacity-0 cursor-pointer z-10"
-                                />
-                                <Button
-                                    variant="outline"
-                                    className={`h-11 px-4 rounded-xl border-slate-200 font-bold text-xs transition-all ${pdfText ? 'bg-emerald-50 border-emerald-200 text-emerald-600' : 'bg-white hover:bg-slate-50'}`}
-                                >
-                                    {isUploading ? <Loader2 className="w-4 h-4 animate-spin mr-2" /> : <FileUp className="w-4 h-4 mr-2" />}
-                                    {pdfText ? 'PDF Added' : 'Add PDF'}
-                                </Button>
-                            </div>
-
-                            <Button
-                                onClick={handleGenerate}
-                                disabled={isGenerating || !topic}
-                                className="h-11 px-6 bg-[#0D5355] hover:bg-[#083334] text-white rounded-xl font-black text-xs uppercase tracking-widest shadow-lg shadow-teal-100"
-                            >
-                                {isGenerating ? <Loader2 className="w-4 h-4 animate-spin" /> : <Sparkles className="w-4 h-4 mr-2" />}
-                                {isGenerating ? 'Generating...' : result ? 'Regenerate' : 'Generate'}
-                            </Button>
-                        </div>
-
-                        {/* Extended Inputs */}
-                        <div className="flex-1 w-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3 mt-3 pt-3 border-t border-slate-100">
-                            {mode === 'lesson' && (
-                                <>
-                                    <div className="lg:col-span-2 space-y-1.5">
-                                        <label className="text-[10px] font-black uppercase tracking-widest text-slate-400 ml-1">Unit Details</label>
-                                        <textarea
-                                            value={unitDetails}
-                                            onChange={(e) => setUnitDetails(e.target.value)}
-                                            placeholder="Provide details about the unit you want to teach..."
-                                            className="flex h-10 w-full rounded-xl border border-slate-200 bg-slate-50 px-3 py-2 text-xs font-bold placeholder:text-slate-400 focus:outline-none focus:ring-2 ring-indigo-500/10 resize-none"
-                                        />
-                                    </div>
-                                    <div className="space-y-1.5">
-                                        <label className="text-[10px] font-black uppercase tracking-widest text-slate-400 ml-1">Session Duration (Minutes)</label>
-                                        <input
-                                            type="number"
-                                            value={sessionDuration}
-                                            onChange={(e) => setSessionDuration(e.target.value)}
-                                            min="15"
-                                            max="180"
-                                            className="flex h-10 w-full rounded-xl border border-slate-200 bg-slate-50 px-3 py-2 text-xs font-bold placeholder:text-slate-400 focus:outline-none focus:ring-2 ring-indigo-500/10"
-                                        />
-                                    </div>
-                                    <div className="space-y-1.5">
-                                        <label className="text-[10px] font-black uppercase tracking-widest text-slate-400 ml-1">Number of Sessions</label>
-                                        <input
-                                            type="number"
-                                            value={numSessions}
-                                            onChange={(e) => setNumSessions(e.target.value)}
-                                            min="1"
-                                            max="20"
-                                            className="flex h-10 w-full rounded-xl border border-slate-200 bg-slate-50 px-3 py-2 text-xs font-bold placeholder:text-slate-400 focus:outline-none focus:ring-2 ring-indigo-500/10"
-                                        />
-                                    </div>
-                                </>
-                            )}
-
-                            {mode === 'quiz' && (
-                                <>
-                                    <div className="space-y-1.5">
-                                        <label className="text-[10px] font-black uppercase tracking-widest text-slate-400 ml-1">Difficulty</label>
-                                        <Select
-                                            value={quizDifficulty}
-                                            onValueChange={setQuizDifficulty}
-                                        >
-                                            <SelectTrigger className="bg-slate-50 border-slate-200 h-14 rounded-xl text-base font-bold">
-                                                <SelectValue placeholder="Difficulty" />
-                                            </SelectTrigger>
-                                            <SelectContent>
-                                                <SelectItem value="Beginner" className="text-sm font-bold">Beginner</SelectItem>
-                                                <SelectItem value="Intermediate" className="text-sm font-bold">Intermediate</SelectItem>
-                                                <SelectItem value="Advanced" className="text-sm font-bold">Advanced</SelectItem>
-                                                <SelectItem value="Mixed" className="text-sm font-bold">Mixed</SelectItem>
-                                            </SelectContent>
-                                        </Select>
-                                    </div>
-                                    <div className="space-y-1.5">
-                                        <label className="text-[10px] font-black uppercase tracking-widest text-slate-400 ml-1">No. of Questions</label>
-                                        <div className="flex items-center h-14 w-full min-w-[140px] rounded-xl border border-slate-200 bg-slate-50 overflow-hidden focus-within:ring-2 ring-indigo-500/10 transition-all">
-                                            <button
-                                                onClick={() => setQuizNumQuestions(prev => Math.max(1, (typeof prev === 'number' ? prev : 5) - 1))}
-                                                className="h-full w-10 shrink-0 flex items-center justify-center text-slate-400 hover:text-indigo-600 hover:bg-indigo-50 transition-colors border-r border-slate-200"
-                                            >
-                                                <span className="text-lg font-bold">-</span>
-                                            </button>
+                        <div className="flex items-center justify-between gap-3 pt-1.5 border-t border-slate-100/50">
+                            <div className="flex-1 flex flex-wrap items-center gap-3">
+                                {mode === 'lesson' && (
+                                    <>
+                                        <div className="flex items-center gap-2">
+                                            <label className="text-[9px] font-black uppercase text-slate-400">Unit:</label>
+                                            <input
+                                                value={unitDetails}
+                                                onChange={(e) => setUnitDetails(e.target.value)}
+                                                placeholder="Unit details..."
+                                                className="h-8 bg-slate-50 border border-slate-200 rounded-lg px-3 text-[11px] font-medium w-[200px]"
+                                            />
+                                        </div>
+                                        <div className="flex items-center gap-2">
+                                            <label className="text-[9px] font-black uppercase text-slate-400">Mins:</label>
+                                            <input
+                                                type="number"
+                                                value={sessionDuration}
+                                                onChange={(e) => setSessionDuration(e.target.value)}
+                                                className="h-8 w-14 bg-slate-50 border border-slate-200 rounded-lg px-2 text-[11px] font-medium"
+                                            />
+                                        </div>
+                                    </>
+                                )}
+                                {mode === 'quiz' && (
+                                    <>
+                                        <div className="flex items-center gap-2">
+                                            <label className="text-[9px] font-black uppercase text-slate-400">Institute:</label>
+                                            <input
+                                                value={instituteName}
+                                                onChange={(e) => setInstituteName(e.target.value)}
+                                                placeholder="Institute..."
+                                                className="h-8 bg-slate-50 border border-slate-200 rounded-lg px-2 text-[10px] font-medium w-[140px]"
+                                            />
+                                        </div>
+                                        <div className="flex items-center gap-2">
+                                            <label className="text-[9px] font-black uppercase text-slate-400">Diff:</label>
+                                            <Select value={quizDifficulty} onValueChange={setQuizDifficulty}>
+                                                <SelectTrigger className="h-8 w-24 bg-slate-50 border-slate-200 rounded-lg text-[10px] font-bold">
+                                                    <SelectValue placeholder="Diff" />
+                                                </SelectTrigger>
+                                                <SelectContent>
+                                                    <SelectItem value="Beginner" className="text-xs">Beginner</SelectItem>
+                                                    <SelectItem value="Intermediate" className="text-xs">Intermediate</SelectItem>
+                                                    <SelectItem value="Advanced" className="text-xs">Advanced</SelectItem>
+                                                    <SelectItem value="Mixed" className="text-xs">Mixed</SelectItem>
+                                                </SelectContent>
+                                            </Select>
+                                        </div>
+                                        <div className="flex items-center gap-2">
+                                            <label className="text-[9px] font-black uppercase text-slate-400">Qs:</label>
                                             <input
                                                 type="number"
                                                 value={quizNumQuestions}
-                                                onChange={(e) => {
-                                                    const val = e.target.value;
-                                                    if (val === "") {
-                                                        // @ts-ignore
-                                                        setQuizNumQuestions("");
-                                                        return;
-                                                    }
-                                                    const num = parseInt(val);
-                                                    setQuizNumQuestions(isNaN(num) ? 5 : num);
-                                                }}
-                                                onBlur={() => {
-                                                    if (!quizNumQuestions || quizNumQuestions < 1) setQuizNumQuestions(5);
-                                                    if (quizNumQuestions > 20) setQuizNumQuestions(20);
-                                                }}
-                                                className="flex-1 h-full min-w-0 bg-transparent border-none text-center text-lg font-bold text-slate-700 focus:outline-none focus:ring-0 px-2 [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
+                                                onChange={(e) => setQuizNumQuestions(parseInt(e.target.value) || 5)}
+                                                className="h-8 w-12 bg-slate-50 border border-slate-200 rounded-lg px-2 text-[10px] font-medium"
                                             />
-                                            <button
-                                                onClick={() => setQuizNumQuestions(prev => Math.min(20, (typeof prev === 'number' ? prev : 5) + 1))}
-                                                className="h-full w-10 shrink-0 flex items-center justify-center text-slate-400 hover:text-indigo-600 hover:bg-indigo-50 transition-colors border-l border-slate-200"
-                                            >
-                                                <span className="text-lg font-bold">+</span>
-                                            </button>
                                         </div>
-                                    </div>
-                                </>
-                            )}
+                                    </>
+                                )}
+                            </div>
+
+                            <div className="flex items-center gap-2">
+                                <div className="relative">
+                                    <input
+                                        type="file"
+                                        accept=".pdf"
+                                        onChange={handleFileUpload}
+                                        className="absolute inset-0 opacity-0 cursor-pointer z-10"
+                                    />
+                                    <Button
+                                        variant="outline"
+                                        size="sm"
+                                        className={`h-9 px-3 rounded-lg border-slate-200 font-bold text-[11px] ${pdfText ? 'bg-emerald-50 text-emerald-600' : ''}`}
+                                    >
+                                        {isUploading ? <Loader2 className="w-4 h-4 animate-spin mr-1" /> : <FileUp className="w-3.5 h-3.5 mr-1" />}
+                                        {pdfText ? 'PDF Added' : 'Add PDF'}
+                                    </Button>
+                                </div>
+
+                                <Button
+                                    onClick={handleGenerate}
+                                    disabled={isGenerating || (!topic && !pdfText)}
+                                    size="sm"
+                                    className="h-9 px-5 bg-[#0D5355] hover:bg-[#083334] text-white rounded-lg font-black text-[11px] uppercase tracking-wider"
+                                >
+                                    {isGenerating ? <Loader2 className="w-4 h-4 animate-spin" /> : <Sparkles className="w-3.5 h-3.5 mr-1.5" />}
+                                    {isGenerating ? 'Wait...' : result ? 'Refresh' : 'Generate'}
+                                </Button>
+                            </div>
                         </div>
                     </div>
                 </div>
             )}
 
-
             {/* Content Area */}
-            <main className="flex-1 p-6 md:p-10">
+            <main className="flex-1 p-6 md:p-10 relative z-0">
                 <AnimatePresence mode="wait">
                     {isGenerating ? (
                         <motion.div
@@ -1034,28 +1094,23 @@ window.onload = function() {
                             animate={{ opacity: 1, y: 0 }}
                             className="w-full md:max-w-[95%] mx-auto bg-white rounded-2xl md:rounded-3xl shadow-xl shadow-slate-200/50 border border-slate-100 min-h-full flex flex-col print:max-w-full print:shadow-none print:border-none print:rounded-none"
                         >
-                            {/* Result Header - Premium Glassmorphism style */}
-                            <div className="sticky top-0 z-50 bg-white/95 backdrop-blur-xl border-b border-slate-100 p-4 md:p-6 flex flex-col md:flex-row md:items-center justify-between gap-4 md:gap-6 shadow-sm print:static print:shadow-none print:border-none print:bg-white">
-                                <div className="flex items-center gap-5">
-                                    <div className={`w-16 h-16 rounded-2xl flex items-center justify-center shadow-lg ${mode === 'lesson' ? 'bg-[#0D5355] text-white shadow-teal-100' :
+                            {/* Result Header - Ultra Compact & Fitted */}
+                            <div className="sticky top-[130px] md:top-[125px] lg:top-[120px] z-40 bg-white/95 backdrop-blur-xl border-b border-slate-100 p-2 md:p-3 flex flex-col md:flex-row md:items-center justify-between gap-3 shadow-sm print:static print:shadow-none print:border-none print:bg-white">
+                                <div className="flex items-center gap-3">
+                                    <div className={`w-12 h-12 rounded-xl flex items-center justify-center shadow-md ${mode === 'lesson' ? 'bg-[#0D5355] text-white shadow-teal-100' :
                                         mode === 'quiz' ? 'bg-amber-500 text-white shadow-amber-200' :
                                             'bg-[#0D5355] text-white shadow-teal-100'}`}>
-                                        {mode === 'lesson' ? <GraduationCap className="w-8 h-8" /> :
-                                            mode === 'quiz' ? <HelpCircle className="w-8 h-8" /> :
-                                                <FileText className="w-8 h-8" />}
+                                        {mode === 'lesson' ? <GraduationCap className="w-6 h-6" /> :
+                                            mode === 'quiz' ? <HelpCircle className="w-6 h-6" /> :
+                                                <FileText className="w-6 h-6" />}
                                     </div>
                                     <div>
-                                        <div className="flex items-center gap-2 mb-1">
-                                            <span className="text-[10px] font-black uppercase tracking-widest text-indigo-500 bg-indigo-50 px-2 py-0.5 rounded-md border border-indigo-100">
-                                                {mode === 'lesson' ? 'Lesson Plan' : mode === 'quiz' ? 'Quiz Generator' : 'Teaching Material'}
+                                        <div className="flex items-center gap-2 mb-0.5">
+                                            <span className="text-[8px] font-black uppercase tracking-wider text-indigo-500 bg-indigo-50 px-1.5 py-0.5 rounded border border-indigo-100">
+                                                {mode === 'lesson' ? 'Lesson Plan' : mode === 'quiz' ? 'Quiz' : 'Material'}
                                             </span>
-                                            {result?.instituteName && (
-                                                <span className="text-[10px] font-black uppercase tracking-widest text-slate-500 bg-slate-100 px-2 py-0.5 rounded-md border border-slate-200">
-                                                    {result.instituteName}
-                                                </span>
-                                            )}
                                         </div>
-                                        <h2 className="text-xl sm:text-2xl font-black text-slate-900 font-display leading-tight line-clamp-2">{result?.title || title || `Generated Content`}</h2>
+                                        <h2 className="text-sm md:text-lg font-black text-slate-900 font-display leading-tight line-clamp-1">{result?.title || title || `Generated Content`}</h2>
                                         <div className="flex flex-wrap items-center gap-2 sm:gap-3 mt-1.5">
                                             {topic && <div className="flex items-center gap-1 sm:gap-1.5 text-slate-500 font-bold text-[10px] sm:text-xs uppercase tracking-wider">
                                                 <BookOpen className="w-3 h-3 sm:w-3.5 sm:h-3.5" /> {topic}
@@ -1080,53 +1135,47 @@ window.onload = function() {
                                     </div>
                                 </div>
 
-                                <div className="flex flex-wrap items-center gap-2 print:hidden">
+                                <div className="flex items-center gap-2 print:hidden">
                                     <Button
                                         variant="ghost"
+                                        size="sm"
                                         onClick={() => setResult(null)}
-                                        className="rounded-xl h-10 md:h-12 font-bold text-slate-500 hover:text-indigo-600 hover:bg-indigo-50 transition-all px-4 md:px-6"
+                                        className="rounded-lg h-8 px-2 md:px-3 font-bold text-slate-500 hover:text-indigo-600 transition-all text-xs"
                                     >
-                                        <ArrowLeft className="w-4 h-4 mr-2" /> Back
+                                        <ArrowLeft className="w-3.5 h-3.5 mr-1" /> Back
                                     </Button>
 
-                                    {mode === 'lesson' && (
-                                        <Button
-                                            onClick={() => setShowQuickAction(true)}
-                                            className="rounded-xl h-10 md:h-12 px-3 md:px-4 font-bold bg-slate-900 text-white hover:bg-slate-800 shadow-lg border border-slate-800 transition-all"
-                                        >
-                                            <Sparkles className="w-4 h-4 mr-2 text-indigo-400" /> AI Tools
-                                        </Button>
-                                    )}
-
-                                    {mode === 'quiz' && result?.id && (
-                                        <Button
-                                            onClick={() => navigate(`/quiz/${result.id}`)}
-                                            className="rounded-xl h-12 px-6 font-bold bg-amber-500 hover:bg-amber-600 text-white shadow-lg shadow-amber-100 transition-all"
-                                        >
-                                            <PlayCircle className="w-4 h-4 mr-2" /> Start Quiz
-                                        </Button>
-                                    )}
-                                    <Button
-                                        variant="outline"
-                                        onClick={() => handleDownloadPDF()}
-                                        className="rounded-xl h-10 md:h-12 px-4 md:px-6 font-bold border-2 border-indigo-100 text-indigo-600 hover:bg-indigo-50 transition-all gap-2"
-                                    >
-                                        <Download className="w-4 h-4" /> <span className="hidden sm:inline">Download PDF</span><span className="sm:hidden">PDF</span>
-                                    </Button>
-                                    <Button
-                                        className={`rounded-xl h-12 px-8 font-bold shadow-lg transition-all ${result?.status === 'PUBLISHED' ? 'bg-emerald-50 text-emerald-600 border border-emerald-100 hover:bg-emerald-100' : 'bg-indigo-600 hover:bg-indigo-700 text-white shadow-indigo-100'} `}
-                                        onClick={handleSaveToLibrary}
-                                        disabled={isSaving || result?.status === 'PUBLISHED'}
-                                    >
-                                        {isSaving ? (
-                                            <Loader2 className="w-4 h-4 animate-spin" />
-                                        ) : result?.status === 'PUBLISHED' ? (
-                                            <CheckCircle2 className="w-4 h-4 mr-2" />
-                                        ) : (
-                                            <Sparkles className="w-4 h-4 mr-2" />
+                                    <div className="flex items-center gap-1.5 sm:gap-2 scale-90 md:scale-100 origin-right">
+                                        {mode === 'lesson' && (
+                                            <Button
+                                                onClick={() => setShowQuickAction(true)}
+                                                className="rounded-lg h-8 md:h-9 px-2 md:px-3 font-bold bg-slate-900 text-white hover:bg-slate-800 shadow-sm transition-all text-[10px] md:text-xs"
+                                            >
+                                                AI Actions
+                                            </Button>
                                         )}
-                                        {result?.status === 'PUBLISHED' ? 'Saved' : <><span className="hidden sm:inline">Save to Library</span><span className="sm:hidden">Save</span></>}
-                                    </Button>
+                                        <Button
+                                            onClick={handleDownloadPDF}
+                                            variant="outline"
+                                            className="rounded-lg h-8 md:h-9 px-2 md:px-3 font-bold border-slate-200 text-slate-700 shadow-sm text-[10px] md:text-xs"
+                                        >
+                                            <Download className="w-3.5 h-3.5 mr-1 md:mr-1.5" /> PDF
+                                        </Button>
+                                        <Button
+                                            className={`rounded-lg h-8 md:h-9 px-3 md:px-4 font-bold shadow-sm transition-all text-[10px] md:text-xs ${result?.status === 'PUBLISHED' ? 'bg-emerald-50 text-emerald-600 hover:bg-emerald-100' : 'bg-indigo-600 hover:bg-indigo-700 text-white'} `}
+                                            onClick={handleSaveToLibrary}
+                                            disabled={isSaving || result?.status === 'PUBLISHED'}
+                                        >
+                                            {isSaving ? (
+                                                <Loader2 className="w-3 h-3 animate-spin mr-1" />
+                                            ) : result?.status === 'PUBLISHED' ? (
+                                                <CheckCircle2 className="w-3 h-3 mr-1" />
+                                            ) : (
+                                                <Bookmark className="w-3 h-3 mr-1" />
+                                            )}
+                                            {result?.status === 'PUBLISHED' ? 'Saved' : 'Save'}
+                                        </Button>
+                                    </div>
                                 </div>
                             </div>
 
@@ -1469,13 +1518,44 @@ window.onload = function() {
                                                 </div>
                                             </div>
                                             {generatedImage && (
-                                                <div className="shrink-0">
-                                                    <div className="w-32 h-32 rounded-3xl overflow-hidden border-4 border-white shadow-xl rotate-3 hover:rotate-0 transition-all duration-500">
-                                                        <img src={generatedImage} alt={topic} className="w-full h-full object-cover" />
-                                                    </div>
+                                                <div className="shrink-0 flex gap-4">
+                                                    {visualImages.length > 0 ? (
+                                                        visualImages.map((imgUrl, idx) => (
+                                                            <div key={idx} className={`w-28 h-28 md:w-32 md:h-32 rounded-3xl overflow-hidden border-4 border-white shadow-xl ${idx === 0 ? 'rotate-3' : idx === 1 ? '-rotate-3' : 'rotate-1'} hover:rotate-0 transition-all duration-500 hover:scale-105`}>
+                                                                <img src={imgUrl} alt={`${topic} visual aid ${idx + 1}`} className="w-full h-full object-cover" />
+                                                            </div>
+                                                        ))
+                                                    ) : (
+                                                        <div className="w-32 h-32 rounded-3xl overflow-hidden border-4 border-white shadow-xl rotate-3 hover:rotate-0 transition-all duration-500">
+                                                            <img src={generatedImage} alt={topic} className="w-full h-full object-cover" />
+                                                        </div>
+                                                    )}
                                                 </div>
                                             )}
                                         </div>
+
+                                        {/* Visual Aids Gallery (if multiple) */}
+                                        {visualImages.length > 1 && (
+                                            <div className="bg-slate-50/50 rounded-[2.5rem] p-8 border border-slate-100">
+                                                <div className="flex items-center gap-3 mb-6">
+                                                    <div className="w-10 h-10 rounded-2xl bg-indigo-600 text-white flex items-center justify-center shadow-lg shadow-indigo-100">
+                                                        <Eye className="w-5 h-5" />
+                                                    </div>
+                                                    <h3 className="text-xl font-black text-slate-900">Visual Aids Gallery</h3>
+                                                </div>
+                                                <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                                                    {visualImages.map((imgUrl, idx) => (
+                                                        <div key={idx} className="group relative aspect-video rounded-3xl overflow-hidden shadow-md hover:shadow-xl transition-all border-2 border-white">
+                                                            <img src={imgUrl} alt={`${topic} aid ${idx}`} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" />
+                                                            <div className="absolute inset-0 bg-black/20 group-hover:bg-transparent transition-all" />
+                                                            <div className="absolute bottom-4 left-4">
+                                                                <span className="px-3 py-1 bg-white/90 backdrop-blur-md rounded-lg text-[10px] font-black uppercase text-slate-900">Visual Aid #{idx + 1}</span>
+                                                            </div>
+                                                        </div>
+                                                    ))}
+                                                </div>
+                                            </div>
+                                        )}
 
                                         {/* Learning Outcomes */}
                                         <div className="bg-slate-50/50 p-6 rounded-2xl border border-slate-100">
@@ -2018,6 +2098,24 @@ window.onload = function() {
                                                     variant={currentPage === 1 ? "default" : "outline"}
                                                     size="sm"
                                                     onClick={() => setCurrentPage(1)}
+                                                    className={`rounded-xl px-4 font-bold ${currentPage === 1 ? 'bg-indigo-600 text-white' : 'text-slate-600 border-slate-200'}`}
+                                                >
+                                                    Content
+                                                </Button>
+                                                <Button
+                                                    variant={currentPage === (result?.sections?.length || 0) + 2 ? "default" : "outline"}
+                                                    size="sm"
+                                                    onClick={() => setCurrentPage((result?.sections?.length || 0) + 2)}
+                                                    className={`rounded-xl px-4 font-bold ${currentPage === (result?.sections?.length || 0) + 2 ? 'bg-indigo-600 text-white' : 'text-slate-600 border-slate-200'}`}
+                                                >
+                                                    Review
+                                                </Button>
+                                            </div>
+                                            <div className="flex items-center gap-4">
+                                                <Button
+                                                    variant={currentPage === 1 ? "default" : "outline"}
+                                                    size="sm"
+                                                    onClick={() => setCurrentPage(1)}
                                                     className={`rounded-xl font-bold ${currentPage === 1 ? 'bg-[#1A3263]' : ''}`}
                                                 >
                                                     Page 1: Content
@@ -2260,6 +2358,6 @@ window.onload = function() {
                     return parts.length > 0 ? parts.join('\n\n') : `Topic: ${topic}, Subject: ${subject}, Grade: ${grade}`;
                 })()}
             />
-        </div>
+        </div >
     );
 }

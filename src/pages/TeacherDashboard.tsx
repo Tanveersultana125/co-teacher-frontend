@@ -196,7 +196,7 @@ const TeacherDashboard = () => {
       </aside>
 
       {/* Main Content */}
-      <main className="flex-1 lg:ml-64 overflow-x-hidden min-h-screen bg-slate-50">
+      <main className="flex-1 lg:ml-64 overflow-x-hidden min-h-screen mesh-gradient">
         <header className="bg-white/80 backdrop-blur-md sticky top-0 z-30 border-b border-slate-100 px-3 sm:px-6 lg:px-8 py-3 sm:py-4 print:hidden">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-4">
@@ -238,7 +238,7 @@ const TeacherDashboard = () => {
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ delay: index * 0.1 }}
                       >
-                        <Card className="border-none shadow-sm bg-white overflow-hidden">
+                        <Card className="border-none shadow-sm bg-white/60 backdrop-blur-md overflow-hidden">
                           <CardContent className="p-6">
                             <div className="flex items-start justify-between">
                               <div className="space-y-1">
@@ -257,6 +257,90 @@ const TeacherDashboard = () => {
                       </motion.div>
                     ))
                   )}
+                </div>
+
+                {/* Daily Mission Checklist & Featured Tool */}
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 items-stretch">
+                  <motion.div
+                    initial={{ opacity: 0, x: -20 }}
+                    animate={{ opacity: 1, x: 0 }}
+                  >
+                    <Card className="h-full border-none shadow-xl bg-white/40 backdrop-blur-xl p-8 relative overflow-hidden group">
+                      {/* Decorative Background Blob */}
+                      <div className="absolute -top-24 -right-24 w-64 h-64 bg-indigo-500/10 rounded-full blur-3xl group-hover:bg-indigo-500/20 transition-all duration-700" />
+
+                      <div className="relative z-10">
+                        <h2 className="text-2xl font-black text-slate-900 mb-2 font-display italic">
+                          What did you do <span className="text-indigo-600">after school</span> yesterday?
+                        </h2>
+                        <div className="flex items-center gap-2 mb-8 animate-bounce w-fit">
+                          <Plus className="w-4 h-4 text-slate-400 rotate-45" />
+                          <div className="text-[10px] font-black uppercase tracking-[0.2em] text-slate-400">Your Daily Mission</div>
+                        </div>
+
+                        <div className="space-y-4">
+                          {[
+                            { id: 'assignments', label: 'Grade student essays', icon: FileText },
+                            { id: 'messages', label: 'Respond to parent emails', icon: MessageSquare },
+                            { id: 'generator', label: 'Write tomorrow’s lesson plan', icon: Brain },
+                            { id: 'quizzes', label: 'Create Quizzes', icon: ClipboardCheck },
+                            { id: 'data-analysis', label: 'Work on IEP goals & Analytics', icon: BarChart3 },
+                          ].map((item) => (
+                            <button
+                              key={item.id}
+                              onClick={() => setActiveTab(item.id)}
+                              className="w-full flex items-center gap-4 p-4 rounded-2xl border border-white/50 bg-white/30 hover:bg-white/60 hover:shadow-lg transition-all text-left group/item"
+                            >
+                              <div className="relative">
+                                <div className="w-6 h-6 rounded-lg border-2 border-slate-300 flex items-center justify-center group-hover/item:border-indigo-500 transition-colors">
+                                  <div className="w-3 h-3 bg-indigo-500 rounded-sm scale-0 group-hover/item:scale-100 transition-transform shadow-sm shadow-indigo-200" />
+                                </div>
+                              </div>
+                              <span className="font-bold text-slate-700 group-hover/item:text-slate-900 transition-colors">{item.label}</span>
+                              <div className="ml-auto opacity-0 group-hover/item:opacity-100 transition-opacity">
+                                <item.icon className="w-4 h-4 text-indigo-500" />
+                              </div>
+                            </button>
+                          ))}
+                        </div>
+                      </div>
+                    </Card>
+                  </motion.div>
+
+                  <motion.div
+                    initial={{ opacity: 0, x: 20 }}
+                    animate={{ opacity: 1, x: 0 }}
+                  >
+                    <Card className="h-full border-none shadow-xl bg-slate-900 p-8 text-white relative overflow-hidden group">
+                      <div className="absolute top-0 right-0 p-8 opacity-20 group-hover:opacity-40 transition-opacity">
+                        <Sparkles className="w-32 h-32" />
+                      </div>
+
+                      <div className="relative z-10 flex flex-col h-full">
+                        <div className="flex items-center gap-2 mb-4">
+                          <div className="px-3 py-1 bg-white/10 rounded-full text-[10px] font-black uppercase tracking-widest backdrop-blur-md">Featured Feature</div>
+                        </div>
+                        <h3 className="text-3xl font-black mb-4 font-display leading-tight">AI Data Intelligence <br /><span className="text-indigo-400">Superpowers.</span></h3>
+                        <p className="text-slate-400 font-medium mb-8 leading-relaxed">
+                          Analyze entire classes in seconds. Identify struggling students, generate improvement plans, and predict future performance with our proprietary AI engine.
+                        </p>
+
+                        <div className="mt-auto space-y-4">
+                          <Button
+                            onClick={() => setActiveTab('data-analysis')}
+                            className="w-full h-14 bg-indigo-600 hover:bg-indigo-700 text-white font-black text-lg rounded-2xl flex items-center justify-center gap-3 group/btn"
+                          >
+                            <span>Open Data Intelligence</span>
+                            <ChevronRight className="w-5 h-5 group-hover/btn:translate-x-1 transition-transform" />
+                          </Button>
+                          <div className="flex items-center justify-between px-2 text-xs font-bold text-slate-500">
+                            <div className="flex items-center gap-1"><Users className="w-3 h-3" /> 2.4k+ Teachers using</div>
+                            <div className="flex items-center gap-1 underline underline-offset-4 cursor-pointer hover:text-white transition-colors">Watch Demo</div>
+                          </div>
+                        </div>
+                      </div>
+                    </Card>
+                  </motion.div>
                 </div>
 
                 {/* Quick Actions */}

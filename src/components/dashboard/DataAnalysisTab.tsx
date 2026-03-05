@@ -175,11 +175,13 @@ export const DataAnalysisTab = () => {
     }
 
     return (
-        <div className="flex bg-[#F8FAFC] min-h-screen">
+        <div className="flex bg-[#F1F5F9] min-h-screen">
             {/* Left Sidebar for Analysis Type */}
-            <div className="w-80 bg-[#E2E8CE] p-6 flex flex-col gap-8 rounded-r-3xl my-4 text-slate-900 shadow-xl border-r border-[#fecdd3]">
-                <div>
-                    <h3 className="text-xl font-bold mb-6 font-display text-slate-900">What would you like to do?</h3>
+            <div className="w-80 bg-white p-6 flex flex-col gap-8 rounded-r-[2.5rem] my-4 text-slate-900 shadow-2xl border-r border-slate-200 relative overflow-hidden">
+                <div className="absolute top-0 right-0 w-24 h-24 bg-indigo-500/5 blur-3xl rounded-full -mr-12 -mt-12" />
+                <div className="relative z-10">
+                    <h3 className="text-xl font-black mb-6 tracking-tight text-slate-900">Analysis Options</h3>
+
                     <div className="relative">
                         <select
                             className="w-full bg-white border border-slate-200 rounded-xl py-3 px-4 font-bold text-sm appearance-none cursor-pointer focus:ring-2 focus:ring-rose-500 text-slate-700 shadow-sm"
@@ -229,9 +231,13 @@ export const DataAnalysisTab = () => {
             </div>
 
             {/* Main Content Area */}
-            <div className="flex-1 p-8">
-                <div className="max-w-4xl mx-auto">
-                    <h2 className="text-4xl font-black text-slate-900 text-center mb-12 font-display">AI Assistant For Teachers</h2>
+            <div className="flex-1 p-10 overflow-y-auto">
+                <div className="max-w-5xl mx-auto">
+                    <div className="text-center mb-12">
+                        <h2 className="text-5xl font-black text-slate-900 tracking-tight font-display mb-3">AI Data Intelligence</h2>
+                        <p className="text-slate-500 font-bold">Transform student data into actionable classroom insights</p>
+                    </div>
+
 
                     {!result && (
                         <div className="space-y-6">
@@ -330,8 +336,12 @@ export const DataAnalysisTab = () => {
                         <motion.div
                             initial={{ opacity: 0, y: 20 }}
                             animate={{ opacity: 1, y: 0 }}
-                            className="bg-[#1e293b] text-white rounded-3xl p-8 shadow-2xl relative overflow-hidden"
+                            className="bg-[#0F172A] text-white rounded-[2.5rem] p-10 shadow-2xl relative overflow-hidden border border-slate-800"
                         >
+                            {/* Decorative background glow */}
+                            <div className="absolute -top-24 -right-24 w-96 h-96 bg-indigo-500/10 blur-[100px] rounded-full mt-2 shrink-0" />
+                            <div className="absolute -bottom-24 -left-24 w-96 h-96 bg-emerald-500/5 blur-[100px] rounded-full mt-2 shrink-0" />
+
                             <div className="absolute top-0 right-0 p-6">
                                 <Button onClick={() => setResult(null)} variant="ghost" className="text-slate-400 hover:text-white">
                                     <X className="w-6 h-6" />
@@ -348,10 +358,14 @@ export const DataAnalysisTab = () => {
                                     {/* Result Rendering Based on Type */}
                                     <div className="space-y-8">
                                         {/* Header */}
-                                        <div className="flex items-center gap-3 border-b border-slate-700 pb-6">
-                                            <FileSpreadsheet className="w-6 h-6 text-indigo-400" />
-                                            <span className="font-mono text-slate-400">{file?.name}</span>
-                                            <span className="text-slate-600 text-sm">{(file?.size || 0) / 1024 > 1024 ? ((file?.size || 0) / 1024 / 1024).toFixed(2) + ' MB' : ((file?.size || 0) / 1024).toFixed(2) + ' KB'}</span>
+                                        <div className="flex items-center gap-3 border-b border-white/10 pb-6 relative z-10">
+                                            <div className="w-10 h-10 rounded-xl bg-white/5 flex items-center justify-center border border-white/10">
+                                                <FileSpreadsheet className="w-5 h-5 text-indigo-400" />
+                                            </div>
+                                            <div className="flex flex-col">
+                                                <span className="font-bold text-slate-100">{file?.name}</span>
+                                                <span className="text-slate-500 text-xs uppercase tracking-widest font-black">{(file?.size || 0) / 1024 > 1024 ? ((file?.size || 0) / 1024 / 1024).toFixed(2) + ' MB' : ((file?.size || 0) / 1024).toFixed(2) + ' KB'}</span>
+                                            </div>
                                         </div>
 
                                         {/* 1. Student Wise Performance Analysis */}
@@ -580,66 +594,70 @@ export const DataAnalysisTab = () => {
                                                 </div>
 
                                                 {/* 2. Class Subject Performance */}
-                                                <div>
-                                                    <div className="bg-[#6F8F72] rounded-2xl p-6 border border-[#5d7a61] mb-8 shadow-xl">
-                                                        <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6">
-                                                            <h3 className="text-xl font-bold text-white">
-                                                                {selectedImprovementSubject ? `${selectedImprovementSubject} Performance` : "Class Subject Performance"}
+                                                <div className="relative z-10">
+                                                    <div className="bg-[#1e293b]/40 backdrop-blur-xl rounded-3xl p-10 border border-white/5 mb-8 shadow-2xl">
+                                                        <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 mb-10">
+                                                            <h3 className="text-3xl font-black text-white tracking-tight">
+                                                                {selectedImprovementSubject ? `${selectedImprovementSubject} Analytics` : "Class Performance Analytics"}
                                                             </h3>
-                                                            <div className="relative min-w-[250px]">
+                                                            <div className="relative min-w-[300px]">
                                                                 <select
-                                                                    className="w-full bg-white/10 border border-white/20 rounded-lg py-2.5 px-4 text-white appearance-none cursor-pointer focus:ring-2 focus:ring-white/30"
+                                                                    className="w-full bg-white/5 border border-white/10 rounded-2xl py-4 px-6 text-white appearance-none cursor-pointer focus:ring-2 focus:ring-indigo-500 transition-all font-bold text-sm shadow-inner"
                                                                     value={selectedImprovementSubject}
                                                                     onChange={(e) => setSelectedImprovementSubject(e.target.value)}
                                                                 >
-                                                                    <option value="">Overall Class Average</option>
-                                                                    {getSubjects().map(sub => <option key={sub} value={sub}>{sub}</option>)}
+                                                                    <option value="" className="bg-slate-900">Overall Class Performance</option>
+                                                                    {getSubjects().map(sub => <option key={sub} value={sub} className="bg-slate-900">{sub}</option>)}
                                                                 </select>
-                                                                <ChevronDown className="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400 pointer-events-none" />
+                                                                <ChevronDown className="absolute right-5 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400 pointer-events-none" />
                                                             </div>
                                                         </div>
 
-                                                        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
-                                                            <div className="bg-white text-slate-900 rounded-xl p-6 text-center shadow-lg">
-                                                                <p className="text-slate-500 font-bold text-sm uppercase tracking-wider mb-2">Average</p>
-                                                                <p className="text-4xl font-black">
+                                                        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
+                                                            <div className="bg-white rounded-[2rem] p-8 text-center shadow-2xl border border-white/10 ring-1 ring-black/5 hover:translate-y-[-4px] transition-transform duration-300">
+                                                                <p className="text-slate-400 font-black text-[11px] uppercase tracking-[0.2em] mb-3">Average Score</p>
+                                                                <p className="text-6xl font-black text-black">
                                                                     {selectedImprovementSubject && result.subjectInsights?.[selectedImprovementSubject]
                                                                         ? result.subjectInsights[selectedImprovementSubject].average
                                                                         : result.overallStats?.average}
                                                                 </p>
                                                             </div>
-                                                            <div className="bg-white/20 backdrop-blur-md text-white rounded-xl p-6 text-center shadow-lg border border-white/10">
-                                                                <p className="text-slate-300 font-bold text-sm uppercase tracking-wider mb-2">Highest</p>
-                                                                <p className="text-4xl font-black">
+                                                            <div className="bg-indigo-600 rounded-[2rem] p-8 text-center shadow-indigo-500/25 shadow-2xl border border-indigo-400/20 hover:translate-y-[-4px] transition-transform duration-300">
+                                                                <p className="text-indigo-200 font-black text-[11px] uppercase tracking-[0.2em] mb-3">Highest Score</p>
+                                                                <p className="text-6xl font-black text-white">
                                                                     {selectedImprovementSubject && result.subjectInsights?.[selectedImprovementSubject]
                                                                         ? result.subjectInsights[selectedImprovementSubject].highest
-                                                                        : result.overallStats?.highest?.toFixed(2)}
+                                                                        : result.overallStats?.highest?.toFixed(1)}
                                                                 </p>
                                                             </div>
-                                                            <div className="bg-white text-slate-900 rounded-xl p-6 text-center shadow-lg">
-                                                                <p className="text-slate-500 font-bold text-sm uppercase tracking-wider mb-2">Lowest</p>
-                                                                <p className="text-4xl font-black">
+                                                            <div className="bg-white rounded-[2rem] p-8 text-center shadow-2xl border border-white/10 ring-1 ring-black/5 hover:translate-y-[-4px] transition-transform duration-300">
+                                                                <p className="text-slate-400 font-black text-[11px] uppercase tracking-[0.2em] mb-3">Lowest Score</p>
+                                                                <p className="text-6xl font-black text-black">
                                                                     {selectedImprovementSubject && result.subjectInsights?.[selectedImprovementSubject]
                                                                         ? result.subjectInsights[selectedImprovementSubject].lowest
-                                                                        : result.overallStats?.lowest?.toFixed(2)}
+                                                                        : result.overallStats?.lowest?.toFixed(1)}
                                                                 </p>
                                                             </div>
                                                         </div>
 
                                                         {selectedImprovementSubject && result.subjectInsights?.[selectedImprovementSubject] && (
-                                                            <div className="animate-in fade-in slide-in-from-top-2 pt-4 border-t border-slate-700">
-                                                                <h4 className="font-bold text-white mb-4 flex items-center gap-2">
-                                                                    <Sparkles className="w-4 h-4" />
-                                                                    Suggestions to Improve Performance in {selectedImprovementSubject}:
-                                                                </h4>
-                                                                <ul className="space-y-3">
+                                                            <div className="animate-in fade-in slide-in-from-top-4 pt-10 border-t border-white/5">
+                                                                <div className="flex items-center gap-3 mb-8">
+                                                                    <div className="w-10 h-10 rounded-xl bg-indigo-500/10 flex items-center justify-center text-indigo-400 border border-indigo-500/20">
+                                                                        <Sparkles className="w-5 h-5" />
+                                                                    </div>
+                                                                    <h4 className="font-black text-white text-xl tracking-tight">
+                                                                        Actionable Recommendations
+                                                                    </h4>
+                                                                </div>
+                                                                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                                                                     {result.subjectInsights[selectedImprovementSubject].suggestions.map((suggestion: string, idx: number) => (
-                                                                        <li key={idx} className="flex items-start gap-3 text-white/90">
-                                                                            <div className="w-1.5 h-1.5 rounded-full bg-white mt-2 shrink-0" />
-                                                                            <span className="leading-relaxed">{suggestion}</span>
-                                                                        </li>
+                                                                        <div key={idx} className="flex items-start gap-4 p-6 bg-white/5 rounded-2xl border border-white/5 hover:bg-white/[0.08] transition-colors">
+                                                                            <div className="text-indigo-400 font-black text-sm mt-1">0{idx + 1}</div>
+                                                                            <span className="text-slate-300 leading-relaxed font-medium">{suggestion}</span>
+                                                                        </div>
                                                                     ))}
-                                                                </ul>
+                                                                </div>
                                                             </div>
                                                         )}
                                                     </div>
@@ -739,17 +757,19 @@ export const DataAnalysisTab = () => {
                                                     )}
                                                 </div>
 
-                                                {/* 4. Overall Plan (Moved to Bottom) */}
-                                                <div className="pt-8 border-t border-slate-700">
-                                                    <h3 className="text-2xl font-bold font-serif mb-6">Overall Class Improvement Plan</h3>
-                                                    <ul className="space-y-4 mb-8">
+                                                {/* 4. Overall Plan */}
+                                                <div className="pt-10 border-t border-white/10 mt-10 relative z-10">
+                                                    <h3 className="text-3xl font-black text-white tracking-tight mb-8">Overall Class Strategy Plan</h3>
+                                                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-12">
                                                         {result.improvementPlan?.map((plan: string, idx: number) => (
-                                                            <li key={idx} className="flex items-start gap-3 text-slate-300">
-                                                                <div className="w-1.5 h-1.5 rounded-full bg-white mt-2 shrink-0" />
-                                                                <span className="text-lg leading-relaxed">{plan}</span>
-                                                            </li>
+                                                            <div key={idx} className="p-8 bg-white/5 border border-white/5 rounded-3xl group hover:bg-white/10 transition-all hover:scale-[1.02] duration-300">
+                                                                <div className="flex items-start gap-5">
+                                                                    <div className="w-10 h-10 rounded-xl bg-indigo-500/20 text-indigo-400 flex items-center justify-center shrink-0 font-black text-xs border border-indigo-500/20">{idx + 1}</div>
+                                                                    <span className="text-slate-300 font-medium text-lg leading-relaxed">{plan}</span>
+                                                                </div>
+                                                            </div>
                                                         ))}
-                                                    </ul>
+                                                    </div>
                                                     <Button
                                                         onClick={() => {
                                                             const blob = new Blob([JSON.stringify(result, null, 2)], { type: 'application/json' });
@@ -762,10 +782,10 @@ export const DataAnalysisTab = () => {
                                                             document.body.removeChild(a);
                                                             URL.revokeObjectURL(url);
                                                         }}
-                                                        className="bg-[#1e293b] border border-slate-600 hover:bg-slate-800 text-white px-6 py-6 h-auto rounded-xl font-bold text-lg"
+                                                        className="w-full bg-white text-slate-900 hover:bg-slate-100 h-20 rounded-[1.5rem] font-black text-xl transition-all shadow-2xl shadow-white/5 group"
                                                     >
-                                                        <Download className="w-5 h-5 mr-3" />
-                                                        Download Class Insights
+                                                        <Download className="w-6 h-6 mr-3 group-hover:translate-y-0.5 transition-transform" />
+                                                        Export Professional Report
                                                     </Button>
                                                 </div>
                                             </div>
@@ -777,6 +797,7 @@ export const DataAnalysisTab = () => {
                     )}
                 </div>
             </div>
-        </div >
+        </div>
+
     );
 };

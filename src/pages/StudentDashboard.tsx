@@ -48,7 +48,7 @@ const StudentDashboard = () => {
 
   if (isLoading) {
     return (
-      <div className="h-screen w-screen flex items-center justify-center bg-slate-50">
+      <div className="h-screen w-screen flex items-center justify-center mesh-gradient">
         <Loader2 className="w-8 h-8 animate-spin text-indigo-600" />
       </div>
     );
@@ -62,7 +62,7 @@ const StudentDashboard = () => {
   ];
 
   return (
-    <div className="flex h-screen bg-[#F8FAFC]">
+    <div className="flex h-screen mesh-gradient overflow-hidden">
       {/* Sidebar Overlay */}
       {isMobileMenuOpen && (
         <div
