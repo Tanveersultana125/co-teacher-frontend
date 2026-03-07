@@ -39,16 +39,16 @@ const AppRoutes = () => {
 
   if (loading) {
     return (
-      <div className="h-screen w-full flex items-center justify-center bg-slate-50">
-        <Loader2 className="h-8 w-8 animate-spin text-primary" />
+      <div className="h-screen w-full flex items-center justify-center bg-[#faf9ff]">
+        <Loader2 className="h-8 w-8 animate-spin text-[#6b5ea7]" />
       </div>
     );
   }
 
   return (
     <Suspense fallback={
-      <div className="h-screen w-full flex items-center justify-center bg-slate-50">
-        <Loader2 className="h-8 w-8 animate-spin text-primary" />
+      <div className="h-screen w-full flex items-center justify-center bg-[#faf9ff]">
+        <Loader2 className="h-8 w-8 animate-spin text-[#6b5ea7]" />
       </div>
     }>
       <Routes>

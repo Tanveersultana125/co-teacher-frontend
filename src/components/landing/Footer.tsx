@@ -4,7 +4,7 @@ import { Logo } from "@/components/common/Logo";
 
 const Footer = () => {
   return (
-    <footer className="bg-[#0D5355] pt-24 pb-12 text-teal-50">
+    <footer className="bg-[#3d3151] pt-24 pb-12 text-white/90">
       <div className="container mx-auto px-6">
         <div className="grid grid-cols-1 xs:grid-cols-2 md:grid-cols-5 gap-12 mb-20">
           <div className="col-span-1 xs:col-span-2 md:col-span-2 space-y-8">
@@ -14,7 +14,7 @@ const Footer = () => {
                 AI Co-teacher
               </span>
             </Link>
-            <p className="text-teal-50/80 text-lg leading-relaxed max-w-sm font-medium">
+            <p className="text-white/70 text-lg leading-relaxed max-w-sm font-medium">
               Empowering educators worldwide with ethical AI tools to simplify teaching and inspire learning.
             </p>
             <div className="flex gap-4">
@@ -22,7 +22,7 @@ const Footer = () => {
                 <a
                   key={i}
                   href="#"
-                  className="w-12 h-12 rounded-2xl bg-white/10 border border-white/20 flex items-center justify-center text-white hover:bg-white hover:text-[#0D5355] transition-all duration-300 shadow-sm"
+                  className="w-12 h-12 rounded-2xl bg-white/10 border border-white/20 flex items-center justify-center text-white hover:bg-white hover:text-[#3d3151] transition-all duration-300 shadow-sm"
                   aria-label={`Social Media ${i}`}
                 >
                   <Icon className="w-5 h-5" />
@@ -63,8 +63,8 @@ const Footer = () => {
         </div>
 
         <div className="pt-12 border-t border-white/10 flex flex-col md:flex-row justify-between items-center gap-6">
-          <p className="text-teal-50/60 font-medium text-sm">© 2024 AI Co-teacher. All rights reserved.</p>
-          <p className="text-teal-50/60 font-medium text-sm italic">Built for teachers, by teachers ❤️</p>
+          <p className="text-white/40 font-medium text-sm">© 2024 AI Co-teacher. All rights reserved.</p>
+          <p className="text-white/40 font-medium text-sm italic">Built for teachers, by teachers ❤️</p>
         </div>
       </div>
     </footer>

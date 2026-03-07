@@ -23,9 +23,16 @@ export default {
         display: ['Plus Jakarta Sans', 'system-ui', 'sans-serif'],
       },
       backgroundImage: {
-        'gradient-hero': 'linear-gradient(135deg, #1E56A0 0%, #24A6B3 100%)',
+        'gradient-hero': 'linear-gradient(135deg, #6b5ea7 0%, #8e82bd 100%)',
       },
       colors: {
+        brand: {
+          primary: '#6b5ea7',
+          light: '#f5f3f7',
+          muted: '#8e82bd',
+          dark: '#3d3151',
+          accent: '#ec8c6b',
+        },
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",

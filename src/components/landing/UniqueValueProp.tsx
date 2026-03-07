@@ -3,7 +3,7 @@ import { Sparkles, Sliders, CheckCircle2 } from "lucide-react";
 
 const UniqueValueProp = () => {
     return (
-        <section className="py-24 bg-[#FFE5D9] overflow-hidden">
+        <section className="py-24 bg-[#faf9ff] overflow-hidden">
             <div className="container mx-auto px-6">
                 <div className="flex flex-col lg:flex-row items-center gap-16 lg:gap-24">
 
@@ -17,48 +17,48 @@ const UniqueValueProp = () => {
                             className="relative"
                         >
                             {/* Decorative Blob */}
-                            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[120%] h-[120%] bg-gradient-to-tr from-indigo-100/50 to-teal-100/50 rounded-full blur-3xl -z-10" />
+                            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[120%] h-[120%] bg-gradient-to-tr from-[#6b5ea7]/10 to-[#ec8c6b]/10 rounded-full blur-3xl -z-10" />
 
                             {/* Main Interface Window */}
                             <div
-                                className="bg-white rounded-2xl shadow-2xl border border-slate-200 overflow-hidden relative z-10 cursor-pointer hover:shadow-indigo-100 transition-all"
+                                className="bg-[#3d3151] rounded-2xl shadow-2xl border border-white/10 overflow-hidden relative z-10 cursor-pointer hover:shadow-[#6b5ea7]/20 transition-all"
                                 onClick={() => window.location.href = "/for-teachers"}
                             >
                                 {/* Window Header */}
-                                <div className="h-10 border-b border-slate-100 bg-slate-50 flex items-center px-4 gap-2">
+                                <div className="h-10 border-b border-white/5 bg-[#2d2440] flex items-center px-4 gap-2">
                                     <div className="w-3 h-3 rounded-full bg-red-400" />
                                     <div className="w-3 h-3 rounded-full bg-amber-400" />
                                     <div className="w-3 h-3 rounded-full bg-emerald-400" />
                                 </div>
 
                                 {/* Window Body */}
-                                <div className="p-6 bg-slate-50/50">
+                                <div className="p-6 bg-[#3d3151]/50">
                                     <div className="flex justify-between items-center mb-6">
                                         <div>
-                                            <h3 className="font-bold text-slate-900 text-lg">Cell Biology: Osmosis</h3>
-                                            <span className="text-xs text-slate-500 uppercase tracking-wide font-semibold">Science • Grade 9</span>
+                                            <h3 className="font-bold text-white text-lg">Cell Biology: Osmosis</h3>
+                                            <span className="text-xs text-white/40 uppercase tracking-wide font-semibold">Science • Grade 9</span>
                                         </div>
-                                        <span className="bg-teal-50 text-[#0D5355] text-xs px-2 py-1 rounded font-bold">Generated</span>
+                                        <span className="bg-white/10 text-[#ec8c6b] text-xs px-2 py-1 rounded font-bold border border-white/5">Generated</span>
                                     </div>
 
                                     {/* Mock Content */}
                                     <div className="space-y-4">
-                                        <div className="bg-white p-4 rounded-xl border border-slate-200 shadow-sm flex gap-4">
-                                            <div className="w-24 h-24 bg-slate-100 rounded-lg overflow-hidden shrink-0">
-                                                <img src="/features/premium_export_slides.png" alt="Education Content" className="w-full h-full object-cover" />
+                                        <div className="bg-white/5 p-4 rounded-xl border border-white/10 shadow-sm flex gap-4">
+                                            <div className="w-24 h-24 bg-white/5 rounded-lg overflow-hidden shrink-0">
+                                                <img src="/features/premium_export_slides.png" alt="Education Content" className="w-full h-full object-cover opacity-80" />
                                             </div>
                                             <div className="flex-1">
-                                                <div className="h-4 bg-slate-100 rounded w-3/4 mb-2" />
-                                                <div className="h-2 bg-slate-50 rounded w-full mb-1" />
-                                                <div className="h-2 bg-slate-50 rounded w-5/6" />
+                                                <div className="h-4 bg-white/10 rounded w-3/4 mb-2" />
+                                                <div className="h-2 bg-white/5 rounded w-full mb-1" />
+                                                <div className="h-2 bg-white/5 rounded w-5/6" />
                                             </div>
                                         </div>
 
-                                        <div className="bg-[#DBEAFE] p-6 rounded-2xl border border-[#93C5FD]">
-                                            <h4 className="text-base font-bold text-[#1E56A0] mb-3 flex items-center gap-2">
-                                                <Sparkles className="w-4 h-4" /> Teacher Tip
+                                        <div className="bg-[#2d2440] p-6 rounded-2xl border border-white/5">
+                                            <h4 className="text-base font-bold text-white mb-3 flex items-center gap-2">
+                                                <Sparkles className="w-4 h-4 text-[#ec8c6b]" /> Teacher Tip
                                             </h4>
-                                            <p className="text-sm text-indigo-900 leading-relaxed font-medium">
+                                            <p className="text-sm text-white/70 leading-relaxed font-medium">
                                                 Use this diagram to explain semi-permeable membranes.
                                                 Ask students to label the water molecules moving across the gradient.
                                             </p>
@@ -66,6 +66,7 @@ const UniqueValueProp = () => {
                                     </div>
                                 </div>
                             </div>
+
 
                             {/* Floating "Settings" Card */}
                             <motion.div
@@ -78,7 +79,7 @@ const UniqueValueProp = () => {
                                     <div>
                                         <div className="text-xs text-slate-500 font-semibold mb-1">Difficulty</div>
                                         <div className="h-1.5 bg-slate-100 rounded-full overflow-hidden">
-                                            <div className="h-full w-[70%] bg-[#1E56A0]" />
+                                            <div className="h-full w-[70%] bg-[#6b5ea7]" />
                                         </div>
                                     </div>
                                     <div>
@@ -100,13 +101,13 @@ const UniqueValueProp = () => {
                             whileInView={{ opacity: 1, x: 0 }}
                             viewport={{ once: true }}
                         >
-                            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-teal-50 text-teal-600 text-sm font-bold mb-6">
+                            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#f5f3f7] text-[#6b5ea7] text-sm font-bold mb-6">
                                 <Sparkles className="w-4 h-4" />
                                 <span>AI-Powered Customization</span>
                             </div>
                             <h2 className="text-4xl md:text-5xl font-display font-bold text-slate-900 mb-6 leading-tight">
                                 Adapt content to <br />
-                                <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#1E56A0] to-teal-500">
+                                <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#6b5ea7] to-[#ec8c6b]">
                                     your classroom's needs
                                 </span>
                             </h2>
@@ -118,7 +119,7 @@ const UniqueValueProp = () => {
 
                             <div className="flex flex-col gap-4">
                                 <div className="flex items-center gap-3">
-                                    <div className="w-10 h-10 rounded-full bg-indigo-50 flex items-center justify-center text-[#1E56A0]">
+                                    <div className="w-10 h-10 rounded-full bg-[#f5f3f7] flex items-center justify-center text-[#6b5ea7]">
                                         <Sliders className="w-5 h-5" />
                                     </div>
                                     <div>
@@ -127,7 +128,7 @@ const UniqueValueProp = () => {
                                     </div>
                                 </div>
                                 <div className="flex items-center gap-3">
-                                    <div className="w-10 h-10 rounded-full bg-teal-50 flex items-center justify-center text-teal-600">
+                                    <div className="w-10 h-10 rounded-full bg-[#f5f3f7] flex items-center justify-center text-[#ec8c6b]">
                                         <CheckCircle2 className="w-5 h-5" />
                                     </div>
                                     <div>

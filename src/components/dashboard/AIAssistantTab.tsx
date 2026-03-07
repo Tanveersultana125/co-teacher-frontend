@@ -1230,7 +1230,7 @@ window.onload = function() {
                                             )}
                                         </div>
                                         {/* Multiple Choice Questions */}
-                                        {(result?.mcqs || result?.content?.mcqs) && (result?.mcqs || result?.content?.mcqs).length > 0 && (
+                                        {(result?.mcqs || result?.content?.mcqs || result?.content?.sectionA_MCQs) && (result?.mcqs || result?.content?.mcqs || result?.content?.sectionA_MCQs).length > 0 && (
                                             <div className="bg-indigo-950 rounded-[2.5rem] p-8 md:p-12 text-white shadow-2xl relative overflow-hidden group/mcq">
                                                 {/* Decorative background elements */}
                                                 <div className="absolute top-0 right-0 w-64 h-64 bg-indigo-500/10 rounded-full blur-3xl -mr-32 -mt-32 transition-transform duration-1000 group-hover/mcq:scale-110"></div>
@@ -1249,11 +1249,11 @@ window.onload = function() {
                                                 </div>
 
                                                 <div className="relative space-y-8">
-                                                    {(result?.mcqs || result?.content?.mcqs).map((m: any, idx: number) => (
+                                                    {(result?.mcqs || result?.content?.mcqs || result?.content?.sectionA_MCQs).map((m: any, idx: number) => (
                                                         <div key={idx} className="bg-white/5 backdrop-blur-sm rounded-[2rem] p-6 md:p-10 border border-white/10 hover:border-white/20 transition-all duration-300 group">
                                                             <div className="flex gap-6 mb-8">
                                                                 <span className="flex-shrink-0 w-12 h-12 rounded-2xl bg-indigo-600 flex items-center justify-center font-black text-white text-xl shadow-lg ring-4 ring-indigo-900/50">{idx + 1}</span>
-                                                                <p className="text-2xl font-bold leading-tight pt-1">{m.question}</p>
+                                                                <p className="text-2xl font-bold leading-tight pt-1">{m.question || m.q}</p>
                                                             </div>
                                                             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 pl-0 md:pl-[4.5rem]">
                                                                 {m.options.map((opt: string, oi: number) => (
@@ -1270,7 +1270,7 @@ window.onload = function() {
                                         )}
 
                                         {/* Match the Following */}
-                                        {(result?.matchFollowing || result?.content?.matchFollowing) && (result?.matchFollowing || result?.content?.matchFollowing).length > 0 && (
+                                        {(result?.matchFollowing || result?.content?.matchFollowing || result?.content?.sectionC_Match) && (result?.matchFollowing || result?.content?.matchFollowing || result?.content?.sectionC_Match).length > 0 && (
                                             <div className="bg-white rounded-[2.5rem] p-10 border border-slate-200 shadow-xl shadow-slate-200/50 relative group/match">
                                                 <div className="flex items-center gap-3 mb-12">
                                                     <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-emerald-400 to-teal-600 flex items-center justify-center text-white shadow-2xl shadow-emerald-200">
@@ -1290,7 +1290,7 @@ window.onload = function() {
                                                             <h4 className="text-[10px] font-black uppercase tracking-[0.3em] text-emerald-600 bg-emerald-50 px-3 py-1 rounded-full">Column A</h4>
                                                             <span className="w-1.5 h-1.5 rounded-full bg-emerald-300 animate-pulse"></span>
                                                         </div>
-                                                        {(result?.matchFollowing || result?.content?.matchFollowing).map((m: any, idx: number) => (
+                                                        {(result?.matchFollowing || result?.content?.matchFollowing || result?.content?.sectionC_Match).map((m: any, idx: number) => (
                                                             <div key={idx} className="p-6 bg-slate-50 rounded-2xl border border-slate-200 font-bold text-slate-700 flex items-center group/item hover:bg-emerald-50 hover:border-emerald-200 transition-all duration-300">
                                                                 <span className="w-10 h-10 rounded-xl bg-white shadow-sm border border-slate-200 flex items-center justify-center text-sm text-slate-400 mr-5 group-hover/item:text-emerald-600 group-hover/item:border-emerald-100 transition-all font-black uppercase">0{idx + 1}</span>
                                                                 <span className="text-lg leading-tight">{m.left}</span>
@@ -1302,7 +1302,7 @@ window.onload = function() {
                                                             <h4 className="text-[10px] font-black uppercase tracking-[0.3em] text-violet-600 bg-violet-50 px-3 py-1 rounded-full">Column B</h4>
                                                             <span className="w-1.5 h-1.5 rounded-full bg-violet-300 animate-pulse"></span>
                                                         </div>
-                                                        {(result?.matchFollowing || result?.content?.matchFollowing).map((m: any, idx: number, arr: any[]) => {
+                                                        {(result?.matchFollowing || result?.content?.matchFollowing || result?.content?.sectionC_Match).map((m: any, idx: number, arr: any[]) => {
                                                             // Stable logic for displaying B column (stable shift)
                                                             const itemIdx = (idx + 3) % arr.length;
                                                             return (
@@ -1364,7 +1364,7 @@ window.onload = function() {
                                                 <h3 className="text-xl font-bold text-slate-900">Activity & Assessment Projects</h3>
                                             </div>
                                             <ul className="space-y-4">
-                                                {(result?.activityQuestions || result?.content?.activityQuestions || result?.content?.activities || []).map((q: any, idx: number) => (
+                                                {(result?.activityQuestions || result?.content?.activityQuestions || result?.content?.activities || result?.content?.activities || []).map((q: any, idx: number) => (
                                                     <li key={idx} className="flex gap-4 p-4 bg-white/80 rounded-xl border border-indigo-100/50 shadow-sm">
                                                         <span className="flex-shrink-0 w-8 h-8 rounded-full bg-indigo-100 flex items-center justify-center font-black text-indigo-600 text-sm">A{idx + 1}</span>
                                                         <p className="pt-1 text-slate-800 font-medium leading-relaxed">{typeof q === 'string' ? q : String(q || "")}</p>
@@ -1421,11 +1421,11 @@ window.onload = function() {
 
                                                             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                                                                 {/* MCQ Answers */}
-                                                                {(result?.mcqs || result?.content?.mcqs || result?.answers?.mcqs) && (
+                                                                {(result?.mcqs || result?.content?.mcqs || result?.content?.sectionA_MCQs || result?.answers?.mcqs || result?.answerKey?.MCQs) && (
                                                                     <div>
                                                                         <h4 className="font-bold text-emerald-800 mb-4 uppercase tracking-wider text-xs">MCQ Answers</h4>
                                                                         <ul className="space-y-3">
-                                                                            {(result?.answers?.mcqs || (result?.mcqs || result?.content?.mcqs || []).map((m: any) => m.correct)).map((ans: string, i: number) => (
+                                                                            {(result?.answers?.mcqs || result?.answerKey?.MCQs || (result?.mcqs || result?.content?.mcqs || result?.content?.sectionA_MCQs || []).map((m: any) => m.correct)).map((ans: string, i: number) => (
                                                                                 <li key={i} className="text-sm text-emerald-900/80 bg-white/50 p-3 rounded-lg flex items-center gap-3">
                                                                                     <span className="w-6 h-6 rounded-full bg-emerald-600 text-white flex items-center justify-center text-[10px] font-black">{i + 1}</span>
                                                                                     {ans}
@@ -1436,11 +1436,11 @@ window.onload = function() {
                                                                 )}
 
                                                                 {/* Match Following Answers */}
-                                                                {(result?.matchFollowing || result?.content?.matchFollowing || result?.answers?.matchFollowing) && (
+                                                                {(result?.matchFollowing || result?.content?.matchFollowing || result?.content?.sectionC_Match || result?.answers?.matchFollowing || result?.answerKey?.Match) && (
                                                                     <div>
                                                                         <h4 className="font-bold text-emerald-800 mb-4 uppercase tracking-wider text-xs">Match Following Answers</h4>
                                                                         <ul className="space-y-3">
-                                                                            {(result?.answers?.matchFollowing || (result?.matchFollowing || result?.content?.matchFollowing || []).map((m: any) => `${m.left} → ${m.right}`)).map((ans: string, i: number) => (
+                                                                            {(result?.answers?.matchFollowing || result?.answerKey?.Match || (result?.matchFollowing || result?.content?.matchFollowing || result?.content?.sectionC_Match || []).map((m: any) => `${m.left} → ${m.right}`)).map((ans: string, i: number) => (
                                                                                 <li key={i} className="text-sm text-emerald-900/80 bg-white/50 p-3 rounded-lg">
                                                                                     {ans}
                                                                                 </li>
@@ -1460,11 +1460,11 @@ window.onload = function() {
                                                                     </ul>
                                                                 </div>
 
-                                                                {(result?.answers?.fillInTheBlanks || result?.answerKey?.["Section B (Fill in the Blanks)"] || result?.content?.answers?.fillInTheBlanks) && (
+                                                                {(result?.answers?.fillInTheBlanks || result?.answerKey?.FillBlanks || result?.answerKey?.["Section B (Fill in the Blanks)"] || result?.content?.answers?.fillInTheBlanks) && (
                                                                     <div>
                                                                         <h4 className="font-bold text-emerald-800 mb-4 uppercase tracking-wider text-xs">Fill in the Blanks Answers</h4>
                                                                         <ul className="space-y-4">
-                                                                            {(result?.answers?.fillInTheBlanks || result?.answerKey?.["Section B (Fill in the Blanks)"] || result?.content?.answers?.fillInTheBlanks || []).map((a: string, idx: number) => (
+                                                                            {(result?.answers?.fillInTheBlanks || result?.answerKey?.FillBlanks || result?.answerKey?.["Section B (Fill in the Blanks)"] || result?.content?.answers?.fillInTheBlanks || []).map((a: string, idx: number) => (
                                                                                 <li key={idx} className="text-sm text-emerald-900/80 bg-white/50 p-3 rounded-lg">
                                                                                     <span className="font-bold mr-2 text-emerald-600">F{idx + 1}.</span> {a}
                                                                                 </li>
@@ -1476,13 +1476,27 @@ window.onload = function() {
                                                                 <div>
                                                                     <h4 className="font-bold text-emerald-800 mb-4 uppercase tracking-wider text-xs">Activity & Project Guides</h4>
                                                                     <ul className="space-y-4">
-                                                                        {(result?.answers?.activityQuestions || result?.answerKey?.Activities || result?.answerKey?.activities || result?.content?.answers?.activityQuestions || result?.answers?.projectIdeas || []).map((a: string, idx: number) => (
+                                                                        {(result?.answers?.activityQuestions || result?.answerKey?.["Project Guidance & Criteria"] || result?.answerKey?.["Model Answers"] || result?.answerKey?.Activities || result?.answerKey?.activities || result?.answerKey?.Project || result?.answerKey?.Project || result?.content?.answers?.activityQuestions || result?.answers?.projectIdeas || []).map((a: string, idx: number) => (
                                                                             <li key={idx} className="text-sm text-emerald-900/80 bg-white/50 p-3 rounded-lg">
                                                                                 <span className="font-bold mr-2 text-emerald-600">G{idx + 1}.</span> {a}
                                                                             </li>
                                                                         ))}
                                                                     </ul>
                                                                 </div>
+
+                                                                {(result?.answerKey?.["Teacher-Only Assessment Questions"] || result?.answerKey?.["Assessment Questions"]) && (
+                                                                    <div className="md:col-span-2">
+                                                                        <h4 className="font-bold text-violet-800 mb-4 uppercase tracking-wider text-xs">Teacher-Only Assessment Questions</h4>
+                                                                        <ul className="space-y-4">
+                                                                            {(result?.answerKey?.["Teacher-Only Assessment Questions"] || result?.answerKey?.["Assessment Questions"] || []).map((a: string, idx: number) => (
+                                                                                <li key={idx} className="text-sm text-violet-900/80 bg-white/50 p-4 rounded-xl border border-violet-100 italic">
+                                                                                    <span className="font-bold mr-2 text-violet-600">TQ{idx + 1}.</span> {a}
+                                                                                </li>
+                                                                            ))}
+                                                                        </ul>
+                                                                    </div>
+                                                                )}
+
                                                             </div>
                                                         </div>
                                                     </motion.div>
@@ -2004,12 +2018,12 @@ window.onload = function() {
                                         {/* Motivational Quote */}
                                         {
                                             result?.motivationalQuote && (
-                                                <div className="mt-12 p-8 bg-[#FF7444] text-slate-900 rounded-[2rem] shadow-xl shadow-orange-100 relative overflow-hidden group">
+                                                <div className="mt-12 p-8 bg-[#6b5ea7] text-white rounded-[2rem] shadow-xl shadow-purple-100 relative overflow-hidden group">
                                                     <div className="absolute -left-4 -top-4 opacity-10 group-hover:scale-110 transition-transform">
                                                         <Sparkles className="w-32 h-32" />
                                                     </div>
                                                     <div className="relative z-10">
-                                                        <span className="text-[10px] font-black uppercase tracking-[0.3em] text-slate-900/60 mb-4 block">Teacher's Inspiration</span>
+                                                        <span className="text-[10px] font-black uppercase tracking-[0.3em] text-white/60 mb-4 block">Teacher's Inspiration</span>
                                                         <p className="text-2xl font-black italic leading-tight">"{result.motivationalQuote}"</p>
                                                     </div>
                                                 </div>
@@ -2240,10 +2254,10 @@ window.onload = function() {
                                                     )}
 
                                                     <div className="flex items-center gap-3 mb-6">
-                                                        <div className="w-10 h-10 rounded-xl bg-[#1A3263] flex items-center justify-center text-white shadow-lg shadow-blue-100">
+                                                        <div className="w-10 h-10 rounded-xl bg-[#3d3151] flex items-center justify-center text-white shadow-lg shadow-purple-100">
                                                             <HelpCircle className="w-5 h-5" />
                                                         </div>
-                                                        <h2 className="text-3xl font-black text-[#1A3263]">Review Questions</h2>
+                                                        <h2 className="text-3xl font-black text-[#3d3151]">Review Questions</h2>
                                                     </div>
 
                                                     <div className="space-y-6 mb-12">

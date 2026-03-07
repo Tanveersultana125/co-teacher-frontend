@@ -25,16 +25,17 @@ export const Logo: React.FC<LogoProps> = ({ className = "w-10 h-10", showText = 
                             <stop offset="100%" stopColor="#9CA3AF" />
                         </linearGradient>
 
-                        {/* Deep Teal Gradient for Background */}
+                        {/* Brand Purple Gradient for Background */}
                         <linearGradient id="tealGrad" x1="0%" y1="0%" x2="0%" y2="100%">
-                            <stop offset="0%" stopColor="#0D5355" />
-                            <stop offset="100%" stopColor="#083334" />
+                            <stop offset="0%" stopColor="#6b5ea7" />
+                            <stop offset="100%" stopColor="#3d3151" />
                         </linearGradient>
 
-                        {/* Gold/Orange Gradient for Accents/Text */}
+
+                        {/* Low Lavender Gradient for Accents/Text */}
                         <linearGradient id="goldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-                            <stop offset="0%" stopColor="#FF8C66" />
-                            <stop offset="100%" stopColor="#FF7444" />
+                            <stop offset="0%" stopColor="#f5f3f7" />
+                            <stop offset="100%" stopColor="#8e82bd" />
                         </linearGradient>
 
                         {/* Glow Filter */}
@@ -92,10 +93,11 @@ export const Logo: React.FC<LogoProps> = ({ className = "w-10 h-10", showText = 
                         width="28"
                         height="28"
                         rx="6"
-                        fill="#083334"
+                        fill="#3d3151"
                         stroke="url(#silverGrad)"
                         strokeWidth="1.5"
                     />
+
 
                     {/* 6. "AI" Text - Metallic Gold */}
                     <text

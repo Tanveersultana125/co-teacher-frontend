@@ -54,15 +54,15 @@ const Login = () => {
   };
 
   return (
-    <div className="min-h-screen bg-[#F8FAFC] flex overflow-hidden">
+    <div className="min-h-screen bg-[#faf9ff] flex overflow-hidden">
       {/* Left Side - Visual */}
-      <div className="hidden lg:flex lg:w-1/2 bg-primary relative p-12 flex-col justify-between overflow-hidden">
-        <div className="absolute top-0 right-0 w-[150%] h-[150%] bg-indigo-500 rounded-full -translate-y-1/2 translate-x-1/2 opacity-20 blur-[100px]" />
+      <div className="hidden lg:flex lg:w-1/2 bg-[#3d3151] relative p-12 flex-col justify-between overflow-hidden">
+        <div className="absolute top-0 right-0 w-[150%] h-[150%] bg-[#6b5ea7] rounded-full -translate-y-1/2 translate-x-1/2 opacity-20 blur-[100px]" />
         <div className="absolute bottom-0 left-0 w-[150%] h-[150%] bg-white rounded-full translate-y-1/2 -translate-x-1/2 opacity-10 blur-[120px]" />
 
         <Link to="/" className="relative z-10 flex items-center gap-2">
-          <div className="w-10 h-10 rounded-xl bg-white flex items-center justify-center">
-            <GraduationCap className="w-6 h-6 text-primary" />
+          <div className="w-10 h-10 rounded-xl bg-white flex items-center justify-center shadow-lg">
+            <GraduationCap className="w-6 h-6 text-[#3d3151]" />
           </div>
           <span className="font-display font-bold text-2xl text-white tracking-tighter">Co-Teacher</span>
         </Link>
@@ -92,7 +92,7 @@ const Login = () => {
           className="w-full max-w-md space-y-10"
         >
           <div>
-            <h1 className="text-4xl font-black text-slate-900 tracking-tight">Sign in</h1>
+            <h1 className="text-4xl font-black text-[#3d3151] tracking-tight">Sign in</h1>
             <p className="text-slate-500 font-bold mt-3">Welcome back to your workstation.</p>
           </div>
 
@@ -119,7 +119,7 @@ const Login = () => {
                   id="email"
                   type="email"
                   placeholder="name@school.edu"
-                  className="h-14 pl-12 rounded-2xl bg-white border-slate-200 focus-visible:ring-primary font-bold transition-all shadow-sm"
+                  className="h-14 pl-12 rounded-2xl bg-white border-slate-200 focus-visible:ring-[#6b5ea7] font-bold transition-all shadow-sm"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   required
@@ -130,7 +130,7 @@ const Login = () => {
             <div className="space-y-2">
               <div className="flex justify-between items-center">
                 <Label className="text-xs font-black text-slate-400 uppercase tracking-widest" htmlFor="password">Password</Label>
-                <a href="#" className="text-xs font-black text-primary hover:underline uppercase tracking-widest">Forgot?</a>
+                <a href="#" className="text-xs font-black text-[#6b5ea7] hover:underline uppercase tracking-widest">Forgot?</a>
               </div>
               <div className="relative">
                 <Lock className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-300 pointer-events-none" />
@@ -138,7 +138,7 @@ const Login = () => {
                   id="password"
                   type={showPassword ? "text" : "password"}
                   placeholder="••••••••"
-                  className="h-14 pl-12 pr-12 rounded-2xl bg-white border-slate-200 focus-visible:ring-primary font-bold transition-all shadow-sm"
+                  className="h-14 pl-12 pr-12 rounded-2xl bg-white border-slate-200 focus-visible:ring-[#6b5ea7] font-bold transition-all shadow-sm"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   required
@@ -153,7 +153,7 @@ const Login = () => {
               </div>
             </div>
 
-            <Button type="submit" className="w-full h-14 rounded-2xl btn-premium text-lg font-bold shadow-2xl" disabled={isLoading}>
+            <Button type="submit" className="w-full h-14 rounded-2xl bg-[#6b5ea7] hover:bg-[#3d3151] text-white text-lg font-bold shadow-xl shadow-purple-100 transition-all" disabled={isLoading}>
               {isLoading ? (
                 <><Loader2 className="w-5 h-5 animate-spin mr-2" /> Signing in...</>
               ) : (
@@ -167,14 +167,14 @@ const Login = () => {
               <span className="w-full border-t border-slate-200" />
             </div>
             <div className="relative flex justify-center text-xs uppercase">
-              <span className="bg-[#F8FAFC] px-2 text-slate-400 font-black tracking-widest">Or continue with</span>
+              <span className="bg-[#faf9ff] px-2 text-slate-400 font-black tracking-widest">Or continue with</span>
             </div>
           </div>
 
           <Button
             onClick={handleGoogleLogin}
             variant="outline"
-            className="w-full h-14 rounded-2xl border-slate-200 font-bold hover:bg-slate-50 transition-all flex items-center justify-center gap-3 shadow-sm"
+            className="w-full h-14 rounded-2xl border-slate-200 font-bold hover:bg-slate-50 transition-all flex items-center justify-center gap-3 shadow-sm text-slate-600"
           >
             <svg className="w-5 h-5" viewBox="0 0 24 24">
               <path
@@ -200,7 +200,7 @@ const Login = () => {
           <div className="text-center">
             <p className="text-slate-500 font-bold">
               New educator?{" "}
-              <Link to="/signup" className="text-primary hover:underline font-black italic">Create an account</Link>
+              <Link to="/signup" className="text-[#6b5ea7] hover:underline font-black italic">Create an account</Link>
             </p>
           </div>
         </motion.div>

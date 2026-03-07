@@ -64,11 +64,11 @@ const Pricing = () => {
                             whileInView={{ opacity: 1, scale: 1 }}
                             viewport={{ once: true }}
                             transition={{ delay: index * 0.1 }}
-                            className={`relative p-8 rounded-[2.5rem] bg-white flex flex-col ${plan.popular ? "border-2 border-primary shadow-2xl shadow-primary/10" : "border border-slate-100 shadow-sm"
+                            className={`relative p-8 rounded-[2.5rem] bg-white flex flex-col ${plan.popular ? "border-2 border-[#6b5ea7] shadow-2xl shadow-[#6b5ea7]/10" : "border border-slate-100 shadow-sm"
                                 }`}
                         >
                             {plan.popular && (
-                                <div className="absolute top-0 right-1/2 translate-x-1/2 -translate-y-1/2 px-4 py-1 bg-primary text-white text-xs font-black rounded-full uppercase tracking-tighter shadow-lg">
+                                <div className="absolute top-0 right-1/2 translate-x-1/2 -translate-y-1/2 px-4 py-1 bg-[#6b5ea7] text-white text-xs font-black rounded-full uppercase tracking-tighter shadow-lg">
                                     Most Popular
                                 </div>
                             )}
@@ -85,8 +85,8 @@ const Pricing = () => {
                             <ul className="space-y-4 mb-10 flex-1">
                                 {plan.features.map((feature, fIndex) => (
                                     <li key={fIndex} className="flex items-start gap-3 text-sm font-medium text-slate-600">
-                                        <div className="w-5 h-5 rounded-full bg-indigo-50 border border-indigo-100 flex items-center justify-center mt-0.5 shrink-0">
-                                            <Check className="w-3 h-3 text-primary" />
+                                        <div className="w-5 h-5 rounded-full bg-[#f5f3f7] border border-[#6b5ea7]/20 flex items-center justify-center mt-0.5 shrink-0">
+                                            <Check className="w-3 h-3 text-[#6b5ea7]" />
                                         </div>
                                         {feature}
                                     </li>
@@ -94,7 +94,7 @@ const Pricing = () => {
                             </ul>
 
                             <Button
-                                className={`w-full h-14 rounded-2xl font-bold text-lg transition-transform active:scale-95 ${plan.popular ? "btn-premium" : "bg-white border-2 border-slate-100 text-slate-900 hover:bg-slate-50"
+                                className={`w-full h-14 rounded-2xl font-bold text-lg transition-transform active:scale-95 ${plan.popular ? "bg-[#6b5ea7] hover:bg-[#6b5ea7]/90 text-white shadow-xl" : "bg-white border-2 border-slate-100 text-slate-900 hover:bg-slate-50"
                                     }`}
                                 asChild
                             >

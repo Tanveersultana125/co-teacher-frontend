@@ -6,35 +6,35 @@
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 222.2 84% 4.9%;
+    --background: 260 20% 98%;
+    --foreground: 260 24% 16%;
 
     --card: 0 0% 100%;
-    --card-foreground: 222.2 84% 4.9%;
+    --card-foreground: 260 24% 16%;
 
     --popover: 0 0% 100%;
-    --popover-foreground: 222.2 84% 4.9%;
+    --popover-foreground: 260 24% 16%;
 
-    --primary: 221.2 83.2% 53.3%;
+    --primary: 251 28% 51%;
     --primary-foreground: 210 40% 98%;
 
-    --secondary: 210 40% 96.1%;
-    --secondary-foreground: 222.2 47.4% 11.2%;
+    --secondary: 260 20% 93%;
+    --secondary-foreground: 260 24% 16%;
 
-    --muted: 210 40% 96.1%;
-    --muted-foreground: 215.4 16.3% 46.9%;
+    --muted: 260 15% 72%;
+    --muted-foreground: 260 10% 45%;
 
-    --accent: 210 40% 96.1%;
-    --accent-foreground: 222.2 47.4% 11.2%;
+    --accent: 260 20% 93%;
+    --accent-foreground: 260 24% 16%;
 
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 210 40% 98%;
 
-    --border: 214.3 31.8% 91.4%;
-    --input: 214.3 31.8% 91.4%;
-    --ring: 221.2 83.2% 53.3%;
+    --border: 260 20% 90%;
+    --input: 260 20% 90%;
+    --ring: 251 28% 51%;
 
-    --radius: 0.75rem;
+    --radius: 1rem;
   }
 
   .dark {
@@ -130,12 +130,64 @@
 }
 
 .mesh-gradient {
-  background-color: #ffffff;
+  background-color: #faf9ff;
   background-image: 
-    radial-gradient(at 0% 0%, rgba(220, 252, 231, 0.5) 0px, transparent 50%),
-    radial-gradient(at 100% 0%, rgba(245, 243, 255, 0.6) 0px, transparent 50%),
-    radial-gradient(at 100% 100%, rgba(224, 242, 254, 0.4) 0px, transparent 50%),
-    radial-gradient(at 0% 100%, rgba(236, 253, 245, 0.5) 0px, transparent 50%),
-    radial-gradient(at 50% 50%, rgba(255, 255, 255, 1) 0px, transparent 50%);
+    radial-gradient(at 0% 0%, rgba(107, 94, 167, 0.1) 0px, transparent 55%),
+    radial-gradient(at 100% 0%, rgba(107, 94, 167, 0.08) 0px, transparent 50%),
+    radial-gradient(at 100% 100%, rgba(236, 140, 107, 0.06) 0px, transparent 50%),
+    radial-gradient(at 0% 100%, rgba(107, 94, 167, 0.05) 0px, transparent 50%),
+    radial-gradient(at 80% 50%, rgba(236, 140, 107, 0.04) 0px, transparent 40%),
+    radial-gradient(at 50% 50%, rgba(255, 255, 255, 1) 0px, transparent 60%);
   background-attachment: fixed;
+}
+
+.tech-pattern {
+  position: relative;
+  overflow: hidden;
+}
+
+.tech-pattern::before {
+  content: "";
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(circle at center, transparent 0%, rgba(107, 94, 167, 0.03) 100%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.tech-ribbon {
+  position: absolute;
+  width: 150%;
+  height: 200px;
+  background: linear-gradient(90deg, transparent, rgba(107, 94, 167, 0.08), transparent);
+  transform: rotate(-15deg);
+  filter: blur(80px);
+  animation: ribbon-flow 20s linear infinite;
+  pointer-events: none;
+  z-index: 0;
+}
+
+@keyframes ribbon-flow {
+  0% { transform: translate(-30%, -20%) rotate(-15deg); }
+  100% { transform: translate(10%, 10%) rotate(-15deg); }
+}
+
+.sparkle-particle {
+  position: absolute;
+  width: 2px;
+  height: 2px;
+  background: white;
+  border-radius: 50%;
+  box-shadow: 0 0 10px 1px rgba(107, 94, 167, 0.5);
+  animation: sparkle-twinkle var(--duration) ease-in-out infinite;
+  pointer-events: none;
+  opacity: 0;
+}
+
+@keyframes sparkle-twinkle {
+  0%, 100% { opacity: 0; transform: scale(0); }
+  50% { opacity: 0.6; transform: scale(1); }
 }

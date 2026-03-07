@@ -49,16 +49,16 @@ const StudentDashboard = () => {
   if (isLoading) {
     return (
       <div className="h-screen w-screen flex items-center justify-center mesh-gradient">
-        <Loader2 className="w-8 h-8 animate-spin text-indigo-600" />
+        <Loader2 className="w-8 h-8 animate-spin text-[#6b5ea7]" />
       </div>
     );
   }
 
   const stats = [
-    { label: "Lessons Completed", value: dashboardData?.stats.lessonsCompleted || "0", icon: BookOpen, color: "text-[#0D5355]", bg: "bg-teal-50" },
-    { label: "Assignments Due", value: dashboardData?.stats.assignmentsDue || "0", icon: FileText, color: "text-amber-600", bg: "bg-amber-50" },
+    { label: "Lessons Completed", value: dashboardData?.stats.lessonsCompleted || "0", icon: BookOpen, color: "text-[#6b5ea7]", bg: "bg-[#f5f3f7]" },
+    { label: "Assignments Due", value: dashboardData?.stats.assignmentsDue || "0", icon: FileText, color: "text-[#ec8c6b]", bg: "bg-[#ec8c6b]/10" },
     { label: "Average Score", value: (dashboardData?.stats.avgScore || "0") + "%", icon: Award, color: "text-emerald-600", bg: "bg-emerald-50" },
-    { label: "Attendance", value: (dashboardData?.stats.attendanceRate || "0") + "%", icon: Calendar, color: "text-blue-600", bg: "bg-blue-50" },
+    { label: "Attendance", value: (dashboardData?.stats.attendanceRate || "0") + "%", icon: Calendar, color: "text-[#3d3151]", bg: "bg-[#3d3151]/10" },
   ];
 
   return (
@@ -78,7 +78,7 @@ const StudentDashboard = () => {
       `}>
         <div className="p-6 lg:p-8 flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 bg-[#4F46E5] rounded-xl flex items-center justify-center text-white shadow-lg shadow-indigo-200">
+            <div className="w-10 h-10 bg-[#6b5ea7] rounded-xl flex items-center justify-center text-white shadow-lg">
               <GraduationCap className="w-6 h-6" />
             </div>
             <span className="text-xl font-bold text-slate-900 font-display tracking-tight">Co-Teacher</span>
@@ -100,11 +100,11 @@ const StudentDashboard = () => {
                 setIsMobileMenuOpen(false);
               }}
               className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-200 font-medium ${activeTab === item.id
-                ? "bg-[#EEF2FF] text-[#4F46E5]"
+                ? "bg-[#f5f3f7] text-[#6b5ea7]"
                 : "text-slate-500 hover:bg-slate-50 hover:text-slate-900"
                 }`}
             >
-              <item.icon className={`w-5 h-5 ${activeTab === item.id ? "text-[#4F46E5]" : "text-slate-400"}`} />
+              <item.icon className={`w-5 h-5 ${activeTab === item.id ? "text-[#6b5ea7]" : "text-slate-400"}`} />
               <span className="font-semibold text-[15px]">{item.label}</span>
             </button>
           ))}
@@ -140,8 +140,8 @@ const StudentDashboard = () => {
                 <p className="text-slate-500 text-[10px] sm:text-sm mt-0.5 font-medium truncate max-w-[150px] sm:max-w-none">Keep up the great work!</p>
               </div>
             </div>
-            <div className="flex items-center gap-4 bg-indigo-50 px-4 py-2 rounded-xl">
-              <span className="text-indigo-600 font-bold text-sm">Grade {dashboardData?.profile.grade}-{dashboardData?.profile.section}</span>
+            <div className="flex items-center gap-4 bg-[#f5f3f7] px-4 py-2 rounded-xl">
+              <span className="text-[#6b5ea7] font-bold text-sm">Grade {dashboardData?.profile.grade}-{dashboardData?.profile.section}</span>
             </div>
           </div>
         </header>
@@ -177,22 +177,22 @@ const StudentDashboard = () => {
             <Card className="border-none shadow-sm bg-white p-8">
               <div className="flex items-center justify-between mb-8">
                 <h3 className="text-xl font-bold text-slate-900 font-display">My Lessons</h3>
-                <Button variant="ghost" className="text-indigo-600 font-bold">View Curriculum</Button>
+                <Button variant="ghost" className="text-[#6b5ea7] font-bold hover:text-[#3d3151] hover:bg-[#f5f3f7]">View Curriculum</Button>
               </div>
               <div className="space-y-4">
                 {dashboardData?.lessons.map((lesson: any) => (
-                  <div key={lesson.id} className="p-4 rounded-2xl border border-slate-100 hover:border-indigo-100 transition-all cursor-pointer group">
+                  <div key={lesson.id} className="p-4 rounded-2xl border border-slate-100 hover:border-[#6b5ea7]/20 hover:bg-[#f5f3f7]/30 transition-all cursor-pointer group">
                     <div className="flex items-center justify-between mb-3">
                       <div className="flex items-center gap-3">
-                        <div className="w-10 h-10 rounded-xl bg-indigo-50 flex items-center justify-center text-indigo-600">
+                        <div className="w-10 h-10 rounded-xl bg-[#f5f3f7] flex items-center justify-center text-[#6b5ea7]">
                           <BookOpen className="w-5 h-5" />
                         </div>
                         <div>
-                          <h4 className="font-bold text-slate-900 group-hover:text-indigo-600 transition-colors">{lesson.title}</h4>
+                          <h4 className="font-bold text-slate-900 group-hover:text-[#6b5ea7] transition-colors">{lesson.title}</h4>
                           <p className="text-xs text-slate-400 font-bold tracking-wider uppercase">{lesson.subject.name}</p>
                         </div>
                       </div>
-                      <Button size="sm" className="bg-[#4F46E5] rounded-lg font-bold">Start</Button>
+                      <Button size="sm" className="bg-[#6b5ea7] hover:bg-[#6b5ea7]/90 rounded-lg font-bold">Start</Button>
                     </div>
                   </div>
                 ))}
@@ -206,7 +206,7 @@ const StudentDashboard = () => {
                   {dashboardData?.assignments.map((asn: any) => (
                     <div key={asn.id} className="flex items-center justify-between p-4 rounded-xl bg-slate-50">
                       <div className="flex items-center gap-4">
-                        <div className={`w-10 h-10 rounded-lg flex items-center justify-center ${asn.submissions.length > 0 ? 'bg-emerald-100 text-emerald-600' : 'bg-amber-100 text-amber-600'}`}>
+                        <div className={`w-10 h-10 rounded-lg flex items-center justify-center ${asn.submissions.length > 0 ? 'bg-emerald-100 text-emerald-600' : 'bg-[#ec8c6b]/10 text-[#ec8c6b]'}`}>
                           {asn.submissions.length > 0 ? <CheckCircle2 className="w-5 h-5" /> : <Clock className="w-5 h-5" />}
                         </div>
                         <div>
@@ -214,7 +214,7 @@ const StudentDashboard = () => {
                           <p className="text-xs text-slate-500 font-bold">Due: {new Date(asn.dueDate).toLocaleDateString()}</p>
                         </div>
                       </div>
-                      <Button size="sm" variant="outline" className="font-bold border-slate-200">
+                      <Button size="sm" variant="outline" className="font-bold border-slate-200 hover:border-[#6b5ea7] hover:bg-[#f5f3f7] text-slate-600 hover:text-[#6b5ea7]">
                         {asn.submissions.length > 0 ? 'Review' : 'Submit'}
                       </Button>
                     </div>
@@ -222,16 +222,17 @@ const StudentDashboard = () => {
                 </div>
               </Card>
 
-              <Card className="border-none shadow-sm bg-[#4F46E5] p-8 text-white">
-                <div className="flex items-center justify-between mb-6">
+              <Card className="border-none shadow-sm bg-[#3d3151] p-8 text-white relative overflow-hidden">
+                <div className="absolute top-0 right-0 w-32 h-32 bg-[#6b5ea7]/20 blur-3xl rounded-full translate-x-1/2 -translate-y-1/2" />
+                <div className="flex items-center justify-between mb-6 relative z-10">
                   <h3 className="text-xl font-bold font-display">Recent Grades</h3>
                   <BarChart3 className="w-6 h-6 opacity-50" />
                 </div>
-                <div className="space-y-4">
+                <div className="space-y-4 relative z-10">
                   {dashboardData?.profile.grades.slice(0, 3).map((grade: any) => (
                     <div key={grade.id} className="flex items-center justify-between p-3 bg-white/10 rounded-xl">
                       <span className="font-bold text-sm">{grade.type}</span>
-                      <span className="font-mono font-bold">{grade.score}/{grade.maxScore}</span>
+                      <span className="font-mono font-bold text-[#ec8c6b]">{grade.score}/{grade.maxScore}</span>
                     </div>
                   ))}
                   {dashboardData?.profile.grades.length === 0 && (

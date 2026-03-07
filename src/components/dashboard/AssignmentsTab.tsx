@@ -800,7 +800,10 @@ function AssignmentDisplay({ content }: { content: any }) {
                                     {Object.entries(content.answerKey)
                                         .filter(([section]) => {
                                             const normalizedSection = section.toLowerCase().replace(/[^a-z0-9]/g, '');
-                                            // Filter logic: Only show sections that have corresponding content
+                                            // More permissive filter: Show if section matches content key OR is a generic teacher section
+                                            const isGenericTeacherSection = ['project', 'guidance', 'outcome', 'rubric', 'summary'].some(key => normalizedSection.includes(key));
+                                            if (isGenericTeacherSection) return true;
+
                                             return Object.keys(content.content || {}).some(contentKey => {
                                                 const normalizedContentKey = contentKey.toLowerCase().replace(/[^a-z0-9]/g, '');
                                                 return normalizedContentKey.includes(normalizedSection) || normalizedSection.includes(normalizedContentKey) ||
@@ -808,6 +811,7 @@ function AssignmentDisplay({ content }: { content: any }) {
                                                     (normalizedSection === 'activities' && normalizedContentKey === 'activities');
                                             });
                                         })
+
                                         .map(([section, answers]: [string, any], idx) => (
                                             <div key={idx} className="space-y-4">
                                                 <p className="text-[10px] font-black uppercase tracking-widest text-emerald-600 mb-2">{section.replace(/_/g, ' ')}</p>

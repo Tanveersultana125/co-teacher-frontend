@@ -139,11 +139,11 @@ const TeacherDashboard = () => {
       </AnimatePresence>
 
       {/* Sidebar - Mobile and Desktop */}
-      <aside className={`fixed inset-y-0 left-0 bg-[#1A3263] border-r border-white/10 flex flex-col z-50 transition-transform duration-300 lg:translate-x-0 lg:w-64 print:hidden ${isMobileMenuOpen ? "translate-x-0 w-[280px]" : "-translate-x-full w-64"
+      <aside className={`fixed inset-y-0 left-0 bg-[#3d3151] border-r border-white/5 flex flex-col z-50 transition-transform duration-300 lg:translate-x-0 lg:w-64 print:hidden ${isMobileMenuOpen ? "translate-x-0 w-[280px]" : "-translate-x-full w-64"
         }`}>
         <div className="p-8 flex items-center justify-between gap-3">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 bg-white rounded-xl flex items-center justify-center text-[#1A3263] shadow-lg">
+            <div className="w-10 h-10 bg-[#f5f3f7] rounded-xl flex items-center justify-center text-[#6b5ea7] shadow-lg">
               <GraduationCap className="w-6 h-6" />
             </div>
             <span className="text-xl font-bold text-white font-display tracking-tight">Co-Teacher</span>
@@ -178,11 +178,23 @@ const TeacherDashboard = () => {
                 setIsMobileMenuOpen(false);
               }}
               className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-200 font-medium ${activeTab === item.id
-                ? "bg-white text-[#1A3263] shadow-md"
+                ? "bg-[#f5f3f7] text-[#6b5ea7] shadow-md"
                 : "text-slate-300 hover:bg-white/10 hover:text-white"
                 }`}
+
+
+
+
+
+
             >
-              <item.icon className={`w-5 h-5 ${activeTab === item.id ? "text-[#1A3263]" : "text-slate-400"}`} />
+              <item.icon className={`w-5 h-5 ${activeTab === item.id ? "text-[#6b5ea7]" : "text-slate-400"}`} />
+
+
+
+
+
+
               <span className="font-semibold text-[15px]">{item.label}</span>
             </button>
           ))}
@@ -222,7 +234,7 @@ const TeacherDashboard = () => {
         <div className="p-4 sm:p-8 space-y-6 sm:space-y-8">
           <Suspense fallback={
             <div className="flex flex-col items-center justify-center h-[400px] gap-4">
-              <Loader2 className="w-8 h-8 animate-spin text-indigo-500" />
+              <Loader2 className="w-8 h-8 animate-spin text-[#6b5ea7]" />
               <p className="text-slate-400 font-medium animate-pulse">Loading experience...</p>
             </div>
           }>
@@ -271,12 +283,13 @@ const TeacherDashboard = () => {
                   >
                     <Card className="h-full border-none shadow-xl bg-white/40 backdrop-blur-xl p-8 relative overflow-hidden group">
                       {/* Decorative Background Blob */}
-                      <div className="absolute -top-24 -right-24 w-64 h-64 bg-indigo-500/10 rounded-full blur-3xl group-hover:bg-indigo-500/20 transition-all duration-700" />
+                      <div className="absolute -top-24 -right-24 w-64 h-64 bg-[#6b5ea7]/10 rounded-full blur-3xl group-hover:bg-[#6b5ea7]/20 transition-all duration-700" />
 
                       <div className="relative z-10">
                         <h2 className="text-2xl font-black text-slate-900 mb-2 font-display italic">
-                          What did you do <span className="text-indigo-600">after school</span> yesterday?
+                          What did you do <span className="text-[#6b5ea7]">after school</span> yesterday?
                         </h2>
+
                         <div className="flex items-center gap-2 mb-8 animate-bounce w-fit">
                           <Plus className="w-4 h-4 text-slate-400 rotate-45" />
                           <div className="text-[10px] font-black uppercase tracking-[0.2em] text-slate-400">Your Daily Mission</div>
@@ -296,14 +309,16 @@ const TeacherDashboard = () => {
                               className="w-full flex items-center gap-4 p-4 rounded-2xl border border-white/50 bg-white/30 hover:bg-white/60 hover:shadow-lg transition-all text-left group/item"
                             >
                               <div className="relative">
-                                <div className="w-6 h-6 rounded-lg border-2 border-slate-300 flex items-center justify-center group-hover/item:border-indigo-500 transition-colors">
-                                  <div className="w-3 h-3 bg-indigo-500 rounded-sm scale-0 group-hover/item:scale-100 transition-transform shadow-sm shadow-indigo-200" />
+                                <div className="w-6 h-6 rounded-lg border-2 border-slate-300 flex items-center justify-center group-hover/item:border-[#6b5ea7] transition-colors">
+                                  <div className="w-3 h-3 bg-[#6b5ea7] rounded-sm scale-0 group-hover/item:scale-100 transition-transform shadow-sm shadow-[#6b5ea7]/20" />
                                 </div>
                               </div>
+
                               <span className="font-bold text-slate-700 group-hover/item:text-slate-900 transition-colors">{item.label}</span>
                               <div className="ml-auto opacity-0 group-hover/item:opacity-100 transition-opacity">
-                                <item.icon className="w-4 h-4 text-indigo-500" />
+                                <item.icon className="w-4 h-4 text-[#6b5ea7]" />
                               </div>
+
                             </button>
                           ))}
                         </div>
@@ -324,19 +339,21 @@ const TeacherDashboard = () => {
                         <div className="flex items-center gap-2 mb-4">
                           <div className="px-3 py-1 bg-white/10 rounded-full text-[10px] font-black uppercase tracking-widest backdrop-blur-md">Featured Feature</div>
                         </div>
-                        <h3 className="text-3xl font-black mb-4 font-display leading-tight">AI Data Intelligence <br /><span className="text-indigo-400">Superpowers.</span></h3>
+                        <h3 className="text-3xl font-black mb-4 font-display leading-tight">AI Data Intelligence <br /><span className="text-[#6b5ea7]">Superpowers.</span></h3>
                         <p className="text-slate-400 font-medium mb-8 leading-relaxed">
+
                           Analyze entire classes in seconds. Identify struggling students, generate improvement plans, and predict future performance with our proprietary AI engine.
                         </p>
 
                         <div className="mt-auto space-y-4">
                           <Button
                             onClick={() => setActiveTab('data-analysis')}
-                            className="w-full h-14 bg-indigo-600 hover:bg-indigo-700 text-white font-black text-lg rounded-2xl flex items-center justify-center gap-3 group/btn"
+                            className="w-full h-14 bg-[#6b5ea7] hover:bg-[#6b5ea7]/90 text-white font-black text-lg rounded-2xl flex items-center justify-center gap-3 group/btn shadow-lg"
                           >
                             <span>Open Data Intelligence</span>
                             <ChevronRight className="w-5 h-5 group-hover/btn:translate-x-1 transition-transform" />
                           </Button>
+
                           <div className="flex items-center justify-between px-2 text-xs font-bold text-slate-500">
                             <div className="flex items-center gap-1"><Users className="w-3 h-3" /> 2.4k+ Teachers using</div>
                             <div className="flex items-center gap-1 underline underline-offset-4 cursor-pointer hover:text-white transition-colors">Watch Demo</div>

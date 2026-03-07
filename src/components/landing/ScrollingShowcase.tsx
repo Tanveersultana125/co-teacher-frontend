@@ -122,9 +122,9 @@ export const ScrollingShowcase = () => {
                             }}
                         >
                             {/* Header Decoration */}
-                            <div className={`h-2 w-full ${card.type === 'slide' ? 'bg-purple-500' :
-                                card.type === 'quiz' ? 'bg-red-500' :
-                                    card.type === 'notes' ? 'bg-green-500' : 'bg-blue-500'
+                            <div className={`h-2 w-full ${card.type === 'slide' ? 'bg-[#6b5ea7]' :
+                                card.type === 'quiz' ? 'bg-[#ec8c6b]' :
+                                    card.type === 'notes' ? 'bg-[#8e82bd]' : 'bg-[#3d3151]'
                                 }`} />
 
                             <div className="p-4 sm:p-6 flex flex-col h-full bg-slate-50">

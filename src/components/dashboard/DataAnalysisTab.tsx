@@ -15,6 +15,8 @@ export const DataAnalysisTab = () => {
     const [analysisType, setAnalysisType] = useState<string>("class_performance");
     const [isAnalyzing, setIsAnalyzing] = useState(false);
     const [result, setResult] = useState<any>(null);
+    const [csvData, setCsvData] = useState<string>("");
+
     const { toast } = useToast();
     const [dragActive, setDragActive] = useState(false);
     const [selectedDetailSubject, setSelectedDetailSubject] = useState<string>("");
@@ -24,6 +26,29 @@ export const DataAnalysisTab = () => {
     const [chatInput, setChatInput] = useState("");
     const [chatMessages, setChatMessages] = useState<{ role: 'user' | 'assistant', content: string }[]>([]);
     const [isChatLoading, setIsChatLoading] = useState(false);
+
+    const handleSendMessage = async () => {
+        if (!chatInput.trim() || isChatLoading) return;
+
+        const question = chatInput;
+        setChatInput("");
+        setChatMessages(prev => [...prev, { role: 'user', content: question }]);
+        setIsChatLoading(true);
+
+        try {
+            const response = await api.post('/ai/chat-data', {
+                question,
+                csvData
+            });
+            setChatMessages(prev => [...prev, { role: 'assistant', content: response.data.answer }]);
+        } catch (err: any) {
+            console.error(err);
+            setChatMessages(prev => [...prev, { role: 'assistant', content: "Sorry, I couldn't process your request. Please try again." }]);
+        } finally {
+            setIsChatLoading(false);
+        }
+    };
+
 
     const handleDrag = (e: any) => {
         e.preventDefault();
@@ -147,7 +172,9 @@ export const DataAnalysisTab = () => {
                 }
             });
 
+            setCsvData(csvData);
             setResult(response.data);
+
 
         } catch (error: any) {
             console.error("Analysis error:", error);
@@ -178,13 +205,13 @@ export const DataAnalysisTab = () => {
         <div className="flex bg-[#F1F5F9] min-h-screen">
             {/* Left Sidebar for Analysis Type */}
             <div className="w-80 bg-white p-6 flex flex-col gap-8 rounded-r-[2.5rem] my-4 text-slate-900 shadow-2xl border-r border-slate-200 relative overflow-hidden">
-                <div className="absolute top-0 right-0 w-24 h-24 bg-indigo-500/5 blur-3xl rounded-full -mr-12 -mt-12" />
+                <div className="absolute top-0 right-0 w-24 h-24 bg-[#6b5ea7]/5 blur-3xl rounded-full -mr-12 -mt-12" />
                 <div className="relative z-10">
                     <h3 className="text-xl font-black mb-6 tracking-tight text-slate-900">Analysis Options</h3>
 
                     <div className="relative">
                         <select
-                            className="w-full bg-white border border-slate-200 rounded-xl py-3 px-4 font-bold text-sm appearance-none cursor-pointer focus:ring-2 focus:ring-rose-500 text-slate-700 shadow-sm"
+                            className="w-full bg-white border border-slate-200 rounded-xl py-3 px-4 font-bold text-sm appearance-none cursor-pointer focus:ring-2 focus:ring-[#6b5ea7] text-slate-700 shadow-sm"
                             value="Perform Analysis" // Static for now as per image logic
                             onChange={() => { }}
                         >
@@ -207,7 +234,7 @@ export const DataAnalysisTab = () => {
                         ].map((type) => (
                             <label
                                 key={type.id}
-                                className={`flex items-center gap-3 p-3 rounded-xl cursor-pointer transition-all ${analysisType === type.id ? 'bg-[#2D336B] text-white shadow-xl shadow-[#2D336B]/20' : 'hover:bg-white hover:shadow-md bg-white/50 border border-transparent hover:border-slate-200 text-slate-700'}`}
+                                className={`flex items-center gap-3 p-3 rounded-xl cursor-pointer transition-all ${analysisType === type.id ? 'bg-[#3d3151] text-white shadow-xl shadow-[#3d3151]/20' : 'hover:bg-white hover:shadow-md bg-white/50 border border-transparent hover:border-slate-200 text-slate-700'}`}
                             >
                                 <input
                                     type="radio"
@@ -242,12 +269,12 @@ export const DataAnalysisTab = () => {
                     {!result && (
                         <div className="space-y-6">
                             {/* Upload Area */}
-                            <div className="bg-[#E2E8CE] rounded-3xl p-8 shadow-2xl overflow-hidden relative">
-                                <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500"></div>
+                            <div className="bg-[#faf9ff] rounded-3xl p-8 shadow-2xl overflow-hidden relative border border-[#6b5ea7]/10">
+                                <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-[#6b5ea7] via-[#8e82bd] to-[#ec8c6b]"></div>
                                 <h3 className="text-slate-900 font-bold mb-4">Upload CSV file with student data</h3>
 
                                 <div
-                                    className={`border-2 border-dashed rounded-2xl h-48 flex flex-col items-center justify-center gap-4 transition-all ${dragActive ? 'border-indigo-500 bg-indigo-500/10' : 'border-slate-400 bg-white/50'}`}
+                                    className={`border-2 border-dashed rounded-2xl h-48 flex flex-col items-center justify-center gap-4 transition-all ${dragActive ? 'border-[#6b5ea7] bg-[#6b5ea7]/10' : 'border-slate-300 bg-white/50'}`}
                                     onDragEnter={handleDrag}
                                     onDragLeave={handleDrag}
                                     onDragOver={handleDrag}
@@ -312,7 +339,7 @@ export const DataAnalysisTab = () => {
                                     <Button
                                         onClick={handleAnalyze}
                                         disabled={isAnalyzing}
-                                        className="h-12 px-8 bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl font-bold text-md shadow-lg shadow-indigo-200"
+                                        className="h-12 px-8 bg-[#6b5ea7] hover:bg-[#6b5ea7]/90 text-white rounded-xl font-bold text-md shadow-lg"
                                     >
                                         {isAnalyzing ? (
                                             <>
@@ -336,11 +363,11 @@ export const DataAnalysisTab = () => {
                         <motion.div
                             initial={{ opacity: 0, y: 20 }}
                             animate={{ opacity: 1, y: 0 }}
-                            className="bg-[#0F172A] text-white rounded-[2.5rem] p-10 shadow-2xl relative overflow-hidden border border-slate-800"
+                            className="bg-[#3d3151] text-white rounded-[2.5rem] p-10 shadow-2xl relative overflow-hidden border border-white/5"
                         >
                             {/* Decorative background glow */}
-                            <div className="absolute -top-24 -right-24 w-96 h-96 bg-indigo-500/10 blur-[100px] rounded-full mt-2 shrink-0" />
-                            <div className="absolute -bottom-24 -left-24 w-96 h-96 bg-emerald-500/5 blur-[100px] rounded-full mt-2 shrink-0" />
+                            <div className="absolute -top-24 -right-24 w-96 h-96 bg-[#6b5ea7]/20 blur-[100px] rounded-full mt-2 shrink-0" />
+                            <div className="absolute -bottom-24 -left-24 w-96 h-96 bg-[#ec8c6b]/10 blur-[100px] rounded-full mt-2 shrink-0" />
 
                             <div className="absolute top-0 right-0 p-6">
                                 <Button onClick={() => setResult(null)} variant="ghost" className="text-slate-400 hover:text-white">
@@ -360,7 +387,7 @@ export const DataAnalysisTab = () => {
                                         {/* Header */}
                                         <div className="flex items-center gap-3 border-b border-white/10 pb-6 relative z-10">
                                             <div className="w-10 h-10 rounded-xl bg-white/5 flex items-center justify-center border border-white/10">
-                                                <FileSpreadsheet className="w-5 h-5 text-indigo-400" />
+                                                <FileSpreadsheet className="w-5 h-5 text-[#6b5ea7]" />
                                             </div>
                                             <div className="flex flex-col">
                                                 <span className="font-bold text-slate-100">{file?.name}</span>
@@ -446,9 +473,9 @@ export const DataAnalysisTab = () => {
                                                 <h2 className="text-3xl font-bold font-serif mb-4">Attendance Analysis</h2>
 
                                                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                                                    <div className="bg-indigo-900/30 border border-indigo-500/30 p-8 rounded-3xl text-center">
-                                                        <p className="text-indigo-300 font-bold uppercase tracking-widest text-sm mb-2">Overall Class Attendance</p>
-                                                        <p className="text-5xl font-black text-white">{result.overallAttendance}%</p>
+                                                    <div className="bg-white/5 border border-white/10 p-8 rounded-3xl text-center">
+                                                        <p className="text-slate-300 font-bold uppercase tracking-widest text-sm mb-2">Overall Class Attendance</p>
+                                                        <p className="text-5xl font-black text-[#6b5ea7]">{result.overallAttendance}%</p>
                                                     </div>
                                                     <div className="bg-slate-800/50 border border-slate-700 p-8 rounded-3xl flex items-center justify-center">
                                                         <p className="text-slate-300 font-medium italic text-center">"{result.correlation}"</p>
@@ -514,8 +541,8 @@ export const DataAnalysisTab = () => {
                                                     ))}
                                                     {isChatLoading && (
                                                         <div className="flex justify-start">
-                                                            <div className="bg-slate-800 rounded-2xl p-4 rounded-tl-none flex items-center gap-2">
-                                                                <Loader2 className="w-4 h-4 animate-spin text-indigo-400" />
+                                                            <div className="bg-white/5 rounded-2xl p-4 rounded-tl-none flex items-center gap-2">
+                                                                <Loader2 className="w-4 h-4 animate-spin text-[#6b5ea7]" />
                                                                 <span className="text-xs text-slate-400">Thinking...</span>
                                                             </div>
                                                         </div>
@@ -529,30 +556,24 @@ export const DataAnalysisTab = () => {
                                                         placeholder="Ask a question about your data..."
                                                         value={chatInput}
                                                         onChange={(e) => setChatInput(e.target.value)}
-                                                        onKeyDown={async (e) => {
-                                                            if (e.key === 'Enter' && chatInput.trim()) {
-                                                                const question = chatInput;
-                                                                setChatInput("");
-                                                                setChatMessages(prev => [...prev, { role: 'user', content: question }]);
-                                                                setIsChatLoading(true);
-                                                                try {
-                                                                    // Mocking chat response for now as endpoint needs adjustment for streaming/context
-                                                                    // In real imp: await api.post('/ai/chat-data', { question, context: result.summary });
-                                                                    await new Promise(r => setTimeout(r, 1500));
-                                                                    setChatMessages(prev => [...prev, { role: 'assistant', content: `I analyzed the data regarding "${question}". Based on the loaded dataset, here are the insights... (This is a simulated response as the chat endpoint is being integrated).` }]);
-                                                                } catch (err) {
-                                                                    console.error(err);
-                                                                } finally {
-                                                                    setIsChatLoading(false);
-                                                                }
+                                                        onKeyDown={(e) => {
+                                                            if (e.key === 'Enter') {
+                                                                handleSendMessage();
                                                             }
                                                         }}
+
                                                     />
                                                     <div className="absolute right-3 top-1/2 -translate-y-1/2">
-                                                        <Button size="icon" className="h-10 w-10 rounded-lg bg-indigo-600 hover:bg-indigo-700">
+                                                        <Button
+                                                            size="icon"
+                                                            className="h-10 w-10 rounded-lg bg-[#6b5ea7] hover:bg-[#6b5ea7]/90"
+                                                            onClick={handleSendMessage}
+                                                            disabled={isChatLoading || !chatInput.trim()}
+                                                        >
                                                             <Sparkles className="w-5 h-5 text-white" />
                                                         </Button>
                                                     </div>
+
                                                 </div>
                                             </div>
                                         )}
@@ -602,7 +623,7 @@ export const DataAnalysisTab = () => {
                                                             </h3>
                                                             <div className="relative min-w-[300px]">
                                                                 <select
-                                                                    className="w-full bg-white/5 border border-white/10 rounded-2xl py-4 px-6 text-white appearance-none cursor-pointer focus:ring-2 focus:ring-indigo-500 transition-all font-bold text-sm shadow-inner"
+                                                                    className="w-full bg-white/5 border border-white/10 rounded-2xl py-4 px-6 text-white appearance-none cursor-pointer focus:ring-2 focus:ring-[#6b5ea7] transition-all font-bold text-sm shadow-inner"
                                                                     value={selectedImprovementSubject}
                                                                     onChange={(e) => setSelectedImprovementSubject(e.target.value)}
                                                                 >
@@ -622,8 +643,8 @@ export const DataAnalysisTab = () => {
                                                                         : result.overallStats?.average}
                                                                 </p>
                                                             </div>
-                                                            <div className="bg-indigo-600 rounded-[2rem] p-8 text-center shadow-indigo-500/25 shadow-2xl border border-indigo-400/20 hover:translate-y-[-4px] transition-transform duration-300">
-                                                                <p className="text-indigo-200 font-black text-[11px] uppercase tracking-[0.2em] mb-3">Highest Score</p>
+                                                            <div className="bg-[#6b5ea7] rounded-[2rem] p-8 text-center shadow-[#6b5ea7]/25 shadow-2xl border border-white/10 hover:translate-y-[-4px] transition-transform duration-300">
+                                                                <p className="text-purple-100 font-black text-[11px] uppercase tracking-[0.2em] mb-3">Highest Score</p>
                                                                 <p className="text-6xl font-black text-white">
                                                                     {selectedImprovementSubject && result.subjectInsights?.[selectedImprovementSubject]
                                                                         ? result.subjectInsights[selectedImprovementSubject].highest
@@ -643,7 +664,7 @@ export const DataAnalysisTab = () => {
                                                         {selectedImprovementSubject && result.subjectInsights?.[selectedImprovementSubject] && (
                                                             <div className="animate-in fade-in slide-in-from-top-4 pt-10 border-t border-white/5">
                                                                 <div className="flex items-center gap-3 mb-8">
-                                                                    <div className="w-10 h-10 rounded-xl bg-indigo-500/10 flex items-center justify-center text-indigo-400 border border-indigo-500/20">
+                                                                    <div className="w-10 h-10 rounded-xl bg-[#6b5ea7]/10 flex items-center justify-center text-[#6b5ea7] border border-[#6b5ea7]/20">
                                                                         <Sparkles className="w-5 h-5" />
                                                                     </div>
                                                                     <h4 className="font-black text-white text-xl tracking-tight">
@@ -764,7 +785,7 @@ export const DataAnalysisTab = () => {
                                                         {result.improvementPlan?.map((plan: string, idx: number) => (
                                                             <div key={idx} className="p-8 bg-white/5 border border-white/5 rounded-3xl group hover:bg-white/10 transition-all hover:scale-[1.02] duration-300">
                                                                 <div className="flex items-start gap-5">
-                                                                    <div className="w-10 h-10 rounded-xl bg-indigo-500/20 text-indigo-400 flex items-center justify-center shrink-0 font-black text-xs border border-indigo-500/20">{idx + 1}</div>
+                                                                    <div className="w-10 h-10 rounded-xl bg-[#6b5ea7]/20 text-[#6b5ea7] flex items-center justify-center shrink-0 font-black text-xs border border-[#6b5ea7]/20">{idx + 1}</div>
                                                                     <span className="text-slate-300 font-medium text-lg leading-relaxed">{plan}</span>
                                                                 </div>
                                                             </div>

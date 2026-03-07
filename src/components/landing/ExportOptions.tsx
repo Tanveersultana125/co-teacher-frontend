@@ -8,12 +8,12 @@ export const ExportOptions = () => {
     const navigate = useNavigate();
 
     return (
-        <section className="py-24 bg-[#ECF9FF] overflow-hidden">
+        <section className="py-24 bg-[#faf9ff] overflow-hidden">
             <div className="container mx-auto px-6">
                 <div className="flex flex-col lg:flex-row items-center gap-16">
                     {/* Left Content */}
                     <div className="lg:w-1/2">
-                        <h2 className="text-4xl font-bold text-slate-900 mb-6 font-display leading-tight">
+                        <h2 className="text-4xl font-bold text-[#3d3151] mb-6 font-display leading-tight">
                             Edit and present your lessons in Co-Teacher or your tool of choice.
                         </h2>
                         <p className="text-lg text-slate-600 mb-8 leading-relaxed font-medium">
@@ -21,7 +21,7 @@ export const ExportOptions = () => {
                         </p>
                         <Button
                             onClick={() => navigate('/login')}
-                            className="bg-[#0D5355] hover:bg-[#083334] text-white rounded-full px-8 h-12 font-bold shadow-lg shadow-teal-200"
+                            className="bg-[#3d3151] hover:bg-[#3d3151]/95 text-white rounded-full px-8 h-12 font-bold shadow-lg"
                         >
                             Try Generator Free
                         </Button>

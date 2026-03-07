@@ -107,33 +107,23 @@ const Features = () => {
               viewport={{ once: true }}
               transition={{ delay: index * 0.05 }}
             >
-              <Card className="h-full border-none shadow-[0_10px_40px_-15px_rgba(0,0,0,0.05)] hover:shadow-[0_20px_60px_-15px_rgba(0,0,0,0.1)] transition-all duration-500 group bg-white rounded-[2.5rem] overflow-hidden flex flex-col">
+              <Card className="h-full border border-white/5 shadow-2xl hover:shadow-[#6b5ea7]/20 transition-all duration-500 group bg-[#2d2440] rounded-[2.5rem] overflow-hidden flex flex-col">
                 {/* Visual Area */}
-                <div className="h-44 w-full bg-slate-100 overflow-hidden relative">
+                <div className="h-44 w-full bg-slate-900/50 overflow-hidden relative">
                   <img
                     src={feature.image}
                     alt={feature.title}
-                    className="w-full h-full object-cover transform transition-transform duration-700 group-hover:scale-110"
+                    className="w-full h-full object-cover transform transition-transform duration-700 group-hover:scale-110 opacity-70"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-b from-transparent to-black/5 pointer-events-none" />
+                  <div className="absolute inset-0 bg-gradient-to-b from-transparent to-[#3d3151] pointer-events-none" />
                 </div>
 
                 <div className="p-8 flex-1 flex flex-col">
-                  <div className={`w-12 h-12 rounded-2xl mb-6 flex items-center justify-center transition-all duration-500 group-hover:scale-110 group-hover:rotate-6
-                                      ${feature.color === "indigo" ? "bg-indigo-50 text-indigo-600 shadow-indigo-100" : ""}
-                                      ${feature.color === "amber" ? "bg-amber-50 text-amber-600 shadow-amber-100" : ""}
-                                      ${feature.color === "blue" ? "bg-blue-50 text-blue-600 shadow-blue-100" : ""}
-                                      ${feature.color === "emerald" ? "bg-emerald-50 text-emerald-600 shadow-emerald-100" : ""}
-                                      ${feature.color === "violet" ? "bg-violet-50 text-violet-600 shadow-violet-100" : ""}
-                                      ${feature.color === "rose" ? "bg-rose-50 text-rose-600 shadow-rose-100" : ""}
-                                      ${feature.color === "sky" ? "bg-sky-50 text-sky-600 shadow-sky-100" : ""}
-                                      ${feature.color === "yellow" ? "bg-yellow-50 text-yellow-600 shadow-yellow-100" : ""}
-                                      shadow-lg
-                                  `}>
+                  <div className="w-12 h-12 rounded-2xl mb-6 flex items-center justify-center transition-all duration-500 group-hover:scale-110 group-hover:rotate-6 bg-[#6b5ea7] text-white shadow-lg shadow-[#6b5ea7]/20">
                     <feature.icon className="w-6 h-6" />
                   </div>
-                  <h3 className="text-xl font-bold text-slate-900 mb-3 font-display">{feature.title}</h3>
-                  <p className="text-slate-500 leading-relaxed mb-8 flex-1">{feature.description}</p>
+                  <h3 className="text-xl font-bold text-white mb-3 font-display">{feature.title}</h3>
+                  <p className="text-white/60 leading-relaxed mb-8 flex-1 text-sm font-medium">{feature.description}</p>
                 </div>
               </Card>
             </motion.div>

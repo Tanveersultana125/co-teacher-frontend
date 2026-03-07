@@ -69,23 +69,26 @@ const Boards = () => {
               className="relative group"
             >
               <div className="absolute inset-0 bg-gradient-hero rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity blur-xl" />
-              <div className="relative bg-card rounded-2xl p-8 border border-border group-hover:border-primary/50 transition-colors">
-                <div className="text-center mb-6">
-                  <h3 className="font-display text-3xl font-bold text-primary mb-1">
+              <div className="relative bg-[#3d3151] rounded-2xl p-8 border border-white/10 group-hover:border-[#ec8c6b]/50 transition-all duration-300 shadow-xl overflow-hidden">
+                {/* Decorative glow */}
+                <div className="absolute top-0 right-0 w-32 h-32 bg-[#6b5ea7] rounded-full blur-[40px] opacity-20 -translate-y-1/2 translate-x-1/2" />
+                
+                <div className="relative z-10 text-center mb-6">
+                  <h3 className="font-display text-3xl font-bold text-white mb-1">
                     {board.name}
                   </h3>
-                  <p className="text-sm text-muted-foreground">{board.fullName}</p>
-                  <div className="mt-3 inline-block px-3 py-1 rounded-full bg-accent text-accent-foreground text-sm font-medium">
+                  <p className="text-sm text-white/60">{board.fullName}</p>
+                  <div className="mt-3 inline-block px-3 py-1 rounded-full bg-white/10 text-white text-xs font-bold tracking-tight border border-white/5">
                     {board.classes}
                   </div>
                 </div>
-                <ul className="space-y-3">
+                <ul className="space-y-3 relative z-10">
                   {board.features.map((feature) => (
                     <li key={feature} className="flex items-center gap-3">
-                      <div className="w-5 h-5 rounded-full bg-success/10 flex items-center justify-center">
-                        <Check className="w-3 h-3 text-success" />
+                      <div className="w-5 h-5 rounded-full bg-white/10 flex items-center justify-center">
+                        <Check className="w-3 h-3 text-[#ec8c6b]" />
                       </div>
-                      <span className="text-foreground">{feature}</span>
+                      <span className="text-white/80 text-sm font-medium">{feature}</span>
                     </li>
                   ))}
                 </ul>

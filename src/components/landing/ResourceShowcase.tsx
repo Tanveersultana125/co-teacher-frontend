@@ -41,7 +41,7 @@ const RESOURCES = [
 
 const ResourceShowcase = () => {
     return (
-        <section className="py-24 bg-[#FCF5EE] overflow-hidden">
+        <section className="py-24 bg-[#faf9ff] overflow-hidden">
             <div className="container mx-auto px-6">
                 <div className="text-center max-w-3xl mx-auto mb-16">
                     <motion.h2
@@ -50,7 +50,7 @@ const ResourceShowcase = () => {
                         viewport={{ once: true }}
                         className="text-3xl md:text-5xl font-display font-bold text-slate-900 mb-6"
                     >
-                        Everything you need to <span className="text-[#1E56A0]">teach, assess, and differentiate learning...</span>
+                        Everything you need to <span className="text-[#6b5ea7]">teach, assess, and differentiate learning...</span>
                     </motion.h2>
                     <motion.p
                         initial={{ opacity: 0, y: 20 }}
