@@ -143,8 +143,8 @@ const TeacherDashboard = () => {
         }`}>
         <div className="p-8 flex items-center justify-between gap-3">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 bg-[#f5f3f7] rounded-xl flex items-center justify-center text-[#6b5ea7] shadow-lg">
-              <GraduationCap className="w-6 h-6" />
+            <div className="w-10 h-10 bg-white rounded-xl flex items-center justify-center shadow-lg border border-slate-200">
+              <img src="/aicoteacher.png" alt="Co-Teacher Logo" className="w-8 h-8 object-contain" />
             </div>
             <span className="text-xl font-bold text-white font-display tracking-tight">Co-Teacher</span>
           </div>
@@ -254,7 +254,7 @@ const TeacherDashboard = () => {
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ delay: index * 0.1 }}
                       >
-                        <Card className="border-none shadow-sm bg-white/60 backdrop-blur-md overflow-hidden">
+                        <Card className="border-none shadow-sm bg-[#f3e8ff] backdrop-blur-md overflow-hidden">
                           <CardContent className="p-6">
                             <div className="flex items-start justify-between">
                               <div className="space-y-1">
@@ -378,7 +378,7 @@ const TeacherDashboard = () => {
                           setGeneratorSubTab("generate");
                           setActiveTab('generator');
                         }}
-                        className="group p-5 sm:p-8 rounded-2xl border border-slate-100 hover:border-[#4F46E5] hover:bg-slate-50 transition-all flex flex-col items-center gap-3 sm:gap-4"
+                        className="group p-5 sm:p-8 rounded-2xl border-none bg-[#f3e8ff] hover:bg-[#e9d5ff] transition-all flex flex-col items-center gap-3 sm:gap-4 shadow-sm"
                       >
                         <div className={`w-12 h-12 sm:w-14 sm:h-14 rounded-2xl ${action.bgColor} flex items-center justify-center group-hover:scale-110 transition-transform`}>
                           <action.icon className={`w-6 h-6 sm:w-7 sm:h-7 ${action.iconColor}`} />
@@ -391,7 +391,7 @@ const TeacherDashboard = () => {
 
                 {/* Lessons and Schedule */}
                 <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 sm:gap-8 pb-12">
-                  <Card className="lg:col-span-2 border-none shadow-sm bg-white p-5 sm:p-8">
+                  <Card className="lg:col-span-2 border-none shadow-sm bg-[#f3e8ff] p-5 sm:p-8">
                     <div className="flex items-center justify-between mb-6 sm:mb-8">
                       <h3 className="text-lg sm:text-xl font-bold text-slate-900 font-display">Recent Lessons</h3>
                       <Button variant="ghost" onClick={() => {

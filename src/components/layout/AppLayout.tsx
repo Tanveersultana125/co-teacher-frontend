@@ -57,8 +57,8 @@ const AppLayout = () => {
                     {/* Header */}
                     <div className="p-6 flex items-center justify-between">
                         <Link to="/" className="flex items-center gap-2 group overflow-hidden whitespace-nowrap">
-                            <div className="w-10 h-10 rounded-xl bg-primary flex items-center justify-center shrink-0">
-                                <GraduationCap className="w-6 h-6 text-white" />
+                            <div className="w-10 h-10 rounded-xl bg-white border border-slate-200 flex items-center justify-center shrink-0">
+                                <img src="/aicoteacher.png" alt="Co-Teacher Logo" className="w-8 h-8 object-contain" />
                             </div>
                             {!collapsed && (
                                 <span className="font-display font-bold text-2xl tracking-tighter text-slate-900 animate-fade-in">

@@ -78,9 +78,9 @@ const StudentDashboard = () => {
       `}>
         <div className="p-6 lg:p-8 flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 bg-[#6b5ea7] rounded-xl flex items-center justify-center text-white shadow-lg">
-              <GraduationCap className="w-6 h-6" />
-            </div>
+              <div className="w-12 h-12 rounded-2xl bg-white flex items-center justify-center shadow-lg border border-slate-200 hidden sm:flex">
+                <img src="/aicoteacher.png" alt="Co-Teacher Logo" className="w-8 h-8 object-contain" />
+              </div>
             <span className="text-xl font-bold text-slate-900 font-display tracking-tight">Co-Teacher</span>
           </div>
           <button

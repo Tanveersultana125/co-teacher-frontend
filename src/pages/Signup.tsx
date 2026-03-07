@@ -42,8 +42,8 @@ const Signup = () => {
         <div className="absolute top-0 right-0 w-[150%] h-[150%] bg-[#6b5ea7] rounded-full -translate-y-1/2 translate-x-1/2 opacity-20 blur-[100px]" />
 
         <Link to="/" className="relative z-10 flex items-center gap-2">
-          <div className="w-10 h-10 rounded-xl bg-[#6b5ea7] flex items-center justify-center shadow-lg">
-            <GraduationCap className="w-6 h-6 text-white" />
+          <div className="w-10 h-10 rounded-xl bg-white flex items-center justify-center shadow-lg border border-slate-200">
+            <img src="/aicoteacher.png" alt="Co-Teacher Logo" className="w-8 h-8 object-contain" />
           </div>
           <span className="font-display font-bold text-2xl text-white tracking-tighter">Co-Teacher</span>
         </Link>
