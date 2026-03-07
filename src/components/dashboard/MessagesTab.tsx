@@ -102,13 +102,13 @@ export function MessagesTab() {
             <div className="w-16 border-r border-slate-100 flex flex-col items-center py-6 gap-6 bg-slate-50/50">
                 <button
                     onClick={() => setActiveView('chats')}
-                    className={`p-3 rounded-2xl transition-all ${activeView === 'chats' ? 'bg-indigo-600 text-white shadow-lg shadow-indigo-200' : 'text-slate-400 hover:bg-white hover:text-indigo-600'}`}
+                    className={`p-3 rounded-2xl transition-all ${activeView === 'chats' ? 'bg-[#6b5ea7] text-white shadow-lg shadow-purple-200' : 'text-slate-400 hover:bg-white hover:text-[#6b5ea7]'}`}
                 >
                     <MessageSquare className="w-6 h-6" />
                 </button>
                 <button
                     onClick={() => setActiveView('history')}
-                    className={`p-3 rounded-2xl transition-all ${activeView === 'history' ? 'bg-indigo-600 text-white shadow-lg shadow-indigo-200' : 'text-slate-400 hover:bg-white hover:text-indigo-600'}`}
+                    className={`p-3 rounded-2xl transition-all ${activeView === 'history' ? 'bg-[#6b5ea7] text-white shadow-lg shadow-purple-200' : 'text-slate-400 hover:bg-white hover:text-[#6b5ea7]'}`}
                 >
                     <History className="w-6 h-6" />
                 </button>
@@ -124,7 +124,7 @@ export function MessagesTab() {
                         {activeView === 'chats' && (
                             <Dialog open={emailOpen} onOpenChange={handleOpenEmail}>
                                 <DialogTrigger asChild>
-                                    <Button size="sm" variant="outline" className="h-8 text-xs font-bold border-indigo-200 text-indigo-600 hover:bg-indigo-50">
+                                    <Button size="sm" variant="outline" className="h-8 text-xs font-bold border-purple-200 text-[#6b5ea7] hover:bg-purple-50">
                                         Compose Email
                                     </Button>
                                 </DialogTrigger>
@@ -146,7 +146,7 @@ export function MessagesTab() {
                                                     <SelectValue placeholder="Select Recipient" />
                                                 </SelectTrigger>
                                                 <SelectContent className="max-h-60">
-                                                    <SelectItem value="custom" className="text-indigo-600 font-bold italic">
+                                                    <SelectItem value="custom" className="text-[#6b5ea7] font-bold italic">
                                                         + Enter Custom Email...
                                                     </SelectItem>
                                                     {allStudents?.map((s: any) => (
@@ -205,7 +205,7 @@ export function MessagesTab() {
                                                 (recipientId === 'custom' && !customEmail) ||
                                                 !emailData.subject || !emailData.body || emailMutation.isPending
                                             }
-                                            className="bg-indigo-600 text-white font-bold"
+                                            className="bg-[#6b5ea7] hover:bg-[#6b5ea7]/90 text-white font-bold"
                                         >
                                             {emailMutation.isPending && <Loader2 className="w-4 h-4 mr-2 animate-spin" />}
                                             Send Email
@@ -226,7 +226,7 @@ export function MessagesTab() {
                             <button
                                 key={contact.id}
                                 onClick={() => setSelectedUser(contact)}
-                                className={`w-full flex items-center gap-4 p-4 hover:bg-slate-50 transition-colors ${selectedUser?.id === contact.id ? 'bg-indigo-50/50 border-r-4 border-indigo-500' : ''}`}
+                                className={`w-full flex items-center gap-4 p-4 hover:bg-slate-50 transition-colors ${selectedUser?.id === contact.id ? 'bg-purple-50/50 border-r-4 border-[#6b5ea7]' : ''}`}
                             >
                                 <Avatar className="w-12 h-12 border-2 border-white shadow-sm">
                                     <AvatarImage src={`https://api.dicebear.com/7.x/avataaars/svg?seed=${contact.name}`} />
@@ -242,7 +242,7 @@ export function MessagesTab() {
                         emailHistory?.map((log: any) => (
                             <div key={log.id} className="p-4 border-b border-slate-50 hover:bg-slate-50 transition-colors cursor-pointer group">
                                 <div className="flex justify-between items-start mb-1">
-                                    <span className="text-[10px] font-bold text-indigo-600 uppercase tracking-wider">{log.recipientName === 'External Recipient' ? 'CUSTOM' : 'USER'}</span>
+                                    <span className="text-[10px] font-bold text-[#6b5ea7] uppercase tracking-wider">{log.recipientName === 'External Recipient' ? 'CUSTOM' : 'USER'}</span>
                                     <span className="text-[10px] text-slate-400 font-medium">{new Date(log.sentAt).toLocaleDateString()}</span>
                                 </div>
                                 <h4 className="font-bold text-slate-800 text-sm truncate">{log.subject}</h4>
@@ -274,7 +274,7 @@ export function MessagesTab() {
                             <div className="flex-1 p-8 overflow-auto space-y-6">
                                 {messages?.filter((m: any) => m.senderId === selectedUser.id || m.receiverId === selectedUser.id).map((m: any) => (
                                     <div key={m.id} className={`flex ${m.senderId === selectedUser.id ? 'justify-start' : 'justify-end'}`}>
-                                        <div className={`max-w-[70%] p-4 rounded-2xl text-sm font-medium shadow-sm ${m.senderId === selectedUser.id ? 'bg-white text-slate-700 rounded-tl-none' : 'bg-indigo-600 text-white rounded-tr-none'}`}>
+                                        <div className={`max-w-[70%] p-4 rounded-2xl text-sm font-medium shadow-sm ${m.senderId === selectedUser.id ? 'bg-white text-slate-700 rounded-tl-none' : 'bg-[#6b5ea7] text-white rounded-tr-none'}`}>
                                             {m.content}
                                             <div className={`mt-1 text-[10px] opacity-60 flex items-center justify-end gap-1`}>
                                                 {new Date(m.createdAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
@@ -293,10 +293,10 @@ export function MessagesTab() {
                                     <input
                                         value={msgContent}
                                         onChange={(e) => setMsgContent(e.target.value)}
-                                        className="flex-1 bg-slate-50 border-none rounded-2xl h-12 px-6 font-medium focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                                        className="flex-1 bg-slate-50 border-none rounded-2xl h-12 px-6 font-medium focus:outline-none focus:ring-2 focus:ring-[#6b5ea7]"
                                         placeholder="Type a message..."
                                     />
-                                    <Button type="submit" className="w-12 h-12 rounded-2xl bg-indigo-600 hover:bg-indigo-700 shadow-lg shadow-indigo-100 p-0">
+                                    <Button type="submit" className="w-12 h-12 rounded-2xl bg-[#6b5ea7] hover:bg-[#6b5ea7]/90 shadow-lg shadow-purple-100 p-0">
                                         <Send className="w-5 h-5 text-white" />
                                     </Button>
                                 </form>
@@ -314,7 +314,7 @@ export function MessagesTab() {
                     <ScrollArea className="flex-1 p-8">
                         <div className="max-w-4xl mx-auto space-y-6">
                             <div className="flex items-center gap-4 mb-4">
-                                <div className="w-12 h-12 rounded-2xl bg-indigo-100 flex items-center justify-center text-indigo-600">
+                                <div className="w-12 h-12 rounded-2xl bg-purple-100 flex items-center justify-center text-[#6b5ea7]">
                                     <Mail className="w-6 h-6" />
                                 </div>
                                 <div>
@@ -332,7 +332,7 @@ export function MessagesTab() {
                                                     <div className="space-y-1">
                                                         <div className="flex items-center gap-2">
                                                             <h4 className="font-bold text-slate-900">{log.subject}</h4>
-                                                            <Badge variant="secondary" className="bg-indigo-50 text-indigo-600 text-[10px] font-bold">
+                                                            <Badge variant="secondary" className="bg-purple-50 text-[#6b5ea7] text-[10px] font-bold">
                                                                 {log.status}
                                                             </Badge>
                                                         </div>

@@ -104,7 +104,7 @@ const LessonPlanner = () => {
 
     return (
         <div className="max-w-6xl mx-auto space-y-12">
-            <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 pb-2 border-b-4 border-indigo-50">
+            <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 pb-2 border-b-4 border-purple-50">
                 <div>
                     <h1 className="text-4xl font-black text-slate-900 flex items-center gap-3">
                         <Sparkles className="w-10 h-10 text-primary" />
@@ -189,7 +189,7 @@ const LessonPlanner = () => {
                         </Button>
                     </Card>
 
-                    <div className="bg-indigo-50 p-6 rounded-3xl border border-indigo-100 flex gap-4">
+                    <div className="bg-purple-50 p-6 rounded-3xl border border-purple-100 flex gap-4">
                         <div className="w-10 h-10 rounded-xl bg-white flex items-center justify-center shrink-0">
                             <BookOpen className="w-5 h-5 text-primary" />
                         </div>

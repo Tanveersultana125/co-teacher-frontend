@@ -236,7 +236,7 @@ const StudentDashboard = () => {
                     </div>
                   ))}
                   {dashboardData?.profile.grades.length === 0 && (
-                    <p className="text-indigo-100 text-sm font-medium">No assessments graded yet.</p>
+                    <p className="text-purple-100 text-sm font-medium">No assessments graded yet.</p>
                   )}
                 </div>
               </Card>

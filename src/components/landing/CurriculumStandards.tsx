@@ -4,12 +4,8 @@ import { Link } from "react-router-dom";
 
 const CurriculumStandards = () => {
     return (
-        <section className="py-24 bg-[#3d3151] overflow-hidden relative">
-            {/* Decorative background elements like in CTA */}
-            <div className="absolute top-0 right-0 w-80 h-80 bg-gradient-to-br from-[#6b5ea7] to-[#ec8c6b] rounded-full blur-[80px] opacity-20 -translate-y-1/2 translate-x-1/2" />
-            <div className="absolute bottom-0 left-0 w-64 h-64 bg-[#6b5ea7] rounded-full blur-[100px] opacity-10 translate-y-1/2 -translate-x-1/2" />
-
-            <div className="container mx-auto px-6 relative z-10">
+        <section className="py-24 bg-[#FFCE99] overflow-hidden">
+            <div className="container mx-auto px-6">
                 <div className="flex flex-col lg:flex-row items-center gap-16 lg:gap-24">
 
                     {/* Left Content */}
@@ -19,14 +15,14 @@ const CurriculumStandards = () => {
                             whileInView={{ opacity: 1, x: 0 }}
                             viewport={{ once: true }}
                         >
-                            <h3 className="text-[#ec8c6b] font-bold text-sm mb-4 tracking-widest uppercase font-display">
+                            <h3 className="text-[#FF5757] font-bold text-sm mb-4 tracking-widest uppercase font-display">
                                 Hit Your Teaching Objectives
                             </h3>
-                            <h2 className="text-4xl md:text-5xl font-display font-bold text-white mb-6 leading-tight">
+                            <h2 className="text-4xl md:text-5xl font-display font-bold text-slate-900 mb-6 leading-tight">
                                 Lessons aligned to <br />
-                                <span className="text-[#8e82bd]">national & state standards</span>
+                                <span className="text-[#1E56A0]">national & state standards</span>
                             </h2>
-                            <p className="text-lg text-white/80 mb-8 leading-relaxed font-medium">
+                            <p className="text-lg text-slate-600 mb-8 leading-relaxed">
                                 Align lessons to your specific curriculum frameworks instantly.
                                 Whether you teach CBSE, ICSE, or International Boards, teach with confidence
                                 knowing that your content is always rigorous and compliant.
@@ -39,10 +35,10 @@ const CurriculumStandards = () => {
                                     "Gap analysis to identify missing topics"
                                 ].map((item, i) => (
                                     <div key={i} className="flex items-center gap-3">
-                                        <div className="w-6 h-6 rounded-full bg-white/10 flex items-center justify-center text-[#ec8c6b] shrink-0 border border-white/10">
+                                        <div className="w-6 h-6 rounded-full bg-green-100 flex items-center justify-center text-green-600 shrink-0">
                                             <Check className="w-3.5 h-3.5" />
                                         </div>
-                                        <span className="text-white/80 font-medium">{item}</span>
+                                        <span className="text-slate-700 font-medium">{item}</span>
                                     </div>
                                 ))}
                             </div>

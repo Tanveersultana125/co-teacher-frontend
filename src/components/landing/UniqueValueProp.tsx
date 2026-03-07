@@ -21,44 +21,44 @@ const UniqueValueProp = () => {
 
                             {/* Main Interface Window */}
                             <div
-                                className="bg-[#3d3151] rounded-2xl shadow-2xl border border-white/10 overflow-hidden relative z-10 cursor-pointer hover:shadow-[#6b5ea7]/20 transition-all"
+                                className="bg-white rounded-2xl shadow-2xl border border-slate-200 overflow-hidden relative z-10 cursor-pointer hover:shadow-indigo-100 transition-all"
                                 onClick={() => window.location.href = "/for-teachers"}
                             >
                                 {/* Window Header */}
-                                <div className="h-10 border-b border-white/5 bg-[#2d2440] flex items-center px-4 gap-2">
+                                <div className="h-10 border-b border-slate-100 bg-slate-50 flex items-center px-4 gap-2">
                                     <div className="w-3 h-3 rounded-full bg-red-400" />
                                     <div className="w-3 h-3 rounded-full bg-amber-400" />
                                     <div className="w-3 h-3 rounded-full bg-emerald-400" />
                                 </div>
 
                                 {/* Window Body */}
-                                <div className="p-6 bg-[#3d3151]/50">
+                                <div className="p-6 bg-slate-50/50">
                                     <div className="flex justify-between items-center mb-6">
                                         <div>
-                                            <h3 className="font-bold text-white text-lg">Cell Biology: Osmosis</h3>
-                                            <span className="text-xs text-white/40 uppercase tracking-wide font-semibold">Science • Grade 9</span>
+                                            <h3 className="font-bold text-slate-900 text-lg">Cell Biology: Osmosis</h3>
+                                            <span className="text-xs text-slate-500 uppercase tracking-wide font-semibold">Science • Grade 9</span>
                                         </div>
-                                        <span className="bg-white/10 text-[#ec8c6b] text-xs px-2 py-1 rounded font-bold border border-white/5">Generated</span>
+                                        <span className="bg-[#f5f3f7] text-[#6b5ea7] text-xs px-2 py-1 rounded font-bold">Generated</span>
                                     </div>
 
                                     {/* Mock Content */}
                                     <div className="space-y-4">
-                                        <div className="bg-white/5 p-4 rounded-xl border border-white/10 shadow-sm flex gap-4">
-                                            <div className="w-24 h-24 bg-white/5 rounded-lg overflow-hidden shrink-0">
-                                                <img src="/features/premium_export_slides.png" alt="Education Content" className="w-full h-full object-cover opacity-80" />
+                                        <div className="bg-white p-4 rounded-xl border border-slate-200 shadow-sm flex gap-4">
+                                            <div className="w-24 h-24 bg-slate-100 rounded-lg overflow-hidden shrink-0">
+                                                <img src="/features/premium_export_slides.png" alt="Education Content" className="w-full h-full object-cover" />
                                             </div>
                                             <div className="flex-1">
-                                                <div className="h-4 bg-white/10 rounded w-3/4 mb-2" />
-                                                <div className="h-2 bg-white/5 rounded w-full mb-1" />
-                                                <div className="h-2 bg-white/5 rounded w-5/6" />
+                                                <div className="h-4 bg-slate-100 rounded w-3/4 mb-2" />
+                                                <div className="h-2 bg-slate-50 rounded w-full mb-1" />
+                                                <div className="h-2 bg-slate-50 rounded w-5/6" />
                                             </div>
                                         </div>
 
-                                        <div className="bg-[#2d2440] p-6 rounded-2xl border border-white/5">
-                                            <h4 className="text-base font-bold text-white mb-3 flex items-center gap-2">
+                                        <div className="bg-[#f5f3f7] p-6 rounded-2xl border border-[#8e82bd]/20">
+                                            <h4 className="text-base font-bold text-[#3d3151] mb-3 flex items-center gap-2">
                                                 <Sparkles className="w-4 h-4 text-[#ec8c6b]" /> Teacher Tip
                                             </h4>
-                                            <p className="text-sm text-white/70 leading-relaxed font-medium">
+                                            <p className="text-sm text-slate-700 leading-relaxed font-medium">
                                                 Use this diagram to explain semi-permeable membranes.
                                                 Ask students to label the water molecules moving across the gradient.
                                             </p>

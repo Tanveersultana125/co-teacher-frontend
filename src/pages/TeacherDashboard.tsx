@@ -84,7 +84,7 @@ const TeacherDashboard = () => {
   }, [searchParams]);
 
   const quickActions = [
-    { icon: BookOpen, label: "Create Lesson Plan", color: "indigo", bgColor: "bg-indigo-50", iconColor: "text-indigo-600", mode: "lesson" },
+    { icon: BookOpen, label: "Create Lesson Plan", color: "indigo", bgColor: "bg-purple-50", iconColor: "text-[#6b5ea7]", mode: "lesson" },
     { icon: Brain, label: "Generate Material", color: "amber", bgColor: "bg-amber-50", iconColor: "text-amber-600", mode: "material" },
     { icon: ClipboardCheck, label: "Create Quiz", color: "blue", bgColor: "bg-blue-50", iconColor: "text-blue-600", mode: "quiz" },
     { icon: FileText, label: "Assignments", color: "emerald", bgColor: "bg-emerald-50", iconColor: "text-emerald-600", mode: "lesson" },
@@ -116,7 +116,7 @@ const TeacherDashboard = () => {
 
 
   const stats = [
-    { label: "Total Students", value: dashboardStats?.totalStudents || "0", change: "+12% from last month", icon: Users, iconColor: "text-indigo-600", iconBg: "bg-indigo-50" },
+    { label: "Total Students", value: dashboardStats?.totalStudents || "0", change: "+12% from last month", icon: Users, iconColor: "text-[#6b5ea7]", iconBg: "bg-purple-50" },
     { label: "Lessons Created", value: dashboardStats?.lessonsCreated || "0", change: "+5 this week", icon: BookOpen, iconColor: "text-emerald-600", iconBg: "bg-emerald-50" },
     { label: "Avg. Performance", value: (dashboardStats?.avgPerformance || "0") + "%", change: "+3% since last term", icon: BarChart3, iconColor: "text-blue-600", iconBg: "bg-blue-50" },
     { label: "Attendance Rate", value: (dashboardStats?.attendanceRate || "0") + "%", change: "98% present today", icon: TrendingUp, iconColor: "text-orange-600", iconBg: "bg-orange-50" },
@@ -330,33 +330,32 @@ const TeacherDashboard = () => {
                     initial={{ opacity: 0, x: 20 }}
                     animate={{ opacity: 1, x: 0 }}
                   >
-                    <Card className="h-full border-none shadow-xl bg-slate-900 p-8 text-white relative overflow-hidden group">
-                      <div className="absolute top-0 right-0 p-8 opacity-20 group-hover:opacity-40 transition-opacity">
-                        <Sparkles className="w-32 h-32" />
+                    <Card className="h-full border-none shadow-xl bg-[#f3e7ff] p-8 text-slate-900 relative overflow-hidden group">
+                      <div className="absolute top-0 right-0 p-8 opacity-[0.05] group-hover:opacity-[0.08] transition-opacity">
+                        <Sparkles className="w-32 h-32 text-[#6b5ea7]" />
                       </div>
 
                       <div className="relative z-10 flex flex-col h-full">
                         <div className="flex items-center gap-2 mb-4">
-                          <div className="px-3 py-1 bg-white/10 rounded-full text-[10px] font-black uppercase tracking-widest backdrop-blur-md">Featured Feature</div>
+                          <div className="px-3 py-1 bg-[#6b5ea7]/10 text-[#6b5ea7] rounded-full text-[10px] font-black uppercase tracking-widest backdrop-blur-md">Featured Feature</div>
                         </div>
                         <h3 className="text-3xl font-black mb-4 font-display leading-tight">AI Data Intelligence <br /><span className="text-[#6b5ea7]">Superpowers.</span></h3>
-                        <p className="text-slate-400 font-medium mb-8 leading-relaxed">
-
+                        <p className="text-slate-600 font-medium mb-8 leading-relaxed">
                           Analyze entire classes in seconds. Identify struggling students, generate improvement plans, and predict future performance with our proprietary AI engine.
                         </p>
 
                         <div className="mt-auto space-y-4">
                           <Button
                             onClick={() => setActiveTab('data-analysis')}
-                            className="w-full h-14 bg-[#6b5ea7] hover:bg-[#6b5ea7]/90 text-white font-black text-lg rounded-2xl flex items-center justify-center gap-3 group/btn shadow-lg"
+                            className="w-full h-14 bg-[#6b5ea7] hover:bg-[#6b5ea7]/90 text-white font-black text-lg rounded-2xl flex items-center justify-center gap-3 group/btn shadow-lg shadow-purple-200"
                           >
                             <span>Open Data Intelligence</span>
                             <ChevronRight className="w-5 h-5 group-hover/btn:translate-x-1 transition-transform" />
                           </Button>
 
                           <div className="flex items-center justify-between px-2 text-xs font-bold text-slate-500">
-                            <div className="flex items-center gap-1"><Users className="w-3 h-3" /> 2.4k+ Teachers using</div>
-                            <div className="flex items-center gap-1 underline underline-offset-4 cursor-pointer hover:text-white transition-colors">Watch Demo</div>
+                            <div className="flex items-center gap-1"><Users className="w-3 h-3 text-[#6b5ea7]" /> 2.4k+ Teachers using</div>
+                            <div className="flex items-center gap-1 underline underline-offset-4 cursor-pointer hover:text-[#6b5ea7] transition-colors">Watch Demo</div>
                           </div>
                         </div>
                       </div>
@@ -404,7 +403,7 @@ const TeacherDashboard = () => {
                     </div>
                     <div className="space-y-4">
                       {lessonsLoading ? (
-                        <Loader2 className="w-8 h-8 animate-spin mx-auto text-indigo-500" />
+                        <Loader2 className="w-8 h-8 animate-spin mx-auto text-[#6b5ea7]" />
                       ) : (
                         lessons?.slice(0, 5).map((lesson: any) => (
                           <div
@@ -416,11 +415,11 @@ const TeacherDashboard = () => {
                             className="flex items-center justify-between p-4 rounded-2xl bg-slate-50/50 border border-transparent hover:border-slate-200 transition-all cursor-pointer group"
                           >
                             <div className="flex items-center gap-4">
-                              <div className="w-12 h-12 rounded-xl bg-indigo-50 flex items-center justify-center text-[#4F46E5]">
+                              <div className="w-12 h-12 rounded-xl bg-purple-50 flex items-center justify-center text-[#4F46E5]">
                                 <BookOpen className="w-6 h-6" />
                               </div>
                               <div>
-                                <h4 className="font-bold text-slate-900 group-hover:text-indigo-600 transition-colors">{lesson.title}</h4>
+                                <h4 className="font-bold text-slate-900 group-hover:text-[#6b5ea7] transition-colors">{lesson.title}</h4>
                                 <p className="text-xs text-slate-400 font-bold uppercase tracking-wider">{lesson.subject?.name || 'Science'} • Grade {lesson.grade || 10}</p>
                               </div>
                             </div>
@@ -453,7 +452,7 @@ const TeacherDashboard = () => {
                       ].map((item, i) => (
                         <div key={i} className="flex items-center justify-between p-3 sm:p-4 rounded-xl border border-slate-100 hover:border-slate-200 transition-colors bg-white hover:bg-slate-50/50 group">
                           <div className="flex items-center gap-4 sm:gap-6">
-                            <span className="font-bold text-indigo-600 text-[10px] sm:text-sm whitespace-nowrap">{item.time}</span>
+                            <span className="font-bold text-[#6b5ea7] text-[10px] sm:text-sm whitespace-nowrap">{item.time}</span>
                             <div className="w-px h-6 sm:h-8 bg-slate-100"></div>
                             <div>
                               <h4 className="font-bold text-slate-900 text-sm sm:text-base">{item.subject}</h4>

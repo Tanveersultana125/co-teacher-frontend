@@ -41,7 +41,7 @@ const ParentDashboard = () => {
     if (isLoading) {
         return (
             <div className="h-screen w-screen flex items-center justify-center mesh-gradient">
-                <Loader2 className="w-8 h-8 animate-spin text-indigo-600" />
+                <Loader2 className="w-8 h-8 animate-spin text-[#6b5ea7]" />
             </div>
         );
     }
@@ -50,7 +50,7 @@ const ParentDashboard = () => {
 
     const stats = [
         { label: "Attendance Rate", value: (parentData?.stats.attendanceRate || "0") + "%", sub: "98% required", icon: Calendar, color: "text-emerald-600", bg: "bg-emerald-50" },
-        { label: "Overall Grade", value: (parentData?.stats.avgGrade || "0") + "%", sub: "Class avg: 72%", icon: Award, color: "text-indigo-600", bg: "bg-indigo-50" },
+        { label: "Overall Grade", value: (parentData?.stats.avgGrade || "0") + "%", sub: "Class avg: 72%", icon: Award, color: "text-[#6b5ea7]", bg: "bg-purple-50" },
         { label: "Pending Tasks", value: parentData?.stats.pendingAssignments || "0", sub: "Next due: Friday", icon: Clock, color: "text-amber-600", bg: "bg-amber-50" },
     ];
 
@@ -71,7 +71,7 @@ const ParentDashboard = () => {
             `}>
                 <div className="p-6 lg:p-8 flex items-center justify-between">
                     <div className="flex items-center gap-3">
-                        <div className="w-10 h-10 bg-[#4F46E5] rounded-xl flex items-center justify-center text-white shadow-lg shadow-indigo-200">
+                        <div className="w-10 h-10 bg-[#4F46E5] rounded-xl flex items-center justify-center text-white shadow-lg shadow-purple-200">
                             <GraduationCap className="w-6 h-6" />
                         </div>
                         <span className="text-xl font-bold text-slate-900 font-display tracking-tight">Co-Teacher</span>
@@ -188,9 +188,9 @@ const ParentDashboard = () => {
                             </div>
                             <div className="space-y-6">
                                 {child?.grades.map((grade: any) => (
-                                    <div key={grade.id} className="flex items-center justify-between p-4 rounded-xl bg-slate-50 hover:bg-indigo-50/30 transition-colors group">
+                                    <div key={grade.id} className="flex items-center justify-between p-4 rounded-xl bg-slate-50 hover:bg-purple-50/30 transition-colors group">
                                         <div className="flex items-center gap-4">
-                                            <div className="w-10 h-10 rounded-lg bg-white flex items-center justify-center text-indigo-600 shadow-sm">
+                                            <div className="w-10 h-10 rounded-lg bg-white flex items-center justify-center text-[#6b5ea7] shadow-sm">
                                                 <BarChart3 className="w-5 h-5" />
                                             </div>
                                             <div>
@@ -199,7 +199,7 @@ const ParentDashboard = () => {
                                             </div>
                                         </div>
                                         <div className="text-right">
-                                            <p className="font-mono font-bold text-indigo-600">{grade.score}/{grade.maxScore}</p>
+                                            <p className="font-mono font-bold text-[#6b5ea7]">{grade.score}/{grade.maxScore}</p>
                                             <p className="text-[10px] font-bold text-slate-400">Excellent Work</p>
                                         </div>
                                     </div>
@@ -245,10 +245,10 @@ const ParentDashboard = () => {
                                         </div>
                                     ))}
                                     {parentData?.recentMessages.length === 0 && (
-                                        <p className="text-indigo-100 text-sm font-medium opacity-70">No recent messages from teachers.</p>
+                                        <p className="text-purple-100 text-sm font-medium opacity-70">No recent messages from teachers.</p>
                                     )}
                                 </div>
-                                <Button className="w-full mt-6 bg-white text-[#4F46E5] hover:bg-indigo-50 font-bold py-6 rounded-xl">
+                                <Button className="w-full mt-6 bg-white text-[#4F46E5] hover:bg-purple-50 font-bold py-6 rounded-xl">
                                     Open Message Center
                                 </Button>
                             </Card>

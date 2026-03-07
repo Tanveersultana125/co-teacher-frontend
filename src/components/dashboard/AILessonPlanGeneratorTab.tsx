@@ -50,21 +50,21 @@ export function AILessonPlanGeneratorTab({ initialMode = "lesson", preloadedLess
                         setPreloadedLesson(null); // Clear when manually switching back? 
                     }}
                     className={`flex items-center gap-2 px-4 sm:px-6 py-2.5 rounded-xl text-xs sm:text-sm font-bold transition-all whitespace-nowrap ${activeSubTab === "generate"
-                        ? "bg-white text-indigo-600 shadow-sm border border-slate-200"
+                        ? "bg-white text-[#6b5ea7] shadow-sm border border-slate-200"
                         : "text-slate-500 hover:text-slate-700"
                         }`}
                 >
-                    <Sparkles className={`w-4 h-4 ${activeSubTab === "generate" ? "text-indigo-600" : "text-slate-400"}`} />
+                    <Sparkles className={`w-4 h-4 ${activeSubTab === "generate" ? "text-[#6b5ea7]" : "text-slate-400"}`} />
                     Generate New
                 </button>
                 <button
                     onClick={() => setActiveSubTab("library")}
                     className={`flex items-center gap-2 px-4 sm:px-6 py-2.5 rounded-xl text-xs sm:text-sm font-bold transition-all whitespace-nowrap ${activeSubTab === "library"
-                        ? "bg-white text-indigo-600 shadow-sm border border-slate-200"
+                        ? "bg-white text-[#6b5ea7] shadow-sm border border-slate-200"
                         : "text-slate-500 hover:text-slate-700"
                         }`}
                 >
-                    <BookOpen className={`w-4 h-4 ${activeSubTab === "library" ? "text-indigo-600" : "text-slate-400"}`} />
+                    <BookOpen className={`w-4 h-4 ${activeSubTab === "library" ? "text-[#6b5ea7]" : "text-slate-400"}`} />
                     My Library
                 </button>
             </div>

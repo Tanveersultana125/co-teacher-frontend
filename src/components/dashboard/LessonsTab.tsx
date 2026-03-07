@@ -69,18 +69,18 @@ export function LessonsTab({ onLessonSelect }: LessonsTabProps) {
 
                 <div className="flex flex-1 items-center justify-end gap-4 max-w-2xl">
                     <div className="flex-1 relative group">
-                        <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400 group-focus-within:text-indigo-500 transition-colors" />
+                        <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400 group-focus-within:text-[#6b5ea7] transition-colors" />
                         <Input
                             placeholder="Search lessons, subjects or topics..."
                             value={searchTerm}
                             onChange={(e) => setSearchTerm(e.target.value)}
-                            className="pl-11 h-12 bg-white border-slate-200 rounded-2xl focus-visible:ring-indigo-500 shadow-sm"
+                            className="pl-11 h-12 bg-white border-slate-200 rounded-2xl focus-visible:ring-[#6b5ea7] shadow-sm"
                         />
                     </div>
                     <div className="flex gap-3 shrink-0">
                         <DropdownMenu>
                             <DropdownMenuTrigger asChild>
-                                <Button variant="outline" className={`h-12 rounded-2xl border-slate-200 font-bold bg-white hover:bg-slate-50 ${timeFilter !== 'all' ? 'text-indigo-600 border-indigo-200 bg-indigo-50/50' : ''}`}>
+                                <Button variant="outline" className={`h-12 rounded-2xl border-slate-200 font-bold bg-white hover:bg-slate-50 ${timeFilter !== 'all' ? 'text-[#6b5ea7] border-purple-200 bg-purple-50/50' : ''}`}>
                                     <Filter className="w-4 h-4 mr-2" />
                                     {timeFilter === 'all' ? 'Filter' :
                                         timeFilter === 'today' ? 'Today' :
@@ -103,7 +103,7 @@ export function LessonsTab({ onLessonSelect }: LessonsTabProps) {
             <div className="grid grid-cols-1 gap-4">
                 {isLoading ? (
                     <div className="flex justify-center p-12">
-                        <Loader2 className="w-8 h-8 animate-spin text-indigo-500" />
+                        <Loader2 className="w-8 h-8 animate-spin text-[#6b5ea7]" />
                     </div>
                 ) : filteredLessons?.length === 0 ? (
                     <div className="text-center p-12 bg-white rounded-3xl border border-dashed border-slate-200">
@@ -124,7 +124,7 @@ export function LessonsTab({ onLessonSelect }: LessonsTabProps) {
                                     <div className="flex items-center gap-6">
                                         <div className={`w-14 h-14 rounded-2xl flex items-center justify-center ${lesson.type === 'QUIZ' ? 'bg-amber-50 text-amber-600' :
                                             lesson.type === 'MATERIAL' ? 'bg-emerald-50 text-emerald-600' :
-                                                lesson.type === 'ASSIGNMENT' ? 'bg-indigo-50 text-indigo-600' :
+                                                lesson.type === 'ASSIGNMENT' ? 'bg-purple-50 text-[#6b5ea7]' :
                                                     'bg-blue-50 text-blue-600'
                                             }`}>
                                             {lesson.type === 'QUIZ' ? <HelpCircle className="w-7 h-7" /> :
@@ -134,10 +134,10 @@ export function LessonsTab({ onLessonSelect }: LessonsTabProps) {
                                         </div>
                                         <div>
                                             <div className="flex items-center gap-2 mb-1">
-                                                <h3 className="text-lg font-bold text-slate-900 group-hover:text-indigo-600 transition-colors leading-none">{lesson.title}</h3>
+                                                <h3 className="text-lg font-bold text-slate-900 group-hover:text-[#6b5ea7] transition-colors leading-none">{lesson.title}</h3>
                                                 <span className={`text-[9px] font-black uppercase tracking-widest px-1.5 py-0.5 rounded border ${lesson.type === 'QUIZ' ? 'bg-amber-50 text-amber-600 border-amber-100' :
                                                     lesson.type === 'MATERIAL' ? 'bg-emerald-50 text-emerald-600 border-emerald-100' :
-                                                        lesson.type === 'ASSIGNMENT' ? 'bg-indigo-50 text-indigo-600 border-indigo-100' :
+                                                        lesson.type === 'ASSIGNMENT' ? 'bg-purple-50 text-[#6b5ea7] border-purple-100' :
                                                             'bg-blue-50 text-blue-600 border-blue-100'
                                                     }`}>
                                                     {lesson.type || 'LESSON'}
@@ -148,7 +148,7 @@ export function LessonsTab({ onLessonSelect }: LessonsTabProps) {
                                                 <span className="w-1 h-1 rounded-full bg-slate-200" />
                                                 <span className="text-xs font-bold text-slate-400 uppercase tracking-wider">{lesson.topic?.name || lesson.topicName || 'Intro'}</span>
                                                 <span className="w-1 h-1 rounded-full bg-slate-200" />
-                                                <span className="text-xs font-bold text-indigo-500 uppercase tracking-wider font-display">Grade {lesson.grade || 10}</span>
+                                                <span className="text-xs font-bold text-[#6b5ea7] uppercase tracking-wider font-display">Grade {lesson.grade || 10}</span>
                                             </div>
                                         </div>
                                     </div>

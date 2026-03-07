@@ -19,10 +19,12 @@ const CTA = () => {
           {/* Card */}
           <div className="relative bg-[#3d3151] rounded-[2.5rem] p-8 sm:p-12 text-center overflow-hidden">
             {/* Decorative elements */}
-            <div className="absolute top-0 right-0 w-80 h-80 bg-gradient-to-br from-[#6b5ea7] to-[#ec8c6b] rounded-full blur-[80px] opacity-40 -translate-y-1/2 translate-x-1/2" />
-            <div className="absolute bottom-0 left-0 w-64 h-64 bg-[#6b5ea7] rounded-full blur-[100px] opacity-20 translate-y-1/2 -translate-x-1/2" />
+            <div className="absolute top-0 right-0 w-96 h-96 bg-gradient-to-br from-[#6b5ea7] to-[#ec8c6b] rounded-full blur-[100px] opacity-50 -translate-y-1/2 translate-x-1/3" />
+            <div className="absolute bottom-0 right-0 w-[450px] h-[450px] bg-[#ec8c6b] rounded-full blur-[120px] opacity-40 translate-y-1/3 translate-x-1/4" />
+            <div className="absolute top-1/2 left-0 w-64 h-64 bg-[#3d3151] rounded-full blur-[100px] opacity-30 -translate-x-1/2 -translate-y-1/2" />
+            <div className="absolute bottom-0 left-0 w-72 h-72 bg-[#6b5ea7] rounded-full blur-[110px] opacity-25 translate-y-1/2 -translate-x-1/3" />
 
-            <div className="relative">
+            <div className="relative pt-6 sm:pt-10">
               <h2 className="font-display text-3xl sm:text-4xl md:text-5xl font-bold text-white mb-6 leading-tight">
                 Ready to Transform Your Teaching?
               </h2>
@@ -43,7 +45,7 @@ const CTA = () => {
                 </Button>
                 <Button
                   size="xl"
-                  className="bg-[#2d243a] text-white hover:bg-[#2d243a]/90 shadow-xl border border-white/5 rounded-2xl h-14 sm:h-16 px-8 font-bold text-lg"
+                  className="bg-[#2d2440] text-white hover:bg-[#2d2440]/90 shadow-xl border border-white/5 rounded-2xl h-14 sm:h-16 px-8 font-bold text-lg"
                   asChild
                 >
                   <Link to="/login">I Already Have an Account</Link>

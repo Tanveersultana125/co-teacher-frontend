@@ -53,7 +53,7 @@ const Dashboard = () => {
 
     const statCards = [
         { label: "Total Students", value: stats.students, icon: Users, color: "text-blue-600", bg: "bg-blue-50", trend: "+12%" },
-        { label: "Lessons Created", value: stats.lessons, icon: BookOpen, color: "text-indigo-600", bg: "bg-indigo-50", trend: "+8%" },
+        { label: "Lessons Created", value: stats.lessons, icon: BookOpen, color: "text-[#6b5ea7]", bg: "bg-purple-50", trend: "+8%" },
         { label: "Pending Assignments", value: stats.assignments, icon: FileText, color: "text-amber-600", bg: "bg-amber-50", trend: "-2" },
         { label: "Attendance Rate", value: `${stats.attendance}%`, icon: TrendingUp, color: "text-emerald-600", bg: "bg-emerald-50", trend: "+3%" },
     ];
@@ -170,7 +170,7 @@ const Dashboard = () => {
                                     <span className="text-xs font-black text-primary block">{item.time.split(' ')[0]}</span>
                                     <span className="text-[10px] font-black text-slate-300 block uppercase">{item.time.split(' ')[1]}</span>
                                 </div>
-                                <div className="flex-1 p-5 rounded-2xl border border-slate-50 bg-slate-50/50 group-hover:bg-indigo-50/50 group-hover:border-indigo-100 transition-all">
+                                <div className="flex-1 p-5 rounded-2xl border border-slate-50 bg-slate-50/50 group-hover:bg-purple-50/50 group-hover:border-purple-100 transition-all">
                                     <h4 className="font-bold text-slate-900 text-[15px]">{item.subject}</h4>
                                     <div className="flex items-center gap-3 mt-1.5">
                                         <span className="flex items-center gap-1 text-[11px] font-black text-slate-400 uppercase tracking-wider">

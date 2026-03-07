@@ -1,6 +1,6 @@
 
 import { useState } from 'react';
-import { Upload, FileText, BarChart3, Users, MessageSquare, AlertCircle, Loader2, Sparkles, X, FileSpreadsheet } from 'lucide-react';
+import { Upload, FileText, BarChart3, Users, MessageSquare, AlertCircle, Loader2, Sparkles, X, FileSpreadsheet, Mail } from 'lucide-react';
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { useToast } from "@/components/ui/use-toast";
@@ -230,7 +230,7 @@ export const DataAnalysisTab = () => {
                             { id: "class_performance", label: "Class Wide Performance Analysis", icon: BarChart3 },
                             { id: "student_performance", label: "Student Wise Performance Analysis", icon: Users },
                             { id: "attendance_analysis", label: "Attendance Analysis", icon: FileText },
-                            { id: "ask_questions", label: "Ask Questions To The Data", icon: MessageSquare },
+                            { id: "ask_questions", label: "Ask Questions To The Data", icon: Mail },
                         ].map((type) => (
                             <label
                                 key={type.id}
@@ -363,21 +363,21 @@ export const DataAnalysisTab = () => {
                         <motion.div
                             initial={{ opacity: 0, y: 20 }}
                             animate={{ opacity: 1, y: 0 }}
-                            className="bg-[#3d3151] text-white rounded-[2.5rem] p-10 shadow-2xl relative overflow-hidden border border-white/5"
+                            className="bg-[#ebd9ff] text-slate-900 rounded-[2.5rem] p-10 shadow-2xl relative overflow-hidden border border-purple-200"
                         >
                             {/* Decorative background glow */}
-                            <div className="absolute -top-24 -right-24 w-96 h-96 bg-[#6b5ea7]/20 blur-[100px] rounded-full mt-2 shrink-0" />
-                            <div className="absolute -bottom-24 -left-24 w-96 h-96 bg-[#ec8c6b]/10 blur-[100px] rounded-full mt-2 shrink-0" />
+                            <div className="absolute -top-24 -right-24 w-96 h-96 bg-[#6b5ea7]/5 blur-[100px] rounded-full mt-2 shrink-0" />
+                            <div className="absolute -bottom-24 -left-24 w-96 h-96 bg-[#ec8c6b]/5 blur-[100px] rounded-full mt-2 shrink-0" />
 
                             <div className="absolute top-0 right-0 p-6">
-                                <Button onClick={() => setResult(null)} variant="ghost" className="text-slate-400 hover:text-white">
+                                <Button onClick={() => setResult(null)} variant="ghost" className="text-slate-400 hover:text-slate-900">
                                     <X className="w-6 h-6" />
                                 </Button>
                             </div>
 
                             {/* Fallback for simple markdown response */}
                             {result.analysis && typeof result.analysis === 'string' ? (
-                                <div className="prose prose-invert max-w-none whitespace-pre-wrap">
+                                <div className="prose prose-slate max-w-none whitespace-pre-wrap text-slate-900">
                                     {result.analysis}
                                 </div>
                             ) : (
@@ -385,12 +385,12 @@ export const DataAnalysisTab = () => {
                                     {/* Result Rendering Based on Type */}
                                     <div className="space-y-8">
                                         {/* Header */}
-                                        <div className="flex items-center gap-3 border-b border-white/10 pb-6 relative z-10">
-                                            <div className="w-10 h-10 rounded-xl bg-white/5 flex items-center justify-center border border-white/10">
+                                        <div className="flex items-center gap-3 border-b border-purple-100 pb-6 relative z-10">
+                                            <div className="w-10 h-10 rounded-xl bg-purple-50 flex items-center justify-center border border-purple-100">
                                                 <FileSpreadsheet className="w-5 h-5 text-[#6b5ea7]" />
                                             </div>
                                             <div className="flex flex-col">
-                                                <span className="font-bold text-slate-100">{file?.name}</span>
+                                                <span className="font-bold text-slate-900">{file?.name}</span>
                                                 <span className="text-slate-500 text-xs uppercase tracking-widest font-black">{(file?.size || 0) / 1024 > 1024 ? ((file?.size || 0) / 1024 / 1024).toFixed(2) + ' MB' : ((file?.size || 0) / 1024).toFixed(2) + ' KB'}</span>
                                             </div>
                                         </div>
@@ -402,13 +402,13 @@ export const DataAnalysisTab = () => {
 
                                                 {/* Toppers Cards */}
                                                 <div>
-                                                    <h3 className="text-emerald-400 font-bold mb-4 flex items-center gap-2"><Sparkles className="w-5 h-5" /> Top Performers</h3>
+                                                    <h3 className="text-emerald-600 font-bold mb-4 flex items-center gap-2"><Sparkles className="w-5 h-5" /> Top Performers</h3>
                                                     <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                                                         {result.toppers?.map((student: any, idx: number) => (
-                                                            <div key={idx} className="bg-gradient-to-br from-emerald-900/40 to-slate-900 border border-emerald-500/30 p-6 rounded-2xl relative overflow-hidden">
+                                                            <div key={idx} className="bg-emerald-50 border border-emerald-100 p-6 rounded-2xl relative overflow-hidden">
                                                                 <div className="absolute top-2 right-2 text-6xl font-black text-emerald-500/10">#{student.rank || idx + 1}</div>
-                                                                <p className="text-emerald-300 font-bold text-lg mb-1">{student.name}</p>
-                                                                <p className="text-3xl font-black text-white">{student.percentage}%</p>
+                                                                <p className="text-emerald-700 font-bold text-lg mb-1">{student.name}</p>
+                                                                <p className="text-3xl font-black text-slate-900">{student.percentage}%</p>
                                                             </div>
                                                         ))}
                                                     </div>
@@ -416,26 +416,26 @@ export const DataAnalysisTab = () => {
 
                                                 {/* Struggling Students */}
                                                 <div>
-                                                    <h3 className="text-rose-400 font-bold mb-4 flex items-center gap-2"><AlertCircle className="w-5 h-5" /> Needs Attention</h3>
+                                                    <h3 className="text-rose-600 font-bold mb-4 flex items-center gap-2"><AlertCircle className="w-5 h-5" /> Needs Attention</h3>
                                                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                                                         {result.struggling?.map((student: any, idx: number) => (
-                                                            <div key={idx} className="bg-rose-900/20 border border-rose-500/30 p-4 rounded-xl flex items-center justify-between">
+                                                            <div key={idx} className="bg-rose-50 border border-rose-100 p-4 rounded-xl flex items-center justify-between">
                                                                 <div>
-                                                                    <p className="text-white font-bold">{student.name}</p>
-                                                                    <p className="text-rose-300 text-sm">Needs help in: {student.needsHelpIn}</p>
+                                                                    <p className="text-slate-900 font-bold">{student.name}</p>
+                                                                    <p className="text-rose-700 text-sm">Needs help in: {student.needsHelpIn}</p>
                                                                 </div>
-                                                                <div className="text-2xl font-black text-rose-500">{student.percentage}%</div>
+                                                                <div className="text-2xl font-black text-rose-600">{student.percentage}%</div>
                                                             </div>
                                                         ))}
                                                     </div>
                                                 </div>
 
                                                 {/* All Students Table */}
-                                                <div className="bg-slate-800/50 rounded-2xl p-6 border border-slate-700">
-                                                    <h3 className="text-xl font-bold text-white mb-4">All Students</h3>
+                                                <div className="bg-slate-50 rounded-2xl p-6 border border-slate-200">
+                                                    <h3 className="text-xl font-bold text-slate-900 mb-4">All Students</h3>
                                                     <div className="overflow-x-auto">
-                                                        <table className="w-full text-left text-sm text-slate-300">
-                                                            <thead className="text-xs uppercase bg-slate-700/50 text-slate-400 font-bold">
+                                                        <table className="w-full text-left text-sm text-slate-600">
+                                                            <thead className="text-xs uppercase bg-white text-slate-500 font-bold border-b border-slate-200">
                                                                 <tr>
                                                                     <th className="px-4 py-3 rounded-l-lg">Name</th>
                                                                     <th className="px-4 py-3">Total Marks</th>
@@ -444,20 +444,20 @@ export const DataAnalysisTab = () => {
                                                                     <th className="px-4 py-3 rounded-r-lg">Remarks</th>
                                                                 </tr>
                                                             </thead>
-                                                            <tbody className="divide-y divide-slate-700">
+                                                            <tbody className="divide-y divide-slate-100">
                                                                 {result.allStudents?.map((student: any, idx: number) => (
-                                                                    <tr key={idx} className="hover:bg-slate-700/30 transition-colors">
-                                                                        <td className="px-4 py-3 font-bold text-white">{student.name}</td>
-                                                                        <td className="px-4 py-3">{student.total}</td>
-                                                                        <td className={`px-4 py-3 font-bold ${student.percentage >= 75 ? 'text-emerald-400' : student.percentage < 40 ? 'text-rose-400' : 'text-amber-400'}`}>
+                                                                    <tr key={idx} className="hover:bg-white transition-colors">
+                                                                        <td className="px-4 py-3 font-bold text-slate-900">{student.name}</td>
+                                                                        <td className="px-4 py-3 text-slate-700">{student.total}</td>
+                                                                        <td className={`px-4 py-3 font-bold ${student.percentage >= 75 ? 'text-emerald-600' : student.percentage < 40 ? 'text-rose-600' : 'text-amber-600'}`}>
                                                                             {student.percentage}%
                                                                         </td>
                                                                         <td className="px-4 py-3">
-                                                                            <span className={`px-2 py-1 rounded-md text-xs font-black ${student.grade === 'A' ? 'bg-emerald-500/20 text-emerald-400' : 'bg-slate-700'}`}>
+                                                                            <span className={`px-2 py-1 rounded-md text-xs font-black ${student.grade === 'A' ? 'bg-emerald-100 text-emerald-700' : 'bg-slate-200 text-slate-700'}`}>
                                                                                 {student.grade}
                                                                             </span>
                                                                         </td>
-                                                                        <td className="px-4 py-3 italic opacity-80">{student.remarks}</td>
+                                                                        <td className="px-4 py-3 italic text-slate-500">{student.remarks}</td>
                                                                     </tr>
                                                                 ))}
                                                             </tbody>
@@ -467,83 +467,83 @@ export const DataAnalysisTab = () => {
                                             </div>
                                         )}
 
-                                        {/* 2. Attendance Analysis */}
-                                        {(analysisType === "attendance_analysis") && (
-                                            <div className="space-y-8 animate-in fade-in slide-in-from-bottom-4">
-                                                <h2 className="text-3xl font-bold font-serif mb-4">Attendance Analysis</h2>
+                                                {/* 2. Attendance Analysis */}
+                                                {(analysisType === "attendance_analysis") && (
+                                                    <div className="space-y-8 animate-in fade-in slide-in-from-bottom-4">
+                                                        <h2 className="text-3xl font-bold font-serif mb-4 text-slate-900">Attendance Analysis</h2>
 
-                                                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                                                    <div className="bg-white/5 border border-white/10 p-8 rounded-3xl text-center">
-                                                        <p className="text-slate-300 font-bold uppercase tracking-widest text-sm mb-2">Overall Class Attendance</p>
-                                                        <p className="text-5xl font-black text-[#6b5ea7]">{result.overallAttendance}%</p>
-                                                    </div>
-                                                    <div className="bg-slate-800/50 border border-slate-700 p-8 rounded-3xl flex items-center justify-center">
-                                                        <p className="text-slate-300 font-medium italic text-center">"{result.correlation}"</p>
-                                                    </div>
-                                                </div>
+                                                        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                                            <div className="bg-white border border-purple-100 p-8 rounded-3xl text-center shadow-sm">
+                                                                <p className="text-slate-500 font-bold uppercase tracking-widest text-sm mb-2">Overall Class Attendance</p>
+                                                                <p className="text-5xl font-black text-[#6b5ea7]">{result.overallAttendance}%</p>
+                                                            </div>
+                                                            <div className="bg-slate-50 border border-slate-200 p-8 rounded-3xl flex items-center justify-center">
+                                                                <p className="text-slate-600 font-medium italic text-center">"{result.correlation}"</p>
+                                                            </div>
+                                                        </div>
 
-                                                {/* Low Attendance List */}
-                                                <div className="bg-rose-900/10 border border-rose-500/20 rounded-2xl p-6">
-                                                    <h3 className="text-rose-400 font-bold mb-4 flex items-center gap-2"><AlertCircle className="w-5 h-5" /> Critical Low Attendance ({'<'}75%)</h3>
-                                                    <div className="space-y-3">
-                                                        {result.lowAttendanceList?.length > 0 ? (
-                                                            result.lowAttendanceList.map((student: any, idx: number) => (
-                                                                <div key={idx} className="flex items-center justify-between p-3 bg-rose-900/20 rounded-xl border border-rose-500/10">
-                                                                    <div className="flex items-center gap-3">
-                                                                        <div className="w-8 h-8 rounded-full bg-rose-500/20 flex items-center justify-center text-rose-400 font-black text-xs">!</div>
-                                                                        <span className="font-bold text-white">{student.name}</span>
-                                                                    </div>
-                                                                    <div className="flex items-center gap-4">
-                                                                        <span className="text-rose-300 font-bold">{student.attendance}%</span>
-                                                                        <span className="px-2 py-1 bg-slate-800 rounded text-xs text-slate-400">{student.performanceStatus}</span>
-                                                                    </div>
-                                                                </div>
-                                                            ))
-                                                        ) : (
-                                                            <p className="text-emerald-400 font-medium py-4 text-center">No students have critically low attendance! 🎉</p>
-                                                        )}
-                                                    </div>
-                                                </div>
+                                                        {/* Low Attendance List */}
+                                                        <div className="bg-rose-50 border border-rose-100 rounded-2xl p-6">
+                                                            <h3 className="text-rose-600 font-bold mb-4 flex items-center gap-2"><AlertCircle className="w-5 h-5" /> Critical Low Attendance ({'<'}75%)</h3>
+                                                            <div className="space-y-3">
+                                                                {result.lowAttendanceList?.length > 0 ? (
+                                                                    result.lowAttendanceList.map((student: any, idx: number) => (
+                                                                        <div key={idx} className="flex items-center justify-between p-3 bg-white rounded-xl border border-rose-100">
+                                                                            <div className="flex items-center gap-3">
+                                                                                <div className="w-8 h-8 rounded-full bg-rose-100 flex items-center justify-center text-rose-600 font-black text-xs">!</div>
+                                                                                <span className="font-bold text-slate-900">{student.name}</span>
+                                                                            </div>
+                                                                            <div className="flex items-center gap-4">
+                                                                                <span className="text-rose-600 font-bold">{student.attendance}%</span>
+                                                                                <span className="px-2 py-1 bg-slate-100 rounded text-xs text-slate-500 font-medium">{student.performanceStatus}</span>
+                                                                            </div>
+                                                                        </div>
+                                                                    ))
+                                                                ) : (
+                                                                    <p className="text-emerald-600 font-medium py-4 text-center">No students have critically low attendance! 🎉</p>
+                                                                )}
+                                                            </div>
+                                                        </div>
 
-                                                {/* Insights */}
-                                                <div className="bg-slate-800/50 p-6 rounded-2xl">
-                                                    <h3 className="font-bold text-white mb-4">Key Insights</h3>
-                                                    <ul className="space-y-2">
-                                                        {result.insights?.map((insight: string, idx: number) => (
-                                                            <li key={idx} className="flex items-start gap-2 text-slate-300">
-                                                                <div className="w-1.5 h-1.5 bg-indigo-500 rounded-full mt-2 shrink-0" />
-                                                                {insight}
-                                                            </li>
-                                                        ))}
-                                                    </ul>
-                                                </div>
+                                                        {/* Insights */}
+                                                        <div className="bg-slate-50 border border-slate-200 p-6 rounded-2xl">
+                                                            <h3 className="font-bold text-slate-900 mb-4">Key Insights</h3>
+                                                            <ul className="space-y-2">
+                                                                {result.insights?.map((insight: string, idx: number) => (
+                                                                    <li key={idx} className="flex items-start gap-2 text-slate-600">
+                                                                        <div className="w-1.5 h-1.5 bg-[#6b5ea7] rounded-full mt-2 shrink-0" />
+                                                                        {insight}
+                                                                    </li>
+                                                                ))}
+                                                            </ul>
+                                                        </div>
                                             </div>
                                         )}
 
                                         {/* 3. Ask Questions (Chat) */}
                                         {(analysisType === "ask_questions") && (
                                             <div className="h-[600px] flex flex-col animate-in fade-in slide-in-from-bottom-4">
-                                                <div className="flex-1 overflow-y-auto space-y-4 p-4 bg-slate-900/50 rounded-2xl mb-4 border border-slate-700">
+                                                <div className="flex-1 overflow-y-auto space-y-4 p-4 bg-slate-50 rounded-2xl mb-4 border border-slate-200">
                                                     {/* Initial Context Summary */}
                                                     {result.summary && (
-                                                        <div className="bg-indigo-900/20 border border-indigo-500/30 p-4 rounded-xl mb-4">
-                                                            <p className="text-indigo-200 text-sm font-medium"><Sparkles className="w-4 h-4 inline mr-2" />AI Data Context:</p>
-                                                            <p className="text-slate-300 text-sm mt-1">{result.summary}</p>
+                                                        <div className="bg-purple-50 border border-purple-100 p-4 rounded-xl mb-4">
+                                                            <p className="text-purple-700 text-sm font-medium"><Sparkles className="w-4 h-4 inline mr-2" />AI Data Context:</p>
+                                                            <p className="text-slate-900 text-sm mt-1">{result.summary}</p>
                                                         </div>
                                                     )}
 
                                                     {chatMessages.map((msg, idx) => (
                                                         <div key={idx} className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}>
-                                                            <div className={`max-w-[80%] rounded-2xl p-4 ${msg.role === 'user' ? 'bg-indigo-600 text-white rounded-tr-none' : 'bg-slate-800 text-slate-200 rounded-tl-none'}`}>
-                                                                <p className="text-sm font-medium">{msg.content}</p>
+                                                            <div className={`max-w-[80%] rounded-2xl p-4 ${msg.role === 'user' ? 'bg-[#6b5ea7] shadow-lg rounded-tr-none' : 'bg-white rounded-tl-none border border-slate-200'}`}>
+                                                                <p className={`text-base font-bold ${msg.role === 'user' ? 'text-white' : 'text-slate-900'}`}>{msg.content}</p>
                                                             </div>
                                                         </div>
                                                     ))}
                                                     {isChatLoading && (
                                                         <div className="flex justify-start">
-                                                            <div className="bg-white/5 rounded-2xl p-4 rounded-tl-none flex items-center gap-2">
+                                                            <div className="bg-white rounded-2xl p-4 rounded-tl-none flex items-center gap-2 border border-slate-200">
                                                                 <Loader2 className="w-4 h-4 animate-spin text-[#6b5ea7]" />
-                                                                <span className="text-xs text-slate-400">Thinking...</span>
+                                                                <span className="text-sm font-bold text-slate-700">AI is analyzing your data...</span>
                                                             </div>
                                                         </div>
                                                     )}
@@ -552,8 +552,8 @@ export const DataAnalysisTab = () => {
                                                 <div className="relative">
                                                     <input
                                                         type="text"
-                                                        className="w-full bg-slate-800 border-none rounded-xl py-4 pl-6 pr-14 text-white font-medium focus:ring-2 focus:ring-indigo-500"
-                                                        placeholder="Ask a question about your data..."
+                                                        className="w-full bg-white border-2 border-slate-300 rounded-xl py-4 pl-6 pr-14 text-slate-900 font-bold focus:ring-2 focus:ring-[#6b5ea7] placeholder:text-slate-500"
+                                                        placeholder="Type your question here..."
                                                         value={chatInput}
                                                         onChange={(e) => setChatInput(e.target.value)}
                                                         onKeyDown={(e) => {
@@ -583,30 +583,30 @@ export const DataAnalysisTab = () => {
                                             <div className="space-y-12 animate-in fade-in slide-in-from-bottom-4">
                                                 {/* 1. Subjects Analysis */}
                                                 <div>
-                                                    <h2 className="text-3xl font-bold font-serif mb-8">Class-wide Analysis</h2>
+                                                    <h2 className="text-3xl font-bold font-serif mb-8 text-slate-900">Class-wide Analysis</h2>
 
-                                                    <h3 className="text-xl font-bold text-slate-200 font-serif mb-4">Subjects Analysis</h3>
+                                                    <h3 className="text-xl font-bold text-slate-700 font-serif mb-4">Subjects Analysis</h3>
 
                                                     <div className="space-y-6">
                                                         <div>
-                                                            <p className="text-emerald-400 font-medium mb-3">Subjects where students are performing well:</p>
+                                                            <p className="text-emerald-600 font-medium mb-3">Subjects where students are performing well:</p>
                                                             <ul className="space-y-2">
                                                                 {result.summary?.performingWell?.map((item: any, idx: number) => (
-                                                                    <li key={idx} className="flex items-center gap-2 text-slate-300">
-                                                                        <div className="w-1.5 h-1.5 rounded-full bg-emerald-400" />
-                                                                        {item.subject}: <span className="text-white font-bold">{item.score}/100</span>
+                                                                    <li key={idx} className="flex items-center gap-2 text-slate-600">
+                                                                        <div className="w-1.5 h-1.5 rounded-full bg-emerald-500" />
+                                                                        {item.subject}: <span className="text-slate-900 font-bold">{item.score}/100</span>
                                                                     </li>
                                                                 ))}
                                                             </ul>
                                                         </div>
 
                                                         <div>
-                                                            <p className="text-rose-400 font-medium mb-3">Subjects where students are struggling:</p>
+                                                            <p className="text-rose-600 font-medium mb-3">Subjects where students are struggling:</p>
                                                             <ul className="space-y-2">
                                                                 {result.summary?.struggling?.map((item: any, idx: number) => (
-                                                                    <li key={idx} className="flex items-center gap-2 text-slate-300">
-                                                                        <div className="w-1.5 h-1.5 rounded-full bg-rose-400" />
-                                                                        {item.subject}: <span className="text-white font-bold">{item.score}/100</span>
+                                                                    <li key={idx} className="flex items-center gap-2 text-slate-600">
+                                                                        <div className="w-1.5 h-1.5 rounded-full bg-rose-500" />
+                                                                        {item.subject}: <span className="text-slate-900 font-bold">{item.score}/100</span>
                                                                     </li>
                                                                 ))}
                                                             </ul>
@@ -616,34 +616,34 @@ export const DataAnalysisTab = () => {
 
                                                 {/* 2. Class Subject Performance */}
                                                 <div className="relative z-10">
-                                                    <div className="bg-[#1e293b]/40 backdrop-blur-xl rounded-3xl p-10 border border-white/5 mb-8 shadow-2xl">
+                                                    <div className="bg-slate-50 rounded-3xl p-10 border border-slate-200 mb-8 shadow-sm">
                                                         <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 mb-10">
-                                                            <h3 className="text-3xl font-black text-white tracking-tight">
+                                                            <h3 className="text-3xl font-black text-slate-900 tracking-tight">
                                                                 {selectedImprovementSubject ? `${selectedImprovementSubject} Analytics` : "Class Performance Analytics"}
                                                             </h3>
                                                             <div className="relative min-w-[300px]">
                                                                 <select
-                                                                    className="w-full bg-white/5 border border-white/10 rounded-2xl py-4 px-6 text-white appearance-none cursor-pointer focus:ring-2 focus:ring-[#6b5ea7] transition-all font-bold text-sm shadow-inner"
+                                                                    className="w-full bg-white border border-slate-200 rounded-2xl py-4 px-6 text-slate-900 appearance-none cursor-pointer focus:ring-2 focus:ring-[#6b5ea7] transition-all font-bold text-sm shadow-sm"
                                                                     value={selectedImprovementSubject}
                                                                     onChange={(e) => setSelectedImprovementSubject(e.target.value)}
                                                                 >
-                                                                    <option value="" className="bg-slate-900">Overall Class Performance</option>
-                                                                    {getSubjects().map(sub => <option key={sub} value={sub} className="bg-slate-900">{sub}</option>)}
+                                                                    <option value="" className="bg-white">Overall Class Performance</option>
+                                                                    {getSubjects().map(sub => <option key={sub} value={sub} className="bg-white">{sub}</option>)}
                                                                 </select>
                                                                 <ChevronDown className="absolute right-5 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400 pointer-events-none" />
                                                             </div>
                                                         </div>
 
                                                         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
-                                                            <div className="bg-white rounded-[2rem] p-8 text-center shadow-2xl border border-white/10 ring-1 ring-black/5 hover:translate-y-[-4px] transition-transform duration-300">
-                                                                <p className="text-slate-400 font-black text-[11px] uppercase tracking-[0.2em] mb-3">Average Score</p>
-                                                                <p className="text-6xl font-black text-black">
+                                                            <div className="bg-white rounded-[2rem] p-8 text-center shadow-sm border border-slate-100 hover:translate-y-[-4px] transition-transform duration-300">
+                                                                <p className="text-slate-500 font-black text-[11px] uppercase tracking-[0.2em] mb-3">Average Score</p>
+                                                                <p className="text-6xl font-black text-slate-900">
                                                                     {selectedImprovementSubject && result.subjectInsights?.[selectedImprovementSubject]
                                                                         ? result.subjectInsights[selectedImprovementSubject].average
                                                                         : result.overallStats?.average}
                                                                 </p>
                                                             </div>
-                                                            <div className="bg-[#6b5ea7] rounded-[2rem] p-8 text-center shadow-[#6b5ea7]/25 shadow-2xl border border-white/10 hover:translate-y-[-4px] transition-transform duration-300">
+                                                            <div className="bg-[#6b5ea7] rounded-[2rem] p-8 text-center shadow-lg border border-[#6b5ea7]/20 hover:translate-y-[-4px] transition-transform duration-300">
                                                                 <p className="text-purple-100 font-black text-[11px] uppercase tracking-[0.2em] mb-3">Highest Score</p>
                                                                 <p className="text-6xl font-black text-white">
                                                                     {selectedImprovementSubject && result.subjectInsights?.[selectedImprovementSubject]
@@ -651,9 +651,9 @@ export const DataAnalysisTab = () => {
                                                                         : result.overallStats?.highest?.toFixed(1)}
                                                                 </p>
                                                             </div>
-                                                            <div className="bg-white rounded-[2rem] p-8 text-center shadow-2xl border border-white/10 ring-1 ring-black/5 hover:translate-y-[-4px] transition-transform duration-300">
-                                                                <p className="text-slate-400 font-black text-[11px] uppercase tracking-[0.2em] mb-3">Lowest Score</p>
-                                                                <p className="text-6xl font-black text-black">
+                                                            <div className="bg-white rounded-[2rem] p-8 text-center shadow-sm border border-slate-100 hover:translate-y-[-4px] transition-transform duration-300">
+                                                                <p className="text-slate-500 font-black text-[11px] uppercase tracking-[0.2em] mb-3">Lowest Score</p>
+                                                                <p className="text-6xl font-black text-slate-900">
                                                                     {selectedImprovementSubject && result.subjectInsights?.[selectedImprovementSubject]
                                                                         ? result.subjectInsights[selectedImprovementSubject].lowest
                                                                         : result.overallStats?.lowest?.toFixed(1)}
@@ -662,20 +662,20 @@ export const DataAnalysisTab = () => {
                                                         </div>
 
                                                         {selectedImprovementSubject && result.subjectInsights?.[selectedImprovementSubject] && (
-                                                            <div className="animate-in fade-in slide-in-from-top-4 pt-10 border-t border-white/5">
+                                                            <div className="animate-in fade-in slide-in-from-top-4 pt-10 border-t border-slate-200">
                                                                 <div className="flex items-center gap-3 mb-8">
-                                                                    <div className="w-10 h-10 rounded-xl bg-[#6b5ea7]/10 flex items-center justify-center text-[#6b5ea7] border border-[#6b5ea7]/20">
+                                                                    <div className="w-10 h-10 rounded-xl bg-purple-50 flex items-center justify-center text-[#6b5ea7] border border-purple-100">
                                                                         <Sparkles className="w-5 h-5" />
                                                                     </div>
-                                                                    <h4 className="font-black text-white text-xl tracking-tight">
+                                                                    <h4 className="font-black text-slate-900 text-xl tracking-tight">
                                                                         Actionable Recommendations
                                                                     </h4>
                                                                 </div>
                                                                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                                                                     {result.subjectInsights[selectedImprovementSubject].suggestions.map((suggestion: string, idx: number) => (
-                                                                        <div key={idx} className="flex items-start gap-4 p-6 bg-white/5 rounded-2xl border border-white/5 hover:bg-white/[0.08] transition-colors">
-                                                                            <div className="text-indigo-400 font-black text-sm mt-1">0{idx + 1}</div>
-                                                                            <span className="text-slate-300 leading-relaxed font-medium">{suggestion}</span>
+                                                                        <div key={idx} className="flex items-start gap-4 p-6 bg-white rounded-2xl border border-slate-100 shadow-sm hover:border-purple-200 transition-colors">
+                                                                            <div className="text-[#6b5ea7] font-black text-sm mt-1">0{idx + 1}</div>
+                                                                            <span className="text-slate-700 leading-relaxed font-medium">{suggestion}</span>
                                                                         </div>
                                                                     ))}
                                                                 </div>
@@ -686,16 +686,16 @@ export const DataAnalysisTab = () => {
 
 
                                                 {/* 3. Subject-wise Detailed Analysis */}
-                                                <div className="pt-8 border-t border-slate-700">
-                                                    <h3 className="text-2xl font-bold font-serif mb-6">Subject-wise Performance Analysis</h3>
+                                                <div className="pt-8 border-t border-slate-200">
+                                                    <h3 className="text-2xl font-bold font-serif mb-6 text-slate-900">Subject-wise Performance Analysis</h3>
 
                                                     <div className="flex flex-col md:flex-row md:items-center justify-start gap-4 mb-2">
-                                                        <p className="text-slate-400 font-bold text-sm">Select a subject to analyze:</p>
+                                                        <p className="text-slate-500 font-bold text-sm">Select a subject to analyze:</p>
                                                     </div>
                                                     <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-8">
                                                         <div className="relative w-full md:w-full">
                                                             <select
-                                                                className="w-full bg-[#1e293b] border border-slate-600 rounded-lg py-3 px-4 text-white appearance-none cursor-pointer focus:ring-2 focus:ring-indigo-500 font-bold"
+                                                                className="w-full bg-white border border-slate-200 rounded-lg py-3 px-4 text-slate-900 appearance-none cursor-pointer focus:ring-2 focus:ring-[#6b5ea7] font-bold shadow-sm"
                                                                 value={selectedDetailSubject}
                                                                 onChange={(e) => setSelectedDetailSubject(e.target.value)}
                                                             >
@@ -707,8 +707,8 @@ export const DataAnalysisTab = () => {
 
                                                     {selectedDetailSubject && result.subjectInsights?.[selectedDetailSubject] && (
                                                         <>
-                                                            <p className="text-slate-400 font-medium mb-6">
-                                                                Class Average for {selectedDetailSubject}: <span className="text-white font-bold">{result.subjectInsights[selectedDetailSubject].average}/100</span>
+                                                            <p className="text-slate-600 font-medium mb-6">
+                                                                Class Average for {selectedDetailSubject}: <span className="text-slate-900 font-bold">{result.subjectInsights[selectedDetailSubject].average}/100</span>
                                                             </p>
 
                                                             <div className="bg-white rounded-2xl p-6 text-slate-900 mb-8">
@@ -732,33 +732,33 @@ export const DataAnalysisTab = () => {
 
                                                             {/* Bottom Stats for Subject */}
                                                             <div className="space-y-6">
-                                                                <p className="text-slate-300 font-medium">
-                                                                    Number of students needing improvement in {selectedDetailSubject}: <span className="text-white font-bold">{
+                                                                <p className="text-slate-600 font-medium">
+                                                                    Number of students needing improvement in {selectedDetailSubject}: <span className="text-slate-900 font-bold">{
                                                                         result.subjectInsights[selectedDetailSubject].distribution
                                                                             .filter((d: any) => ['0-20', '21-40', '41-60'].some(r => d.range.includes(r)))
                                                                             .reduce((acc: number, curr: any) => acc + curr.count, 0)
                                                                     }</span>
                                                                 </p>
 
-                                                                <h4 className="text-2xl font-bold text-white font-serif">{selectedDetailSubject} Performance Summary</h4>
+                                                                <h4 className="text-2xl font-bold text-slate-900 font-serif">{selectedDetailSubject} Performance Summary</h4>
 
                                                                 <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                                                                    <div className="bg-slate-500/50 text-white rounded-xl p-8 text-center border border-slate-500">
-                                                                        <p className="text-slate-200 font-bold text-sm uppercase tracking-wider mb-2">Average</p>
+                                                                    <div className="bg-slate-50 text-slate-900 rounded-xl p-8 text-center border border-slate-200 shadow-sm">
+                                                                        <p className="text-slate-500 font-bold text-sm uppercase tracking-wider mb-2">Average</p>
                                                                         <p className="text-4xl font-black">{result.subjectInsights[selectedDetailSubject].average}</p>
                                                                     </div>
-                                                                    <div className="bg-[#6F8F72] text-white rounded-xl p-8 text-center shadow-lg">
-                                                                        <p className="text-slate-500 font-bold text-sm uppercase tracking-wider mb-2">Highest</p>
+                                                                    <div className="bg-[#6F8F72] text-white rounded-xl p-8 text-center shadow-md">
+                                                                        <p className="text-slate-100 font-bold text-sm uppercase tracking-wider mb-2">Highest</p>
                                                                         <p className="text-4xl font-black">{result.subjectInsights[selectedDetailSubject].highest}</p>
                                                                     </div>
-                                                                    <div className="bg-white text-slate-900 rounded-xl p-8 text-center">
-                                                                        <p className="text-slate-400 font-bold text-sm uppercase tracking-wider mb-2">Lowest</p>
+                                                                    <div className="bg-white text-slate-900 rounded-xl p-8 text-center border border-slate-100 shadow-sm">
+                                                                        <p className="text-slate-500 font-bold text-sm uppercase tracking-wider mb-2">Lowest</p>
                                                                         <p className="text-4xl font-black">{result.subjectInsights[selectedDetailSubject].lowest}</p>
                                                                     </div>
                                                                 </div>
 
                                                                 <Button
-                                                                    className="bg-[#1e293b] border border-slate-600 hover:bg-slate-800 text-white px-6 py-6 h-auto rounded-xl font-bold text-lg"
+                                                                    className="bg-[#6b5ea7] hover:bg-[#5a4d8c] text-white px-6 py-6 h-auto rounded-xl font-bold text-lg shadow-lg"
                                                                     onClick={() => {
                                                                         const blob = new Blob([JSON.stringify(result.subjectInsights[selectedDetailSubject], null, 2)], { type: 'application/json' });
                                                                         const url = URL.createObjectURL(blob);
@@ -779,14 +779,14 @@ export const DataAnalysisTab = () => {
                                                 </div>
 
                                                 {/* 4. Overall Plan */}
-                                                <div className="pt-10 border-t border-white/10 mt-10 relative z-10">
-                                                    <h3 className="text-3xl font-black text-white tracking-tight mb-8">Overall Class Strategy Plan</h3>
+                                                <div className="pt-10 border-t border-slate-200 mt-10 relative z-10">
+                                                    <h3 className="text-3xl font-black text-slate-900 tracking-tight mb-8">Overall Class Strategy Plan</h3>
                                                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-12">
                                                         {result.improvementPlan?.map((plan: string, idx: number) => (
-                                                            <div key={idx} className="p-8 bg-white/5 border border-white/5 rounded-3xl group hover:bg-white/10 transition-all hover:scale-[1.02] duration-300">
+                                                            <div key={idx} className="p-8 bg-slate-50 border border-slate-200 rounded-3xl group hover:border-purple-200 transition-all hover:scale-[1.01] duration-300">
                                                                 <div className="flex items-start gap-5">
-                                                                    <div className="w-10 h-10 rounded-xl bg-[#6b5ea7]/20 text-[#6b5ea7] flex items-center justify-center shrink-0 font-black text-xs border border-[#6b5ea7]/20">{idx + 1}</div>
-                                                                    <span className="text-slate-300 font-medium text-lg leading-relaxed">{plan}</span>
+                                                                    <div className="w-10 h-10 rounded-xl bg-purple-100 text-[#6b5ea7] flex items-center justify-center shrink-0 font-black text-xs border border-purple-200">{idx + 1}</div>
+                                                                    <span className="text-slate-700 font-medium text-lg leading-relaxed">{plan}</span>
                                                                 </div>
                                                             </div>
                                                         ))}
@@ -803,7 +803,7 @@ export const DataAnalysisTab = () => {
                                                             document.body.removeChild(a);
                                                             URL.revokeObjectURL(url);
                                                         }}
-                                                        className="w-full bg-white text-slate-900 hover:bg-slate-100 h-20 rounded-[1.5rem] font-black text-xl transition-all shadow-2xl shadow-white/5 group"
+                                                        className="w-full bg-[#6b5ea7] text-white hover:bg-[#5a4d8c] h-20 rounded-[1.5rem] font-black text-xl transition-all shadow-xl group"
                                                     >
                                                         <Download className="w-6 h-6 mr-3 group-hover:translate-y-0.5 transition-transform" />
                                                         Export Professional Report

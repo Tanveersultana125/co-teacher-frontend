@@ -1,4 +1,4 @@
-﻿import { useState, useRef } from "react";
+import { useState, useRef } from "react";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import {
@@ -151,7 +151,7 @@ export function LessonSummarizerTab() {
                         <button
                             onClick={() => setMode("upload")}
                             className={`flex items-center gap-2 px-4 sm:px-6 py-2.5 rounded-lg text-xs sm:text-sm font-bold transition-all ${mode === "upload"
-                                ? "bg-[#36656B] text-white shadow-md"
+                                ? "bg-[#6b5ea7] text-white shadow-md"
                                 : "text-slate-500 hover:text-slate-800 hover:bg-slate-50"}`}
                         >
                             <Upload className="w-4 h-4" /> Upload PDF
@@ -159,7 +159,7 @@ export function LessonSummarizerTab() {
                         <button
                             onClick={() => setMode("text")}
                             className={`flex items-center gap-2 px-4 sm:px-6 py-2.5 rounded-lg text-xs sm:text-sm font-bold transition-all ${mode === "text"
-                                ? "bg-[#36656B] text-white shadow-md"
+                                ? "bg-[#6b5ea7] text-white shadow-md"
                                 : "text-slate-500 hover:text-slate-800 hover:bg-slate-50"}`}
                         >
                             <Text className="w-4 h-4" /> Paste Text
@@ -172,7 +172,7 @@ export function LessonSummarizerTab() {
                                 <p className="font-semibold text-slate-700 ml-1">Upload PDF File Of Your Lesson</p>
                                 {!file ? (
                                     <div
-                                        className={`border-2 border-dashed rounded-2xl p-10 transition-all duration-200 flex flex-col items-center justify-center gap-4 bg-white ${isDragOver ? 'border-[#36656B] bg-teal-50' : 'border-slate-300 hover:bg-slate-50 hover:border-slate-400'}`}
+                                        className={`border-2 border-dashed rounded-2xl p-10 transition-all duration-200 flex flex-col items-center justify-center gap-4 bg-white ${isDragOver ? 'border-[#6b5ea7] bg-purple-50' : 'border-slate-300 hover:bg-slate-50 hover:border-slate-400'}`}
                                         onDragOver={(e) => { e.preventDefault(); setIsDragOver(true); }}
                                         onDragLeave={() => setIsDragOver(false)}
                                         onDrop={handleDrop}
@@ -196,7 +196,7 @@ export function LessonSummarizerTab() {
                                 ) : (
                                     <div className="border border-slate-200 rounded-2xl p-6 bg-white flex items-center justify-between shadow-sm">
                                         <div className="flex items-center gap-4">
-                                            <div className="w-12 h-12 rounded-xl bg-teal-50 text-[#36656B] flex items-center justify-center border border-teal-100">
+                                            <div className="w-12 h-12 rounded-xl bg-purple-50 text-[#6b5ea7] flex items-center justify-center border border-purple-100">
                                                 <FileText className="w-6 h-6" />
                                             </div>
                                             <div>
@@ -215,7 +215,7 @@ export function LessonSummarizerTab() {
                                 <p className="font-semibold text-slate-700 ml-1">Paste Or Type Your Content</p>
                                 <Textarea
                                     placeholder="Paste your lesson plan, meeting notes, or educational content here..."
-                                    className="min-h-[300px] bg-white border-slate-200 text-slate-900 placeholder:text-slate-400 rounded-2xl p-6 text-lg resize-none focus:ring-[#36656B] focus:border-[#36656B] transition-all font-medium leading-relaxed shadow-sm"
+                                    className="min-h-[300px] bg-white border-slate-200 text-slate-900 placeholder:text-slate-400 rounded-2xl p-6 text-lg resize-none focus:ring-[#6b5ea7] focus:border-[#6b5ea7] transition-all font-medium leading-relaxed shadow-sm"
                                     value={textInput}
                                     onChange={(e) => setTextInput(e.target.value)}
                                 />
@@ -226,7 +226,7 @@ export function LessonSummarizerTab() {
                             <Button
                                 onClick={handleSummarize}
                                 disabled={isGenerating}
-                                className="w-full bg-[#36656B] hover:bg-[#2A4D52] text-white font-bold h-14 rounded-xl text-lg shadow-xl shadow-teal-900/10 transition-all mt-4"
+                                className="w-full bg-[#6b5ea7] hover:bg-[#6b5ea7]/90 text-white font-bold h-14 rounded-xl text-lg shadow-xl shadow-purple-900/10 transition-all mt-4"
                             >
                                 {isGenerating ? <Loader2 className="w-5 h-5 animate-spin mr-2" /> : <BookOpen className="w-5 h-5 mr-2" />}
                                 {isGenerating ? "Analyzing Content..." : "Generate Summary"}
@@ -265,7 +265,7 @@ export function LessonSummarizerTab() {
                                 exit={{ opacity: 0, scale: 0.9 }}
                                 className="bg-white rounded-3xl p-12 text-center border border-slate-200 shadow-xl mt-10"
                             >
-                                <Loader2 className="w-12 h-12 text-[#36656B] animate-spin mx-auto mb-6" />
+                                <Loader2 className="w-12 h-12 text-[#6b5ea7] animate-spin mx-auto mb-6" />
                                 <h3 className="text-2xl font-bold text-slate-900">Analyzing Content...</h3>
                                 <p className="text-slate-500 mt-2 font-medium">Our AI is extracting key concepts for you.</p>
                             </motion.div>
@@ -287,7 +287,7 @@ export function LessonSummarizerTab() {
                                             <button
                                                 onClick={() => setDisplayMode("bullets")}
                                                 className={`flex items-center gap-1.5 px-4 py-2 rounded-lg text-sm font-bold transition-all ${displayMode === "bullets"
-                                                    ? "bg-white text-[#36656B] shadow-sm border border-[#36656B]/20"
+                                                    ? "bg-white text-[#6b5ea7] shadow-sm border border-[#6b5ea7]/20"
                                                     : "text-slate-500 hover:text-slate-700"}`}
                                             >
                                                 <List className="w-3.5 h-3.5" />
@@ -296,7 +296,7 @@ export function LessonSummarizerTab() {
                                             <button
                                                 onClick={() => setDisplayMode("paragraph")}
                                                 className={`flex items-center gap-1.5 px-4 py-2 rounded-lg text-sm font-bold transition-all ${displayMode === "paragraph"
-                                                    ? "bg-white text-[#36656B] shadow-sm border border-[#36656B]/20"
+                                                    ? "bg-white text-[#6b5ea7] shadow-sm border border-[#6b5ea7]/20"
                                                     : "text-slate-500 hover:text-slate-700"}`}
                                             >
                                                 <AlignLeft className="w-3.5 h-3.5" />
@@ -331,7 +331,7 @@ export function LessonSummarizerTab() {
                                                             <>
                                                                 {pointsArray.map((point: string, i: number) => (
                                                                     <div key={i} className="flex gap-3 text-slate-700">
-                                                                        <span className="text-[#36656B] font-bold mt-1 shrink-0">•</span>
+                                                                        <span className="text-[#6b5ea7] font-bold mt-1 shrink-0">•</span>
                                                                         <p className="font-medium leading-relaxed text-[15px]">{point}</p>
                                                                     </div>
                                                                 ))}

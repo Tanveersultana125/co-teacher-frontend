@@ -48,7 +48,7 @@ export function AnalyticsTab() {
     if (isLoading) {
         return (
             <div className="flex h-[400px] items-center justify-center">
-                <Loader2 className="w-8 h-8 animate-spin text-indigo-500" />
+                <Loader2 className="w-8 h-8 animate-spin text-[#6b5ea7]" />
             </div>
         );
     }
@@ -64,7 +64,7 @@ export function AnalyticsTab() {
                 <div className="flex p-1 bg-slate-100 rounded-xl">
                     <button
                         onClick={() => setMode('overview')}
-                        className={`flex items-center gap-2 px-4 py-2 rounded-lg font-bold text-sm transition-all ${mode === 'overview' ? 'bg-white text-indigo-600 shadow-sm' : 'text-slate-500 hover:text-slate-700'
+                        className={`flex items-center gap-2 px-4 py-2 rounded-lg font-bold text-sm transition-all ${mode === 'overview' ? 'bg-white text-[#6b5ea7] shadow-sm' : 'text-slate-500 hover:text-slate-700'
                             }`}
                     >
                         <LayoutDashboard className="w-4 h-4" />
@@ -72,7 +72,7 @@ export function AnalyticsTab() {
                     </button>
                     <button
                         onClick={() => setMode('ai')}
-                        className={`flex items-center gap-2 px-4 py-2 rounded-lg font-bold text-sm transition-all ${mode === 'ai' ? 'bg-white text-indigo-600 shadow-sm' : 'text-slate-500 hover:text-slate-700'
+                        className={`flex items-center gap-2 px-4 py-2 rounded-lg font-bold text-sm transition-all ${mode === 'ai' ? 'bg-white text-[#6b5ea7] shadow-sm' : 'text-slate-500 hover:text-slate-700'
                             }`}
                     >
                         <Sparkles className="w-4 h-4" />
@@ -87,9 +87,9 @@ export function AnalyticsTab() {
                 <>
                     {/* Overview Cards */}
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-                        <Card className="border-none shadow-sm shadow-indigo-100">
+                        <Card className="border-none shadow-sm shadow-purple-100">
                             <CardContent className="p-6 flex items-center gap-4">
-                                <div className="w-12 h-12 bg-indigo-50 rounded-xl flex items-center justify-center text-indigo-600">
+                                <div className="w-12 h-12 bg-purple-50 rounded-xl flex items-center justify-center text-[#6b5ea7]">
                                     <Users className="w-6 h-6" />
                                 </div>
                                 <div>

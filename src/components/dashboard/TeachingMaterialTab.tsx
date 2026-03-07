@@ -58,12 +58,12 @@ export function TeachingMaterialTab() {
                                 <button
                                     key={t.id}
                                     onClick={() => setType(t.id)}
-                                    className={`w-full flex items-center gap-3 p-3 rounded-xl border-2 transition-all ${type === t.id ? 'border-[#4F46E5] bg-indigo-50/50' : 'border-slate-50 hover:border-slate-100'}`}
+                                    className={`w-full flex items-center gap-3 p-3 rounded-xl border-2 transition-all ${type === t.id ? 'border-[#6b5ea7] bg-purple-50/50' : 'border-slate-50 hover:border-slate-100'}`}
                                 >
                                     <div className={`w-10 h-10 rounded-lg ${t.bg} flex items-center justify-center ${t.color}`}>
                                         <t.icon className="w-5 h-5" />
                                     </div>
-                                    <span className={`font-bold text-sm ${type === t.id ? 'text-[#4F46E5]' : 'text-slate-600'}`}>{t.label}</span>
+                                    <span className={`font-bold text-sm ${type === t.id ? 'text-[#6b5ea7]' : 'text-slate-600'}`}>{t.label}</span>
                                 </button>
                             ))}
                         </div>
@@ -116,7 +116,7 @@ export function TeachingMaterialTab() {
                     </div>
 
                     <Button
-                        className="w-full h-12 bg-[#4F46E5] font-bold rounded-xl"
+                        className="w-full h-12 bg-[#6b5ea7] hover:bg-[#6b5ea7]/90 font-bold rounded-xl"
                         disabled={!topicId || generateMutation.isPending}
                         onClick={() => generateMutation.mutate({ type, topicId })}
                     >
@@ -160,18 +160,18 @@ export function TeachingMaterialTab() {
                         <div className="flex flex-col h-full bg-[#FAF9F6] relative">
                             {/* Textbook Header */}
                             <div className="p-10 border-b border-slate-200 bg-white flex items-start justify-between relative overflow-hidden">
-                                <div className="absolute top-0 right-0 w-64 h-64 bg-indigo-50/50 rounded-full -translate-y-1/2 translate-x-1/2 blur-3xl pointer-events-none" />
+                                <div className="absolute top-0 right-0 w-64 h-64 bg-purple-50/50 rounded-full -translate-y-1/2 translate-x-1/2 blur-3xl pointer-events-none" />
 
                                 <div className="flex items-start gap-8 relative z-10">
-                                    <div className="w-20 h-20 rounded-full bg-[#1A3263] flex items-center justify-center text-white text-4xl font-black shadow-xl shadow-indigo-100 shrink-0">
+                                    <div className="w-20 h-20 rounded-full bg-[#6b5ea7] flex items-center justify-center text-white text-4xl font-black shadow-xl shadow-purple-100 shrink-0">
                                         {generatedContent.chapterNumber || "1"}
                                     </div>
                                     <div>
-                                        <h1 className="text-5xl font-black text-[#1A3263] mb-4 tracking-tight leading-none">
+                                        <h1 className="text-5xl font-black text-[#6b5ea7] mb-4 tracking-tight leading-none">
                                             {generatedContent.title}
                                         </h1>
                                         <div className="flex items-center gap-3">
-                                            <span className="px-3 py-1 bg-indigo-50 text-indigo-600 text-[10px] font-black uppercase tracking-widest rounded-full">
+                                            <span className="px-3 py-1 bg-purple-50 text-[#6b5ea7] text-[10px] font-black uppercase tracking-widest rounded-full">
                                                 Chapter {generatedContent.chapterNumber || "1"}
                                             </span>
                                             <span className="text-slate-300 font-light px-2">|</span>
@@ -208,7 +208,7 @@ export function TeachingMaterialTab() {
                                                 className="space-y-4"
                                             >
                                                 <h3 className="text-2xl font-black text-slate-900 flex items-center gap-3">
-                                                    <div className="w-1.5 h-8 bg-indigo-600 rounded-full" />
+                                                    <div className="w-1.5 h-8 bg-[#6b5ea7] rounded-full" />
                                                     {section.heading}
                                                 </h3>
                                                 <p className="text-slate-700 leading-relaxed font-medium">
@@ -217,8 +217,8 @@ export function TeachingMaterialTab() {
                                                 <ul className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-6">
                                                     {section.bulletPoints?.map((point: string, pIdx: number) => (
                                                         <li key={pIdx} className="flex items-start gap-4 p-4 rounded-2xl bg-white border border-slate-100 shadow-sm hover:shadow-md transition-shadow group">
-                                                            <div className="w-6 h-6 rounded-lg bg-indigo-50 flex items-center justify-center shrink-0 group-hover:bg-indigo-600 transition-colors">
-                                                                <span className="w-1.5 h-1.5 rounded-full bg-indigo-600 group-hover:bg-white" />
+                                                            <div className="w-6 h-6 rounded-lg bg-purple-50 flex items-center justify-center shrink-0 group-hover:bg-[#6b5ea7] transition-colors">
+                                                                <span className="w-1.5 h-1.5 rounded-full bg-[#6b5ea7] group-hover:bg-white" />
                                                             </div>
                                                             <span className="text-sm font-semibold text-slate-700 leading-snug">{point}</span>
                                                         </li>
@@ -232,18 +232,18 @@ export function TeachingMaterialTab() {
                                 {/* Sidebar Column */}
                                 <div className="lg:col-span-4 space-y-8">
                                     {/* Learning Objectives Box (Textbook Style) */}
-                                    <div className="bg-indigo-50 p-8 rounded-[2.5rem] border-2 border-dashed border-indigo-200 relative overflow-hidden">
+                                    <div className="bg-purple-50 p-8 rounded-[2.5rem] border-2 border-dashed border-purple-200 relative overflow-hidden">
                                         <div className="absolute top-0 right-0 p-4 opacity-10">
-                                            <BookOpen className="w-12 h-12 text-indigo-600" />
+                                            <BookOpen className="w-12 h-12 text-[#6b5ea7]" />
                                         </div>
-                                        <h4 className="text-indigo-900 font-black uppercase tracking-widest text-xs mb-6 flex items-center gap-2">
-                                            <span className="w-2 h-2 rounded-full bg-indigo-600" />
+                                        <h4 className="text-purple-900 font-black uppercase tracking-widest text-xs mb-6 flex items-center gap-2">
+                                            <span className="w-2 h-2 rounded-full bg-[#6b5ea7]" />
                                             In This Chapter
                                         </h4>
                                         <ul className="space-y-4">
                                             {generatedContent.learningObjectives?.map((obj: string, i: number) => (
-                                                <li key={i} className="flex gap-3 text-sm font-bold text-indigo-900/70">
-                                                    <ChevronRight className="w-5 h-5 text-indigo-400 shrink-0" />
+                                                <li key={i} className="flex gap-3 text-sm font-bold text-purple-900/70">
+                                                    <ChevronRight className="w-5 h-5 text-purple-400 shrink-0" />
                                                     {obj}
                                                 </li>
                                             ))}
@@ -251,7 +251,7 @@ export function TeachingMaterialTab() {
                                     </div>
 
                                     {/* Illustration Area (Visual Placeholder) */}
-                                    <div className="aspect-square bg-white rounded-[2.5rem] border border-slate-100 shadow-xl shadow-indigo-50 flex flex-col items-center justify-center p-4 text-center gap-4 group cursor-help transition-all hover:scale-[1.02] overflow-hidden relative">
+                                    <div className="aspect-square bg-white rounded-[2.5rem] border border-slate-100 shadow-xl shadow-purple-50 flex flex-col items-center justify-center p-4 text-center gap-4 group cursor-help transition-all hover:scale-[1.02] overflow-hidden relative">
                                         {generatedContent.generatedImage ? (
                                             <div className="w-full h-full flex flex-col items-center justify-center relative">
                                                 <img
@@ -263,7 +263,7 @@ export function TeachingMaterialTab() {
                                                     }}
                                                 />
                                                 <div className="absolute bottom-4 left-0 right-0 group-hover:bottom-6 transition-all">
-                                                    <span className="bg-white/90 backdrop-blur-sm px-4 py-1.5 rounded-full shadow-lg border border-indigo-100 text-[10px] font-black uppercase tracking-widest text-indigo-600">
+                                                    <span className="bg-white/90 backdrop-blur-sm px-4 py-1.5 rounded-full shadow-lg border border-purple-100 text-[10px] font-black uppercase tracking-widest text-[#6b5ea7]">
                                                         Visual Study Guide
                                                     </span>
                                                 </div>
@@ -279,15 +279,15 @@ export function TeachingMaterialTab() {
                                                     className="w-full h-full object-contain rounded-3xl"
                                                 />
                                                 <div className="absolute bottom-4 left-0 right-0">
-                                                    <span className="bg-white/90 backdrop-blur-sm px-4 py-1.5 rounded-full shadow-lg border border-indigo-100 text-[10px] font-black uppercase tracking-widest text-indigo-600">
+                                                    <span className="bg-white/90 backdrop-blur-sm px-4 py-1.5 rounded-full shadow-lg border border-purple-100 text-[10px] font-black uppercase tracking-widest text-[#6b5ea7]">
                                                         Visual Study Guide
                                                     </span>
                                                 </div>
                                             </div>
                                         ) : (
                                             <>
-                                                <div className="w-20 h-20 rounded-3xl bg-slate-50 flex items-center justify-center group-hover:bg-indigo-50 transition-colors">
-                                                    <Presentation className="w-10 h-10 text-slate-300 group-hover:text-indigo-400 transition-colors" />
+                                                <div className="w-20 h-20 rounded-3xl bg-slate-50 flex items-center justify-center group-hover:bg-purple-50 transition-colors">
+                                                    <Presentation className="w-10 h-10 text-slate-300 group-hover:text-purple-400 transition-colors" />
                                                 </div>
                                                 <div>
                                                     <p className="text-[10px] font-black uppercase tracking-widest text-slate-400 mb-1">Visual Study Guide</p>

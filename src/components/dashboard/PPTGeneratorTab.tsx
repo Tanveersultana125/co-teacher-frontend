@@ -124,14 +124,14 @@ export function PPTGeneratorTab() {
                     <TabsList className="bg-slate-100 p-1.5 rounded-2xl h-16 shadow-inner border border-slate-200">
                         <TabsTrigger
                             value="generate"
-                            className="rounded-xl px-10 h-full data-[state=active]:bg-white data-[state=active]:text-indigo-600 data-[state=active]:shadow-lg font-bold transition-all text-slate-500"
+                            className="rounded-xl px-10 h-full data-[state=active]:bg-white data-[state=active]:text-[#6b5ea7] data-[state=active]:shadow-lg font-bold transition-all text-slate-500"
                         >
                             <Sparkles className="w-5 h-5 mr-3" />
                             New Presentation
                         </TabsTrigger>
                         <TabsTrigger
                             value="history"
-                            className="rounded-xl px-10 h-full data-[state=active]:bg-white data-[state=active]:text-indigo-600 data-[state=active]:shadow-lg font-bold transition-all text-slate-500"
+                            className="rounded-xl px-10 h-full data-[state=active]:bg-white data-[state=active]:text-[#6b5ea7] data-[state=active]:shadow-lg font-bold transition-all text-slate-500"
                         >
                             <History className="w-5 h-5 mr-3" />
                             My History
@@ -141,7 +141,7 @@ export function PPTGeneratorTab() {
 
                 <TabsContent value="generate" className="animate-in fade-in slide-in-from-bottom-4 duration-500">
                     <Card className="max-w-2xl mx-auto border-none shadow-2xl shadow-slate-200/60 overflow-hidden relative bg-white/80 backdrop-blur-md">
-                        <div className="absolute top-0 left-0 w-full h-1.5 bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500"></div>
+                        <div className="absolute top-0 left-0 w-full h-1.5 bg-gradient-to-r from-purple-500 via-[#6b5ea7] to-pink-500"></div>
                         <CardHeader className="pt-10 pb-6 px-8 text-center">
                             <CardTitle className="text-3xl font-black text-slate-800">What is the topic?</CardTitle>
                             <CardDescription className="text-lg font-medium">Generate 8 professional slides in seconds</CardDescription>
@@ -149,7 +149,7 @@ export function PPTGeneratorTab() {
                         <CardContent className="px-8 pb-10">
                             <div className="space-y-6">
                                 <Input
-                                    className="h-16 pl-6 pr-6 text-lg font-bold border-slate-200 focus-visible:ring-indigo-500 rounded-2xl transition-all shadow-sm"
+                                    className="h-16 pl-6 pr-6 text-lg font-bold border-slate-200 focus-visible:ring-[#6b5ea7] rounded-2xl transition-all shadow-sm"
                                     placeholder="e.g. History of Rome, Chemical Reactions..."
                                     value={topic}
                                     onChange={(e) => setTopic(e.target.value)}
@@ -159,7 +159,7 @@ export function PPTGeneratorTab() {
                                 <Button
                                     onClick={handleGenerate}
                                     disabled={isGenerating || !topic.trim()}
-                                    className="w-full h-16 bg-indigo-600 hover:bg-indigo-700 text-white rounded-2xl font-black text-xl shadow-xl shadow-indigo-200 transition-all hover:scale-[1.01] active:scale-95 disabled:opacity-50"
+                                    className="w-full h-16 bg-[#6b5ea7] hover:bg-[#6b5ea7]/90 text-white rounded-2xl font-black text-xl shadow-xl shadow-purple-200 transition-all hover:scale-[1.01] active:scale-95 disabled:opacity-50"
                                 >
                                     {isGenerating ? (
                                         <><Loader2 className="w-6 h-6 animate-spin mr-3" /> Crafting Your Slides...</>
@@ -185,11 +185,11 @@ export function PPTGeneratorTab() {
                             ))
                         ) : history?.length > 0 ? (
                             history.map((ppt: any) => (
-                                <Card key={ppt.id} className="group overflow-hidden border-slate-100 hover:border-indigo-200 transition-all hover:shadow-xl hover:shadow-indigo-500/10">
-                                    <div className="h-2 w-full bg-slate-100 group-hover:bg-indigo-500 transition-all" />
+                                <Card key={ppt.id} className="group overflow-hidden border-slate-100 hover:border-purple-200 transition-all hover:shadow-xl hover:shadow-purple-500/10">
+                                    <div className="h-2 w-full bg-slate-100 group-hover:bg-[#6b5ea7] transition-all" />
                                     <CardHeader className="p-5 pb-2">
                                         <div className="flex justify-between items-start">
-                                            <div className="p-2 bg-indigo-50 rounded-xl text-indigo-600">
+                                            <div className="p-2 bg-purple-50 rounded-xl text-[#6b5ea7]">
                                                 <Presentation className="w-5 h-5" />
                                             </div>
                                             <div className="flex gap-2 opacity-0 group-hover:opacity-100 transition-all">
@@ -218,7 +218,7 @@ export function PPTGeneratorTab() {
                                                 <Eye className="w-4 h-4 mr-2" /> Preview
                                             </Button>
                                             <Button
-                                                className="w-full h-10 rounded-xl font-bold bg-indigo-50 text-indigo-700 hover:bg-indigo-100"
+                                                className="w-full h-10 rounded-xl font-bold bg-purple-50 text-[#6b5ea7] hover:bg-purple-100"
                                                 onClick={() => handleDownloadExisting(ppt)}
                                             >
                                                 <Download className="w-4 h-4 mr-2" /> Export
@@ -249,7 +249,7 @@ export function PPTGeneratorTab() {
                             <p className="text-slate-500 font-medium">Generated Outline Preview</p>
                         </div>
                         <Button
-                            className="bg-indigo-600 hover:bg-indigo-700 h-12 px-6 rounded-2xl font-bold shadow-lg shadow-indigo-100"
+                            className="bg-[#6b5ea7] hover:bg-[#6b5ea7]/90 h-12 px-6 rounded-2xl font-bold shadow-lg shadow-purple-100"
                             onClick={() => handleDownloadExisting(viewingPPT)}
                         >
                             <Download className="w-4 h-4 mr-2" /> Download .pptx
@@ -267,7 +267,7 @@ export function PPTGeneratorTab() {
                                         <ul className="space-y-2">
                                             {slide.points?.map((p: string, j: number) => (
                                                 <li key={j} className="flex items-start text-slate-600 font-medium line-clamp-2">
-                                                    <div className="w-2 h-2 rounded-full bg-indigo-400 mt-2 mr-3 shrink-0" />
+                                                    <div className="w-2 h-2 rounded-full bg-purple-400 mt-2 mr-3 shrink-0" />
                                                     {p}
                                                 </li>
                                             ))}

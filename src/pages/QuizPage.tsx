@@ -138,7 +138,7 @@ export default function QuizPage() {
         return (
             <div className="min-h-screen bg-slate-50 flex items-center justify-center">
                 <div className="flex flex-col items-center gap-4">
-                    <div className="w-12 h-12 border-4 border-indigo-600 border-t-transparent rounded-full animate-spin" />
+                    <div className="w-12 h-12 border-4 border-[#6b5ea7] border-t-transparent rounded-full animate-spin" />
                     <p className="text-slate-500 font-bold animate-pulse">Loading Quiz Questions...</p>
                 </div>
             </div>
@@ -152,7 +152,7 @@ export default function QuizPage() {
                     <AlertCircle className="w-16 h-16 text-rose-500 mx-auto mb-4" />
                     <h2 className="text-2xl font-black text-slate-900 mb-2">Quiz Not Found</h2>
                     <p className="text-slate-500 mb-6">The quiz you are looking for does not exist or has been removed.</p>
-                    <Button onClick={() => navigate('/dashboard')} className="w-full h-12 rounded-xl bg-indigo-600 font-bold">
+                    <Button onClick={() => navigate('/dashboard')} className="w-full h-12 rounded-xl bg-[#6b5ea7] font-bold">
                         Go to Dashboard
                     </Button>
                 </div>
@@ -184,9 +184,9 @@ export default function QuizPage() {
                         </div>
                     </div>
 
-                    <div className="flex items-center gap-2 sm:gap-6 bg-indigo-50 px-4 py-2 rounded-2xl border border-indigo-100 shadow-sm">
-                        <Timer className="w-5 h-5 text-indigo-600 animate-pulse" />
-                        <span className={`font-mono text-xl font-black tracking-tighter ${timeLeft < 60 ? 'text-rose-500' : 'text-indigo-700'}`}>
+                    <div className="flex items-center gap-2 sm:gap-6 bg-purple-50 px-4 py-2 rounded-2xl border border-purple-100 shadow-sm">
+                        <Timer className="w-5 h-5 text-[#6b5ea7] animate-pulse" />
+                        <span className={`font-mono text-xl font-black tracking-tighter ${timeLeft < 60 ? 'text-rose-500' : 'text-[#6b5ea7]'}`}>
                             {formatTime(timeLeft)}
                         </span>
                     </div>
@@ -194,7 +194,7 @@ export default function QuizPage() {
                     <Button
                         onClick={handleSubmit}
                         disabled={isSubmitted}
-                        className="rounded-xl h-10 sm:h-12 px-3 sm:px-6 font-bold bg-indigo-600 hover:bg-indigo-700 text-white shadow-lg shadow-indigo-100 transition-all text-xs sm:text-base"
+                        className="rounded-xl h-10 sm:h-12 px-3 sm:px-6 font-bold bg-[#6b5ea7] hover:bg-[#6b5ea7] text-white shadow-lg shadow-purple-100 transition-all text-xs sm:text-base"
                     >
                         Submit <span className="hidden sm:inline">Quiz</span>
                     </Button>
@@ -203,7 +203,7 @@ export default function QuizPage() {
                     <motion.div
                         initial={{ width: 0 }}
                         animate={{ width: `${progress}%` }}
-                        className="h-full bg-indigo-500 shadow-[0_0_10px_rgba(79,70,229,0.5)]"
+                        className="h-full bg-[#6b5ea7] shadow-[0_0_10px_rgba(79,70,229,0.5)]"
                     />
                 </div>
             </header>
@@ -220,9 +220,9 @@ export default function QuizPage() {
                         className="w-full max-w-4xl"
                     >
                         {isSubmitted && !isReviewMode ? (
-                            <div className="bg-white rounded-[2.5rem] p-10 sm:p-14 shadow-2xl shadow-indigo-100/50 border border-slate-100 text-center relative overflow-hidden">
+                            <div className="bg-white rounded-[2.5rem] p-10 sm:p-14 shadow-2xl shadow-purple-100/50 border border-slate-100 text-center relative overflow-hidden">
                                 {/* Celebratory Background Element */}
-                                <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-indigo-50 rounded-full opacity-50 blur-3xl pointer-events-none" />
+                                <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-purple-50 rounded-full opacity-50 blur-3xl pointer-events-none" />
 
                                 <div className="relative z-10 flex flex-col items-center">
                                     <div className="w-24 h-24 bg-[#0D5355] rounded-3xl flex items-center justify-center text-white mb-8 shadow-xl shadow-teal-200 rotate-3 transition-transform hover:rotate-0">
@@ -322,7 +322,7 @@ export default function QuizPage() {
                                     <div className="flex flex-col sm:flex-row gap-4 w-full">
                                         <Button
                                             onClick={handleRestart}
-                                            className="h-16 flex-1 rounded-2xl bg-white border-2 border-indigo-600 text-indigo-600 hover:bg-indigo-50 font-black text-lg shadow-sm transition-all flex items-center justify-center gap-3"
+                                            className="h-16 flex-1 rounded-2xl bg-white border-2 border-[#6b5ea7] text-[#6b5ea7] hover:bg-purple-50 font-black text-lg shadow-sm transition-all flex items-center justify-center gap-3"
                                         >
                                             <RefreshCcw className="w-6 h-6" /> Restart Quiz
                                         </Button>
@@ -336,12 +336,12 @@ export default function QuizPage() {
                                 </div>
                             </div>
                         ) : isReviewMode ? (
-                            <div className="bg-white rounded-[2.5rem] p-8 sm:p-12 shadow-2xl shadow-indigo-100/50 border border-slate-100 relative max-h-[80vh] flex flex-col">
+                            <div className="bg-white rounded-[2.5rem] p-8 sm:p-12 shadow-2xl shadow-purple-100/50 border border-slate-100 relative max-h-[80vh] flex flex-col">
                                 <div className="flex items-center justify-between mb-8 shrink-0">
                                     <div className="flex items-center gap-4">
                                         <button
                                             onClick={() => setIsReviewMode(false)}
-                                            className="w-12 h-12 rounded-2xl bg-slate-50 flex items-center justify-center text-slate-400 hover:text-indigo-600 hover:bg-indigo-50 transition-all"
+                                            className="w-12 h-12 rounded-2xl bg-slate-50 flex items-center justify-center text-slate-400 hover:text-[#6b5ea7] hover:bg-purple-50 transition-all"
                                         >
                                             <ArrowLeft className="w-6 h-6" />
                                         </button>
@@ -350,7 +350,7 @@ export default function QuizPage() {
                                             <p className="text-slate-400 font-bold uppercase tracking-widest text-[10px]">Learn from your results</p>
                                         </div>
                                     </div>
-                                    <div className="bg-indigo-600 px-4 py-2 rounded-xl text-white font-black text-sm">
+                                    <div className="bg-[#6b5ea7] px-4 py-2 rounded-xl text-white font-black text-sm">
                                         {results.correct} / {results.total} Correct
                                     </div>
                                 </div>
@@ -403,12 +403,12 @@ export default function QuizPage() {
                                                 </div>
 
                                                 <div className="bg-white/60 rounded-2xl p-4 border border-slate-100 flex gap-3">
-                                                    <div className="w-8 h-8 rounded-xl bg-indigo-50 flex items-center justify-center shrink-0">
-                                                        <Info className="w-4 h-4 text-indigo-600" />
+                                                    <div className="w-8 h-8 rounded-xl bg-purple-50 flex items-center justify-center shrink-0">
+                                                        <Info className="w-4 h-4 text-[#6b5ea7]" />
                                                     </div>
                                                     <div>
-                                                        <p className="text-[10px] font-black uppercase tracking-widest text-indigo-600 mb-1">Explanation</p>
-                                                        <p className="text-sm font-medium text-indigo-900/80 leading-relaxed italic">
+                                                        <p className="text-[10px] font-black uppercase tracking-widest text-[#6b5ea7] mb-1">Explanation</p>
+                                                        <p className="text-sm font-medium text-purple-900/80 leading-relaxed italic">
                                                             {q.explanation || "No detailed explanation available for this older quiz. Try generating a new quiz to see full answer explanations!"}
                                                         </p>
                                                     </div>
@@ -422,7 +422,7 @@ export default function QuizPage() {
                             /* Question Card */
                             <div className="bg-white rounded-[1.5rem] sm:rounded-[2rem] p-5 sm:p-12 shadow-2xl shadow-slate-200/50 border border-slate-100 relative overflow-hidden">
                                 <div className="absolute top-4 right-4 sm:top-6 sm:right-6">
-                                    <span className="text-[10px] sm:text-xs font-black text-indigo-500 bg-indigo-50 px-2.5 sm:px-3 py-1 sm:py-1.5 rounded-full border border-indigo-100 uppercase tracking-widest">
+                                    <span className="text-[10px] sm:text-xs font-black text-[#6b5ea7] bg-purple-50 px-2.5 sm:px-3 py-1 sm:py-1.5 rounded-full border border-purple-100 uppercase tracking-widest">
                                         {currentQuestionIndex + 1} / {quiz.questions.length}
                                     </span>
                                 </div>
@@ -447,27 +447,27 @@ export default function QuizPage() {
                                                     disabled={isSubmitted}
                                                     className={`
                                                         group relative w-full p-5 sm:p-6 rounded-2xl border-2 text-left transition-all duration-300 flex items-center gap-4
-                                                        ${isSelected ? 'bg-indigo-50 border-indigo-500 shadow-md ring-4 ring-indigo-50/50' : 'bg-white border-slate-100 hover:border-indigo-200 hover:shadow-lg'}
+                                                        ${isSelected ? 'bg-purple-50 border-[#6b5ea7] shadow-md ring-4 ring-purple-50/50' : 'bg-white border-slate-100 hover:border-purple-200 hover:shadow-lg'}
                                                         ${isCorrect ? 'bg-emerald-50 border-emerald-500 ring-4 ring-emerald-50/50' : ''}
                                                         ${isWrong ? 'bg-rose-50 border-rose-500 ring-4 ring-rose-50/50' : ''}
                                                     `}
                                                 >
                                                     <div className={`
                                                         w-10 h-10 rounded-xl flex items-center justify-center font-black transition-all border-2
-                                                        ${isSelected ? 'bg-indigo-600 text-white border-indigo-600' : 'bg-slate-50 text-slate-400 border-slate-100 group-hover:bg-indigo-50 group-hover:text-indigo-600'}
+                                                        ${isSelected ? 'bg-[#6b5ea7] text-white border-[#6b5ea7]' : 'bg-slate-50 text-slate-400 border-slate-100 group-hover:bg-purple-50 group-hover:text-[#6b5ea7]'}
                                                         ${isCorrect ? 'bg-emerald-500 text-white border-emerald-500' : ''}
                                                         ${isWrong ? 'bg-rose-500 text-white border-rose-500' : ''}
                                                     `}>
                                                         {String.fromCharCode(65 + index)}
                                                     </div>
-                                                    <span className={`text-base sm:text-lg font-bold transition-all ${isSelected ? 'text-indigo-900' : 'text-slate-600'} ${isCorrect ? 'text-emerald-900' : ''} ${isWrong ? 'text-rose-900' : ''}`}>
+                                                    <span className={`text-base sm:text-lg font-bold transition-all ${isSelected ? 'text-purple-900' : 'text-slate-600'} ${isCorrect ? 'text-emerald-900' : ''} ${isWrong ? 'text-rose-900' : ''}`}>
                                                         {option}
                                                     </span>
                                                     {(isSelected || isCorrect || isWrong) && (
                                                         <div className="ml-auto">
                                                             {isCorrect ? <CheckCircle2 className="w-6 h-6 text-emerald-500" /> :
                                                                 isWrong ? <div className="w-6 h-6 rounded-full bg-rose-500 flex items-center justify-center text-white text-xs font-black">✕</div> :
-                                                                    <div className={`w-3 h-3 rounded-full bg-indigo-500 shadow-[0_0_10px_rgba(79,70,229,0.5)]`} />}
+                                                                    <div className={`w-3 h-3 rounded-full bg-[#6b5ea7] shadow-[0_0_10px_rgba(79,70,229,0.5)]`} />}
                                                         </div>
                                                     )}
                                                 </motion.button>
@@ -489,7 +489,7 @@ export default function QuizPage() {
                             variant="ghost"
                             disabled={currentQuestionIndex === 0}
                             onClick={() => setCurrentQuestionIndex(prev => prev - 1)}
-                            className="h-12 px-6 sm:px-8 rounded-xl font-bold text-slate-500 hover:text-indigo-600 transition-all flex items-center gap-2"
+                            className="h-12 px-6 sm:px-8 rounded-xl font-bold text-slate-500 hover:text-[#6b5ea7] transition-all flex items-center gap-2"
                         >
                             <ChevronLeft className="w-5 h-5" /> <span className="hidden sm:inline">Previous</span>
                         </Button>
@@ -498,8 +498,8 @@ export default function QuizPage() {
                             {quiz.questions.map((_: any, i: number) => (
                                 <div
                                     key={i}
-                                    className={`w-2.5 h-2.5 rounded-full transition-all duration-500 ${i === currentQuestionIndex ? 'w-8 bg-indigo-500' :
-                                        userAnswers[i] ? 'bg-indigo-200' : 'bg-slate-200'
+                                    className={`w-2.5 h-2.5 rounded-full transition-all duration-500 ${i === currentQuestionIndex ? 'w-8 bg-[#6b5ea7]' :
+                                        userAnswers[i] ? 'bg-purple-200' : 'bg-slate-200'
                                         }`}
                                 />
                             ))}
@@ -510,14 +510,14 @@ export default function QuizPage() {
                                 <Button
                                     onClick={handleSubmit}
                                     disabled={isSubmitted}
-                                    className="h-12 px-8 rounded-xl font-bold bg-indigo-600 hover:bg-indigo-700 text-white shadow-lg shadow-indigo-100 transition-all"
+                                    className="h-12 px-8 rounded-xl font-bold bg-[#6b5ea7] hover:bg-[#6b5ea7] text-white shadow-lg shadow-purple-100 transition-all"
                                 >
                                     Finish Quiz
                                 </Button>
                             ) : (
                                 <Button
                                     onClick={() => setCurrentQuestionIndex(prev => prev + 1)}
-                                    className="h-12 px-6 sm:px-8 rounded-xl font-bold bg-white border-2 border-indigo-600 text-indigo-600 hover:bg-indigo-50 transition-all flex items-center gap-2"
+                                    className="h-12 px-6 sm:px-8 rounded-xl font-bold bg-white border-2 border-[#6b5ea7] text-[#6b5ea7] hover:bg-purple-50 transition-all flex items-center gap-2"
                                 >
                                     <span className="hidden sm:inline">Next Question</span> <ChevronRight className="w-5 h-5" />
                                 </Button>

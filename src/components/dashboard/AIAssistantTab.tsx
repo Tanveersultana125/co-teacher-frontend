@@ -1,4 +1,4 @@
-﻿import { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import ReactMarkdown from 'react-markdown';
@@ -555,7 +555,7 @@ window.onload = function() {
                             <div className="flex flex-col gap-1">
                                 <label className="text-[9px] font-black uppercase tracking-widest text-slate-400 ml-1">Type</label>
                                 <Select value={mode} onValueChange={(v: any) => setMode(v)}>
-                                    <SelectTrigger className="bg-slate-50 border-slate-200 h-9 rounded-lg text-[11px] font-bold ring-offset-white focus:ring-2 ring-indigo-500/10 min-w-[110px]">
+                                    <SelectTrigger className="bg-slate-50 border-slate-200 h-9 rounded-lg text-[11px] font-bold ring-offset-white focus:ring-2 ring-[#6b5ea7]/10 min-w-[110px]">
                                         <SelectValue placeholder="Type" />
                                     </SelectTrigger>
                                     <SelectContent>
@@ -570,7 +570,7 @@ window.onload = function() {
                             <div className="flex flex-col gap-1">
                                 <label className="text-[9px] font-black uppercase tracking-widest text-slate-400 ml-1">Curriculum</label>
                                 <Select value={board} onValueChange={setBoard}>
-                                    <SelectTrigger className="bg-slate-50 border-slate-200 h-9 rounded-lg text-[11px] font-bold ring-offset-white focus:ring-2 ring-indigo-500/10 min-w-[80px]">
+                                    <SelectTrigger className="bg-slate-50 border-slate-200 h-9 rounded-lg text-[11px] font-bold ring-offset-white focus:ring-2 ring-[#6b5ea7]/10 min-w-[80px]">
                                         <SelectValue placeholder="Board" />
                                     </SelectTrigger>
                                     <SelectContent>
@@ -584,7 +584,7 @@ window.onload = function() {
                             <div className="flex flex-col gap-1">
                                 <label className="text-[9px] font-black uppercase tracking-widest text-slate-400 ml-1">Grade</label>
                                 <Select value={grade} onValueChange={setGrade}>
-                                    <SelectTrigger className="bg-slate-50 border-slate-200 h-9 rounded-lg text-[11px] font-bold ring-offset-white focus:ring-2 ring-indigo-500/10 min-w-[90px]">
+                                    <SelectTrigger className="bg-slate-50 border-slate-200 h-9 rounded-lg text-[11px] font-bold ring-offset-white focus:ring-2 ring-[#6b5ea7]/10 min-w-[90px]">
                                         <SelectValue placeholder="Grade" />
                                     </SelectTrigger>
                                     <SelectContent>
@@ -604,7 +604,7 @@ window.onload = function() {
                                             role="combobox"
                                             aria-expanded={openSubject}
                                             disabled={isLoadingMetadata}
-                                            className="w-full h-9 flex items-center justify-between rounded-lg border border-slate-200 bg-slate-50 px-3 py-2 text-[11px] font-bold ring-offset-white focus:ring-2 ring-indigo-500/10 hover:bg-slate-50 text-slate-700 hover:text-slate-900"
+                                            className="w-full h-9 flex items-center justify-between rounded-lg border border-slate-200 bg-slate-50 px-3 py-2 text-[11px] font-bold ring-offset-white focus:ring-2 ring-[#6b5ea7]/10 hover:bg-slate-50 text-slate-700 hover:text-slate-900"
                                         >
                                             <span className="truncate flex-1 text-left">
                                                 {subject || (isLoadingMetadata ? "Loading..." : "Select subject...")}
@@ -623,7 +623,7 @@ window.onload = function() {
                                                             <Button
                                                                 variant="ghost"
                                                                 size="sm"
-                                                                className="w-full justify-start text-xs font-bold text-indigo-600 hover:text-indigo-700 hover:bg-indigo-50"
+                                                                className="w-full justify-start text-xs font-bold text-[#6b5ea7] hover:text-[#6b5ea7] hover:bg-purple-50"
                                                                 onClick={() => {
                                                                     setSubject(subjectSearch);
                                                                     setTopic("");
@@ -664,7 +664,7 @@ window.onload = function() {
                                                                 setOpenSubject(false);
                                                                 setSubjectSearch("");
                                                             }}
-                                                            className="text-indigo-600 font-bold"
+                                                            className="text-[#6b5ea7] font-bold"
                                                         >
                                                             <Sparkles className="mr-2 h-4 w-4" />
                                                             Add "{subjectSearch}"
@@ -687,7 +687,7 @@ window.onload = function() {
                                             role="combobox"
                                             aria-expanded={openTopic}
                                             disabled={isLoadingMetadata}
-                                            className="w-full h-9 flex items-center justify-between rounded-lg border border-slate-200 bg-slate-50 px-3 py-2 text-[11px] font-bold ring-offset-white focus:ring-2 ring-indigo-500/10 hover:bg-slate-50 text-slate-700 hover:text-slate-900"
+                                            className="w-full h-9 flex items-center justify-between rounded-lg border border-slate-200 bg-slate-50 px-3 py-2 text-[11px] font-bold ring-offset-white focus:ring-2 ring-[#6b5ea7]/10 hover:bg-slate-50 text-slate-700 hover:text-slate-900"
                                         >
                                             <span className="truncate flex-1 text-left">
                                                 {topic || (isLoadingMetadata ? "Loading..." : "Select topic...")}
@@ -708,7 +708,7 @@ window.onload = function() {
                                                             <Button
                                                                 variant="ghost"
                                                                 size="sm"
-                                                                className="w-full justify-start text-xs font-bold text-indigo-600 hover:text-indigo-700 hover:bg-indigo-50"
+                                                                className="w-full justify-start text-xs font-bold text-[#6b5ea7] hover:text-[#6b5ea7] hover:bg-purple-50"
                                                                 onClick={() => {
                                                                     setTopic(topicSearch);
                                                                     setOpenTopic(false);
@@ -770,7 +770,7 @@ window.onload = function() {
                                                                 setOpenTopic(false);
                                                                 setTopicSearch("");
                                                             }}
-                                                            className="text-indigo-600 font-bold"
+                                                            className="text-[#6b5ea7] font-bold"
                                                         >
                                                             <Sparkles className="mr-2 h-4 w-4" />
                                                             Add "{topicSearch}"
@@ -795,7 +795,7 @@ window.onload = function() {
                                     value={title}
                                     onChange={(e) => setTitle(e.target.value)}
                                     placeholder={mode === 'quiz' ? "e.g. Algebra Quiz 1" : "e.g. Intro to Trigonometry"}
-                                    className="flex h-9 w-full rounded-lg border border-slate-200 bg-slate-50 px-3 py-2 text-[11px] font-bold placeholder:text-slate-400 focus:outline-none focus:ring-2 ring-indigo-500/10"
+                                    className="flex h-9 w-full rounded-lg border border-slate-200 bg-slate-50 px-3 py-2 text-[11px] font-bold placeholder:text-slate-400 focus:outline-none focus:ring-2 ring-[#6b5ea7]/10"
                                 />
                             </div>
 
@@ -803,12 +803,12 @@ window.onload = function() {
                             <div className="flex flex-col gap-1 min-w-[110px]">
                                 <label className="text-[9px] font-black uppercase tracking-widest text-slate-400 ml-1">Language</label>
                                 <Select value={responseLanguage} onValueChange={setResponseLanguage}>
-                                    <SelectTrigger className="bg-slate-50 border-slate-200 h-9 rounded-lg text-[11px] font-bold ring-offset-white focus:ring-2 ring-indigo-500/10">
+                                    <SelectTrigger className="bg-slate-50 border-slate-200 h-9 rounded-lg text-[11px] font-bold ring-offset-white focus:ring-2 ring-[#6b5ea7]/10">
                                         <SelectValue placeholder="Lang" />
                                     </SelectTrigger>
                                     <SelectContent>
                                         <SelectItem value="auto" className="text-xs font-bold flex items-center gap-2">
-                                            <Sparkles className="w-3 h-3 text-indigo-500" /> Auto
+                                            <Sparkles className="w-3 h-3 text-[#6b5ea7]" /> Auto
                                         </SelectItem>
                                         <SelectItem value="Urdu" className="text-xs font-bold">Urdu</SelectItem>
                                         <SelectItem value="Hindi" className="text-xs font-bold">Hindi</SelectItem>
@@ -827,7 +827,7 @@ window.onload = function() {
                                         value={instituteName}
                                         onChange={(e) => setInstituteName(e.target.value)}
                                         placeholder="e.g. Deccan Institute"
-                                        className="flex h-10 w-full rounded-xl border border-slate-200 bg-slate-50 px-3 py-2 text-xs font-bold placeholder:text-slate-400 focus:outline-none focus:ring-2 ring-indigo-500/10"
+                                        className="flex h-10 w-full rounded-xl border border-slate-200 bg-slate-50 px-3 py-2 text-xs font-bold placeholder:text-slate-400 focus:outline-none focus:ring-2 ring-[#6b5ea7]/10"
                                     />
                                 </div>
                             )}
@@ -941,7 +941,7 @@ window.onload = function() {
                             className="min-h-[400px] flex flex-col items-center justify-center text-center"
                         >
                             <div className="relative w-24 h-24 mb-6">
-                                <div className="absolute inset-0 border-4 border-indigo-50/50 rounded-full"></div>
+                                <div className="absolute inset-0 border-4 border-purple-50/50 rounded-full"></div>
                                 <motion.div
                                     className="absolute inset-0 border-4 border-[#0D5355] rounded-full border-t-transparent"
                                     animate={{ rotate: 360 }}
@@ -956,13 +956,13 @@ window.onload = function() {
 
                             <div className="w-64 h-2 bg-slate-100 rounded-full overflow-hidden border border-slate-200">
                                 <motion.div
-                                    className="h-full bg-indigo-600 shadow-[0_0_15px_rgba(79,70,229,0.5)]"
+                                    className="h-full bg-[#6b5ea7] shadow-[0_0_15px_rgba(79,70,229,0.5)]"
                                     initial={{ width: 0 }}
                                     animate={{ width: `${generationProgress}% ` }}
                                     transition={{ duration: 0.5 }}
                                 />
                             </div>
-                            <p className="text-[10px] font-black text-indigo-500 mt-3 uppercase tracking-widest">
+                            <p className="text-[10px] font-black text-[#6b5ea7] mt-3 uppercase tracking-widest">
                                 {generationProgress < 30 ? "Initializing..." :
                                     generationProgress < 60 ? "Drafting Content..." :
                                         generationProgress < 90 ? "Polishing Results..." : "Finalizing..."}
@@ -975,8 +975,8 @@ window.onload = function() {
                             animate={{ opacity: 1 }}
                             className="min-h-[400px] flex flex-col items-center justify-center text-center py-20"
                         >
-                            <div className="w-20 h-20 bg-indigo-50 rounded-3xl flex items-center justify-center mb-6">
-                                <Brain className="w-10 h-10 text-indigo-600 opacity-20" />
+                            <div className="w-20 h-20 bg-purple-50 rounded-3xl flex items-center justify-center mb-6">
+                                <Brain className="w-10 h-10 text-[#6b5ea7] opacity-20" />
                             </div>
                             <h2 className="text-2xl font-black text-slate-900 mb-2">Ready to Build?</h2>
                             <p className="text-slate-500 max-w-sm font-medium">
@@ -995,7 +995,7 @@ window.onload = function() {
                                 <Button
                                     variant="ghost"
                                     onClick={() => setActiveActivityIndex(null)}
-                                    className="gap-2 font-bold text-slate-500 hover:text-indigo-600"
+                                    className="gap-2 font-bold text-slate-500 hover:text-[#6b5ea7]"
                                 >
                                     <ArrowLeft className="w-4 h-4" /> Back to Lesson Plan
                                 </Button>
@@ -1003,16 +1003,16 @@ window.onload = function() {
                                     {safeActivities.map((_: any, idx: number) => (
                                         <div
                                             key={idx}
-                                            className={`h-1.5 w-8 rounded-full transition-all ${idx === activeActivityIndex ? 'bg-indigo-600' : 'bg-slate-200'}`}
+                                            className={`h-1.5 w-8 rounded-full transition-all ${idx === activeActivityIndex ? 'bg-[#6b5ea7]' : 'bg-slate-200'}`}
                                         />
                                     ))}
                                 </div>
                             </div>
 
-                            <Card className="border-none shadow-2xl shadow-indigo-100 rounded-[2.5rem] bg-white overflow-visible">
+                            <Card className="border-none shadow-2xl shadow-purple-100 rounded-[2.5rem] bg-white overflow-visible">
                                 <div className="p-10 border-b border-slate-50 bg-gradient-to-br from-indigo-50/30 to-white">
                                     <div className="flex items-center gap-4 mb-6">
-                                        <div className="px-4 py-2 bg-indigo-600 text-white rounded-2xl font-black text-sm uppercase tracking-widest shadow-lg shadow-indigo-200">
+                                        <div className="px-4 py-2 bg-[#6b5ea7] text-white rounded-2xl font-black text-sm uppercase tracking-widest shadow-lg shadow-purple-200">
                                             Activity {activeActivityIndex + 1}
                                         </div>
                                         <div className="h-px flex-1 bg-slate-100" />
@@ -1048,14 +1048,14 @@ window.onload = function() {
                                         </p>
                                     </div>
 
-                                    <div className="p-8 bg-indigo-50/50 rounded-[2rem] border border-indigo-100 border-dashed relative overflow-hidden group">
+                                    <div className="p-8 bg-purple-50/50 rounded-[2rem] border border-purple-100 border-dashed relative overflow-hidden group">
                                         <div className="absolute top-0 right-0 p-4 opacity-10">
                                             <GraduationCap className="w-24 h-24" />
                                         </div>
-                                        <h4 className="font-bold text-indigo-900 mb-2 flex items-center gap-2 relative z-10">
+                                        <h4 className="font-bold text-purple-900 mb-2 flex items-center gap-2 relative z-10">
                                             <GraduationCap className="w-5 h-5" /> Teacher's Pro Tip
                                         </h4>
-                                        <p className="text-indigo-700 font-medium leading-relaxed relative z-10">
+                                        <p className="text-[#6b5ea7] font-medium leading-relaxed relative z-10">
                                             {safeActivities[activeActivityIndex]?.tip ||
                                                 "Encourage students to ask \"Why?\" during this phase. If you notice the energy dipping, try a quick 30-second peer-discussion to re-activate the classroom environment."}
                                         </p>
@@ -1080,7 +1080,7 @@ window.onload = function() {
                                                 toast.success("Lesson completed! 🎉 Great job!");
                                             }
                                         }}
-                                        className="h-14 px-10 rounded-2xl font-bold bg-indigo-600 hover:bg-indigo-700 shadow-xl shadow-indigo-100"
+                                        className="h-14 px-10 rounded-2xl font-bold bg-[#6b5ea7] hover:bg-[#6b5ea7] shadow-xl shadow-purple-100"
                                     >
                                         {activeActivityIndex === safeActivities.length - 1 ? 'Finish Lesson' : 'Next Activity'} <ChevronRight className="w-4 h-4 ml-2" />
                                     </Button>
@@ -1106,7 +1106,7 @@ window.onload = function() {
                                     </div>
                                     <div>
                                         <div className="flex items-center gap-2 mb-0.5">
-                                            <span className="text-[8px] font-black uppercase tracking-wider text-indigo-500 bg-indigo-50 px-1.5 py-0.5 rounded border border-indigo-100">
+                                            <span className="text-[8px] font-black uppercase tracking-wider text-[#6b5ea7] bg-purple-50 px-1.5 py-0.5 rounded border border-purple-100">
                                                 {mode === 'lesson' ? 'Lesson Plan' : mode === 'quiz' ? 'Quiz' : 'Material'}
                                             </span>
                                         </div>
@@ -1140,7 +1140,7 @@ window.onload = function() {
                                         variant="ghost"
                                         size="sm"
                                         onClick={() => setResult(null)}
-                                        className="rounded-lg h-8 px-2 md:px-3 font-bold text-slate-500 hover:text-indigo-600 transition-all text-xs"
+                                        className="rounded-lg h-8 px-2 md:px-3 font-bold text-slate-500 hover:text-[#6b5ea7] transition-all text-xs"
                                     >
                                         <ArrowLeft className="w-3.5 h-3.5 mr-1" /> Back
                                     </Button>
@@ -1162,7 +1162,7 @@ window.onload = function() {
                                             <Download className="w-3.5 h-3.5 mr-1 md:mr-1.5" /> PDF
                                         </Button>
                                         <Button
-                                            className={`rounded-lg h-8 md:h-9 px-3 md:px-4 font-bold shadow-sm transition-all text-[10px] md:text-xs ${result?.status === 'PUBLISHED' ? 'bg-emerald-50 text-emerald-600 hover:bg-emerald-100' : 'bg-indigo-600 hover:bg-indigo-700 text-white'} `}
+                                            className={`rounded-lg h-8 md:h-9 px-3 md:px-4 font-bold shadow-sm transition-all text-[10px] md:text-xs ${result?.status === 'PUBLISHED' ? 'bg-emerald-50 text-emerald-600 hover:bg-emerald-100' : 'bg-[#6b5ea7] hover:bg-[#6b5ea7] text-white'} `}
                                             onClick={handleSaveToLibrary}
                                             disabled={isSaving || result?.status === 'PUBLISHED'}
                                         >
@@ -1197,14 +1197,14 @@ window.onload = function() {
 
                                                 {(result?.keyPoints || result?.content?.keyPoints) && (
                                                     <div className="bg-slate-50 rounded-3xl p-8 border border-slate-100">
-                                                        <h4 className="flex items-center gap-2 text-indigo-900 font-black text-lg mb-6 uppercase tracking-wider">
+                                                        <h4 className="flex items-center gap-2 text-purple-900 font-black text-lg mb-6 uppercase tracking-wider">
                                                             <Target className="w-5 h-5" />
                                                             Quick Review Points
                                                         </h4>
                                                         <ul className="grid grid-cols-1 md:grid-cols-2 gap-4">
                                                             {(result?.keyPoints || result?.content?.keyPoints || []).map((kp: string, i: number) => (
                                                                 <li key={i} className="flex items-start gap-3 bg-white p-4 rounded-xl border border-slate-100 shadow-sm">
-                                                                    <span className="flex-shrink-0 w-6 h-6 rounded-full bg-indigo-600 text-white flex items-center justify-center text-[10px] font-black mt-0.5">{i + 1}</span>
+                                                                    <span className="flex-shrink-0 w-6 h-6 rounded-full bg-[#6b5ea7] text-white flex items-center justify-center text-[10px] font-black mt-0.5">{i + 1}</span>
                                                                     <span className="text-sm font-bold text-slate-700 leading-tight">{kp}</span>
                                                                 </li>
                                                             ))}
@@ -1215,7 +1215,7 @@ window.onload = function() {
 
                                             {generatedImage && (
                                                 <div className="w-full lg:w-80 group">
-                                                    <div className="bg-white p-4 rounded-[2.5rem] shadow-2xl shadow-indigo-100 border border-slate-100 group-hover:scale-105 transition-transform duration-500">
+                                                    <div className="bg-white p-4 rounded-[2.5rem] shadow-2xl shadow-purple-100 border border-slate-100 group-hover:scale-105 transition-transform duration-500">
                                                         <div className="flex items-center gap-2 mb-3 px-2">
                                                             <div className="w-2 h-2 rounded-full bg-emerald-500" />
                                                             <span className="text-[10px] font-black uppercase tracking-widest text-slate-400">Assignment Focus</span>
@@ -1231,19 +1231,19 @@ window.onload = function() {
                                         </div>
                                         {/* Multiple Choice Questions */}
                                         {(result?.mcqs || result?.content?.mcqs || result?.content?.sectionA_MCQs) && (result?.mcqs || result?.content?.mcqs || result?.content?.sectionA_MCQs).length > 0 && (
-                                            <div className="bg-indigo-950 rounded-[2.5rem] p-8 md:p-12 text-white shadow-2xl relative overflow-hidden group/mcq">
+                                            <div className="bg-purple-950 rounded-[2.5rem] p-8 md:p-12 text-white shadow-2xl relative overflow-hidden group/mcq">
                                                 {/* Decorative background elements */}
-                                                <div className="absolute top-0 right-0 w-64 h-64 bg-indigo-500/10 rounded-full blur-3xl -mr-32 -mt-32 transition-transform duration-1000 group-hover/mcq:scale-110"></div>
+                                                <div className="absolute top-0 right-0 w-64 h-64 bg-[#6b5ea7]/10 rounded-full blur-3xl -mr-32 -mt-32 transition-transform duration-1000 group-hover/mcq:scale-110"></div>
                                                 <div className="absolute bottom-0 left-0 w-64 h-64 bg-violet-500/10 rounded-full blur-3xl -ml-32 -mb-32"></div>
 
                                                 <div className="relative flex flex-col md:flex-row md:items-center justify-between gap-6 mb-12">
                                                     <div className="flex items-center gap-5">
-                                                        <div className="w-16 h-16 rounded-[1.25rem] bg-indigo-500 flex items-center justify-center text-white shadow-2xl shadow-indigo-500/40">
+                                                        <div className="w-16 h-16 rounded-[1.25rem] bg-[#6b5ea7] flex items-center justify-center text-white shadow-2xl shadow-[#6b5ea7]/40">
                                                             <CheckCircle2 className="w-8 h-8" />
                                                         </div>
                                                         <div>
                                                             <h3 className="text-3xl font-black tracking-tight leading-none mb-2">Multiple Choice</h3>
-                                                            <p className="text-indigo-300 font-medium">Test your knowledge with these selections</p>
+                                                            <p className="text-purple-300 font-medium">Test your knowledge with these selections</p>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -1252,13 +1252,13 @@ window.onload = function() {
                                                     {(result?.mcqs || result?.content?.mcqs || result?.content?.sectionA_MCQs).map((m: any, idx: number) => (
                                                         <div key={idx} className="bg-white/5 backdrop-blur-sm rounded-[2rem] p-6 md:p-10 border border-white/10 hover:border-white/20 transition-all duration-300 group">
                                                             <div className="flex gap-6 mb-8">
-                                                                <span className="flex-shrink-0 w-12 h-12 rounded-2xl bg-indigo-600 flex items-center justify-center font-black text-white text-xl shadow-lg ring-4 ring-indigo-900/50">{idx + 1}</span>
+                                                                <span className="flex-shrink-0 w-12 h-12 rounded-2xl bg-[#6b5ea7] flex items-center justify-center font-black text-white text-xl shadow-lg ring-4 ring-purple-900/50">{idx + 1}</span>
                                                                 <p className="text-2xl font-bold leading-tight pt-1">{m.question || m.q}</p>
                                                             </div>
                                                             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 pl-0 md:pl-[4.5rem]">
                                                                 {m.options.map((opt: string, oi: number) => (
-                                                                    <div key={oi} className="group/opt relative p-5 bg-white/5 rounded-2xl border border-white/5 text-slate-100 font-medium hover:bg-white hover:text-indigo-950 hover:shadow-2xl transition-all duration-300 cursor-default flex items-center gap-5">
-                                                                        <span className="w-10 h-10 rounded-xl bg-white/10 flex items-center justify-center text-sm font-black group-hover/opt:bg-indigo-50 group-hover/opt:text-indigo-600 transition-all uppercase italic tracking-tighter shadow-sm">{String.fromCharCode(65 + oi)}</span>
+                                                                    <div key={oi} className="group/opt relative p-5 bg-white/5 rounded-2xl border border-white/5 text-slate-100 font-medium hover:bg-white hover:text-purple-950 hover:shadow-2xl transition-all duration-300 cursor-default flex items-center gap-5">
+                                                                        <span className="w-10 h-10 rounded-xl bg-white/10 flex items-center justify-center text-sm font-black group-hover/opt:bg-purple-50 group-hover/opt:text-[#6b5ea7] transition-all uppercase italic tracking-tighter shadow-sm">{String.fromCharCode(65 + oi)}</span>
                                                                         <span className="text-lg leading-snug">{opt}</span>
                                                                     </div>
                                                                 ))}
@@ -1356,17 +1356,17 @@ window.onload = function() {
                                         )}
 
                                         {/* Activity Questions */}
-                                        <div className="bg-indigo-50/50 rounded-2xl p-6 md:p-8 border border-indigo-100">
+                                        <div className="bg-purple-50/50 rounded-2xl p-6 md:p-8 border border-purple-100">
                                             <div className="flex items-center gap-3 mb-6">
-                                                <div className="w-10 h-10 rounded-xl bg-indigo-600 flex items-center justify-center text-white shadow-lg shadow-indigo-200">
+                                                <div className="w-10 h-10 rounded-xl bg-[#6b5ea7] flex items-center justify-center text-white shadow-lg shadow-purple-200">
                                                     <Sparkles className="w-5 h-5" />
                                                 </div>
                                                 <h3 className="text-xl font-bold text-slate-900">Activity & Assessment Projects</h3>
                                             </div>
                                             <ul className="space-y-4">
                                                 {(result?.activityQuestions || result?.content?.activityQuestions || result?.content?.activities || result?.content?.activities || []).map((q: any, idx: number) => (
-                                                    <li key={idx} className="flex gap-4 p-4 bg-white/80 rounded-xl border border-indigo-100/50 shadow-sm">
-                                                        <span className="flex-shrink-0 w-8 h-8 rounded-full bg-indigo-100 flex items-center justify-center font-black text-indigo-600 text-sm">A{idx + 1}</span>
+                                                    <li key={idx} className="flex gap-4 p-4 bg-white/80 rounded-xl border border-purple-100/50 shadow-sm">
+                                                        <span className="flex-shrink-0 w-8 h-8 rounded-full bg-purple-100 flex items-center justify-center font-black text-[#6b5ea7] text-sm">A{idx + 1}</span>
                                                         <p className="pt-1 text-slate-800 font-medium leading-relaxed">{typeof q === 'string' ? q : String(q || "")}</p>
                                                     </li>
                                                 ))}
@@ -1512,20 +1512,20 @@ window.onload = function() {
                                                 <h2 className="text-4xl font-black text-slate-900 mb-6 font-display">Lesson Plan</h2>
                                                 <div className="flex flex-wrap items-center gap-x-6 gap-y-3 text-sm font-bold text-slate-500 uppercase tracking-tight">
                                                     <div className="flex items-center gap-2">
-                                                        <div className="w-1.5 h-1.5 rounded-full bg-indigo-500" />
+                                                        <div className="w-1.5 h-1.5 rounded-full bg-[#6b5ea7]" />
                                                         <span><span className="text-slate-400">Unit:</span> {String(unitDetails || result?.unitDetails || result?.title || result?.content?.title || title || topic || "N/A")}</span>
                                                     </div>
                                                     <div className="flex items-center gap-2">
-                                                        <div className="w-1.5 h-1.5 rounded-full bg-indigo-500" />
+                                                        <div className="w-1.5 h-1.5 rounded-full bg-[#6b5ea7]" />
                                                         <span><span className="text-slate-400">Duration:</span> {String(sessionDuration || "60")} Min</span>
                                                     </div>
                                                     <div className="flex items-center gap-2">
-                                                        <div className="w-1.5 h-1.5 rounded-full bg-indigo-500" />
+                                                        <div className="w-1.5 h-1.5 rounded-full bg-[#6b5ea7]" />
                                                         <span><span className="text-slate-400">Sessions:</span> {String(numSessions || "1")}</span>
                                                     </div>
                                                     {(result?.groupSize || result?.content?.groupSize) && (
                                                         <div className="flex items-center gap-2">
-                                                            <div className="w-1.5 h-1.5 rounded-full bg-indigo-500" />
+                                                            <div className="w-1.5 h-1.5 rounded-full bg-[#6b5ea7]" />
                                                             <span><span className="text-slate-400">Groups:</span> {String(result.groupSize || result.content?.groupSize)}</span>
                                                         </div>
                                                     )}
@@ -1552,7 +1552,7 @@ window.onload = function() {
                                         {visualImages.length > 1 && (
                                             <div className="bg-slate-50/50 rounded-[2.5rem] p-8 border border-slate-100">
                                                 <div className="flex items-center gap-3 mb-6">
-                                                    <div className="w-10 h-10 rounded-2xl bg-indigo-600 text-white flex items-center justify-center shadow-lg shadow-indigo-100">
+                                                    <div className="w-10 h-10 rounded-2xl bg-[#6b5ea7] text-white flex items-center justify-center shadow-lg shadow-purple-100">
                                                         <Eye className="w-5 h-5" />
                                                     </div>
                                                     <h3 className="text-xl font-black text-slate-900">Visual Aids Gallery</h3>
@@ -1574,20 +1574,20 @@ window.onload = function() {
                                         {/* Learning Outcomes */}
                                         <div className="bg-slate-50/50 p-6 rounded-2xl border border-slate-100">
                                             <div className="flex items-center gap-2 mb-4">
-                                                <div className="w-8 h-8 rounded-lg bg-indigo-50 flex items-center justify-center text-indigo-600">
+                                                <div className="w-8 h-8 rounded-lg bg-purple-50 flex items-center justify-center text-[#6b5ea7]">
                                                     <Target className="w-4 h-4" />
                                                 </div>
                                                 <h4 className="font-bold text-lg text-slate-900">Learning Outcomes:</h4>
                                             </div>
                                             {
                                                 (Array.isArray(result?.objective || result?.content?.objective)) ? (
-                                                    <ol className="list-decimal pl-5 space-y-2 marker:text-indigo-600 marker:font-bold">
+                                                    <ol className="list-decimal pl-5 space-y-2 marker:text-[#6b5ea7] marker:font-bold">
                                                         {(result.objective || result.content?.objective).map((obj: string, i: number) => (
                                                             <li key={i} className="text-slate-700 leading-relaxed pl-2">{String(obj)}</li>
                                                         ))}
                                                     </ol>
                                                 ) : (
-                                                    <p className="text-slate-700 leading-relaxed pl-2 border-l-4 border-indigo-100 bg-white p-4 rounded-r-xl shadow-sm">
+                                                    <p className="text-slate-700 leading-relaxed pl-2 border-l-4 border-purple-100 bg-white p-4 rounded-r-xl shadow-sm">
                                                         {String(result?.objective || result?.content?.objective || result?.learningOutcomes || result?.content?.learningOutcomes || "Ready to view learning objectives.")}
                                                     </p>
                                                 )
@@ -1599,7 +1599,7 @@ window.onload = function() {
                                             result?.materials && (
                                                 <div>
                                                     <div className="flex items-center gap-2 mb-4">
-                                                        <div className="w-8 h-8 rounded-lg bg-indigo-50 flex items-center justify-center text-indigo-600">
+                                                        <div className="w-8 h-8 rounded-lg bg-purple-50 flex items-center justify-center text-[#6b5ea7]">
                                                             <FileText className="w-4 h-4" />
                                                         </div>
                                                         <h4 className="font-bold text-lg text-slate-900">Materials Needed:</h4>
@@ -1616,7 +1616,7 @@ window.onload = function() {
                                         {/* Core Concept Explanation */}
                                         <div className="bg-white rounded-2xl border border-slate-100 p-6 shadow-sm">
                                             <div className="flex items-center gap-2 mb-4">
-                                                <div className="w-8 h-8 rounded-lg bg-indigo-50 flex items-center justify-center text-indigo-600">
+                                                <div className="w-8 h-8 rounded-lg bg-purple-50 flex items-center justify-center text-[#6b5ea7]">
                                                     <Brain className="w-4 h-4" />
                                                 </div>
                                                 <h4 className="font-bold text-lg text-slate-900">Concept Explanation:</h4>
@@ -1637,12 +1637,12 @@ window.onload = function() {
                                         {(result?.pedagogy || result?.content?.pedagogy) && (
                                             <div>
                                                 <div className="flex items-center gap-2 mb-4">
-                                                    <div className="w-8 h-8 rounded-lg bg-indigo-50 flex items-center justify-center text-indigo-600">
+                                                    <div className="w-8 h-8 rounded-lg bg-purple-50 flex items-center justify-center text-[#6b5ea7]">
                                                         <GraduationCap className="w-4 h-4" />
                                                     </div>
                                                     <h4 className="font-bold text-lg text-slate-900">Pedagogy:</h4>
                                                 </div>
-                                                <div className="text-slate-700 leading-relaxed pl-2 border-l-4 border-indigo-100 bg-slate-50/50 p-4 rounded-r-xl whitespace-pre-wrap text-sm font-medium">
+                                                <div className="text-slate-700 leading-relaxed pl-2 border-l-4 border-purple-100 bg-slate-50/50 p-4 rounded-r-xl whitespace-pre-wrap text-sm font-medium">
                                                     {String(result.pedagogy || result.content?.pedagogy || "")}
                                                 </div>
                                             </div>
@@ -1650,12 +1650,12 @@ window.onload = function() {
 
                                         {/* Inquiry based learning */}
                                         {(result?.inquiryBasedLearning || result?.content?.inquiryBasedLearning) && (
-                                            <div className="bg-white rounded-2xl border border-dashed border-indigo-200 p-6">
+                                            <div className="bg-white rounded-2xl border border-dashed border-purple-200 p-6">
                                                 <div className="flex items-center gap-2 mb-4">
-                                                    <div className="w-8 h-8 rounded-lg bg-indigo-50 flex items-center justify-center text-indigo-600">
+                                                    <div className="w-8 h-8 rounded-lg bg-purple-50 flex items-center justify-center text-[#6b5ea7]">
                                                         <BookOpen className="w-4 h-4" />
                                                     </div>
-                                                    <h4 className="font-bold text-lg text-indigo-900">Inquiry based learning:</h4>
+                                                    <h4 className="font-bold text-lg text-purple-900">Inquiry based learning:</h4>
                                                 </div>
                                                 <div className="text-slate-700 leading-relaxed whitespace-pre-wrap text-sm font-medium">
                                                     {String(result.inquiryBasedLearning || result.content?.inquiryBasedLearning || "")}
@@ -1666,7 +1666,7 @@ window.onload = function() {
                                         {/* Lesson Activities and Descriptions */}
                                         <div className="space-y-6">
                                             <div className="flex items-center gap-2">
-                                                <div className="w-8 h-8 rounded-lg bg-indigo-50 flex items-center justify-center text-indigo-600">
+                                                <div className="w-8 h-8 rounded-lg bg-purple-50 flex items-center justify-center text-[#6b5ea7]">
                                                     <ClipboardList className="w-4 h-4" />
                                                 </div>
                                                 <h4 className="font-bold text-lg text-slate-900">Lesson Activities:</h4>
@@ -1679,11 +1679,11 @@ window.onload = function() {
                                                         if (acts.length === 0) return <p className="text-slate-400 italic">No activities listed.</p>;
 
                                                         return acts.map((act: any, i: number) => (
-                                                            <div key={i} className="p-5 bg-white rounded-2xl border border-slate-100 shadow-sm hover:border-indigo-100 transition-all group">
+                                                            <div key={i} className="p-5 bg-white rounded-2xl border border-slate-100 shadow-sm hover:border-purple-100 transition-all group">
                                                                 <div className="flex items-start justify-between gap-4 mb-3">
                                                                     <div className="flex-1">
                                                                         <h5 className="font-black text-slate-900 leading-tight">
-                                                                            <span className="text-indigo-600 mr-2">{i + 1}.</span>
+                                                                            <span className="text-[#6b5ea7] mr-2">{i + 1}.</span>
                                                                             {act.task || act.description || "Activity " + (i + 1)}
                                                                         </h5>
                                                                     </div>
@@ -1702,9 +1702,9 @@ window.onload = function() {
                                                                         )}
                                                                         <div className="grid grid-cols-1 md:grid-cols-2 gap-3 mt-4 pt-4 border-t border-slate-50">
                                                                             {act.recap && (
-                                                                                <div className="p-3 bg-indigo-50/50 rounded-xl border border-indigo-50">
-                                                                                    <span className="text-[10px] font-black uppercase text-indigo-400 block mb-1">Concept Recap</span>
-                                                                                    <p className="text-xs text-indigo-900/70 font-medium leading-relaxed">{act.recap}</p>
+                                                                                <div className="p-3 bg-purple-50/50 rounded-xl border border-purple-50">
+                                                                                    <span className="text-[10px] font-black uppercase text-purple-400 block mb-1">Concept Recap</span>
+                                                                                    <p className="text-xs text-purple-900/70 font-medium leading-relaxed">{act.recap}</p>
                                                                                 </div>
                                                                             )}
                                                                             {act.tip && (
@@ -1725,15 +1725,15 @@ window.onload = function() {
 
                                         {/* Closure Activity */}
                                         {(result?.closure || result?.content?.closure) && (
-                                            <div className="p-8 bg-indigo-50/40 rounded-3xl border border-indigo-100 border-dashed relative overflow-hidden mt-8">
+                                            <div className="p-8 bg-purple-50/40 rounded-3xl border border-purple-100 border-dashed relative overflow-hidden mt-8">
                                                 <div className="absolute -right-4 -bottom-4 opacity-5">
-                                                    <RotateCcw className="w-24 h-24 text-indigo-900" />
+                                                    <RotateCcw className="w-24 h-24 text-purple-900" />
                                                 </div>
                                                 <div className="flex items-center gap-3 mb-4">
-                                                    <div className="w-10 h-10 rounded-xl bg-indigo-600 flex items-center justify-center text-white shadow-lg shadow-indigo-100">
+                                                    <div className="w-10 h-10 rounded-xl bg-[#6b5ea7] flex items-center justify-center text-white shadow-lg shadow-purple-100">
                                                         <RotateCcw className="w-5 h-5" />
                                                     </div>
-                                                    <h4 className="font-bold text-lg text-indigo-900">Closure & Reflection:</h4>
+                                                    <h4 className="font-bold text-lg text-purple-900">Closure & Reflection:</h4>
                                                 </div>
                                                 <div className="text-slate-700 leading-relaxed whitespace-pre-wrap text-sm font-bold italic pl-13">
                                                     {String(result.closure || result.content?.closure || "")}
@@ -1745,7 +1745,7 @@ window.onload = function() {
                                             result?.teachingStrategies && result.teachingStrategies.length > 0 && (
                                                 <div>
                                                     <div className="flex items-center gap-2 mb-4">
-                                                        <div className="w-8 h-8 rounded-lg bg-indigo-50 flex items-center justify-center text-indigo-600">
+                                                        <div className="w-8 h-8 rounded-lg bg-purple-50 flex items-center justify-center text-[#6b5ea7]">
                                                             <Lightbulb className="w-4 h-4" />
                                                         </div>
                                                         <h4 className="font-bold text-lg text-slate-900">Teaching Strategies to Increase Student Engagement:</h4>
@@ -1764,7 +1764,7 @@ window.onload = function() {
                                             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-8">
                                                 <div className="p-6 bg-slate-50 rounded-2xl border border-slate-200">
                                                     <h5 className="font-bold text-slate-900 mb-2 flex items-center gap-2">
-                                                        <Eye className="w-4 h-4 text-indigo-600" />
+                                                        <Eye className="w-4 h-4 text-[#6b5ea7]" />
                                                         Formative Assessment:
                                                     </h5>
                                                     <p className="text-sm text-slate-700 leading-relaxed font-medium">{String((result.assessment || result.content?.assessment)?.formative || "")}</p>
@@ -1780,7 +1780,7 @@ window.onload = function() {
                                         ) : (result?.assessmentMethods || result?.content?.assessmentMethods) && (result.assessmentMethods || result.content?.assessmentMethods).length > 0 && (
                                             <div>
                                                 <div className="flex items-center gap-2 mb-4">
-                                                    <div className="w-8 h-8 rounded-lg bg-indigo-50 flex items-center justify-center text-indigo-600">
+                                                    <div className="w-8 h-8 rounded-lg bg-purple-50 flex items-center justify-center text-[#6b5ea7]">
                                                         <ShieldCheck className="w-4 h-4" />
                                                     </div>
                                                     <h4 className="font-bold text-lg text-slate-900">Assessment Methods:</h4>
@@ -1798,7 +1798,7 @@ window.onload = function() {
                                             result?.homework && (
                                                 <div className="p-6 bg-slate-50 rounded-2xl border border-slate-200">
                                                     <h4 className="font-bold text-lg text-slate-900 mb-3 flex items-center gap-2">
-                                                        <BookOpen className="w-5 h-5 text-indigo-600" />
+                                                        <BookOpen className="w-5 h-5 text-[#6b5ea7]" />
                                                         Homework Assignment:
                                                     </h4>
                                                     <div className="text-slate-700 leading-relaxed whitespace-pre-wrap text-sm font-medium">
@@ -1811,25 +1811,25 @@ window.onload = function() {
                                         {/* Review Questions */}
                                         {
                                             (result?.questions || result?.content?.questions) && (
-                                                <div className="p-8 bg-[#0D5355] rounded-3xl text-white shadow-xl shadow-teal-100 relative overflow-hidden mb-8">
-                                                    <div className="absolute top-0 right-0 p-6 opacity-10">
-                                                        <HelpCircle className="w-20 h-20" />
+                                                <div className="p-8 bg-[#f3e7ff] rounded-[2.5rem] border border-purple-200/50 shadow-xl shadow-purple-100/20 relative overflow-hidden mb-8">
+                                                    <div className="absolute -top-6 -right-6 opacity-[0.03] rotate-12">
+                                                        <HelpCircle className="w-32 h-32 text-purple-900" />
                                                     </div>
-                                                    <h4 className="text-white/70 font-black uppercase tracking-[0.2em] text-[10px] mb-6 flex items-center gap-2">
-                                                        <span className="w-1.5 h-1.5 rounded-full bg-teal-400" />
+                                                    <h4 className="text-purple-900/60 font-black uppercase tracking-[0.2em] text-[10px] mb-6 flex items-center gap-2">
+                                                        <span className="w-2 h-2 rounded-full bg-[#ec8c6b] shadow-sm shadow-orange-200" />
                                                         Review & Evaluation
                                                     </h4>
                                                     <div className="space-y-6">
                                                         {(Array.isArray(result?.questions || result?.content?.questions) ? (result?.questions || result?.content?.questions) : []).map((q: any, i: number) => (
                                                             <div key={i} className="flex gap-4">
-                                                                <span className="text-teal-400 font-black">Q{i + 1}.</span>
+                                                                <span className="text-[#ec8c6b] font-black">Q{i + 1}.</span>
                                                                 <div className="flex-1">
-                                                                    <p className="font-bold text-lg leading-relaxed">{typeof q === 'string' ? q : (q.question || q.text)}</p>
+                                                                    <p className="font-bold text-lg leading-relaxed text-slate-800">{typeof q === 'string' ? q : (q.question || q.text)}</p>
                                                                     {q.options && (
                                                                         <div className="grid grid-cols-1 md:grid-cols-2 gap-2 mt-3">
                                                                             {q.options.map((opt: string, idx: number) => (
-                                                                                <div key={idx} className="text-sm bg-white/10 p-2 rounded-lg border border-white/5">
-                                                                                    {String.fromCharCode(65 + idx)}. {opt}
+                                                                                <div key={idx} className="text-sm bg-white p-2.5 rounded-xl border border-slate-100 shadow-sm text-slate-600 font-medium">
+                                                                                    <span className="text-[#6b5ea7] font-black mr-2">{String.fromCharCode(65 + idx)}.</span> {opt}
                                                                                 </div>
                                                                             ))}
                                                                         </div>
@@ -1880,7 +1880,7 @@ window.onload = function() {
                                                         {(Array.isArray(result.estimatedTime) ? result.estimatedTime : []).map((item: any, i: number) => (
                                                             <div key={i} className="p-4 bg-white rounded-2xl border border-slate-100 text-center">
                                                                 <span className="block text-[10px] font-black uppercase text-slate-400 mb-1">{item.section}</span>
-                                                                <span className="text-sm font-bold text-indigo-600">{item.time}</span>
+                                                                <span className="text-sm font-bold text-[#6b5ea7]">{item.time}</span>
                                                             </div>
                                                         ))}
                                                     </div>
@@ -1914,7 +1914,7 @@ window.onload = function() {
                                                                     }
                                                                     setIsEditingLink(true);
                                                                 }}
-                                                                className="text-slate-400 hover:text-indigo-600 h-8 w-8 p-0"
+                                                                className="text-slate-400 hover:text-[#6b5ea7] h-8 w-8 p-0"
                                                             >
                                                                 <Edit3 className="w-4 h-4" />
                                                             </Button>
@@ -1922,26 +1922,26 @@ window.onload = function() {
                                                     </div>
 
                                                     {isEditingLink ? (
-                                                        <div className="flex flex-col gap-3 p-6 bg-slate-50 border border-indigo-100 rounded-3xl mb-4">
+                                                        <div className="flex flex-col gap-3 p-6 bg-slate-50 border border-purple-100 rounded-3xl mb-4">
                                                             <input
                                                                 value={tempLink.title}
                                                                 onChange={(e) => setTempLink({ ...tempLink, title: e.target.value })}
                                                                 placeholder="Video Title"
-                                                                className="flex h-12 w-full rounded-xl border border-slate-200 bg-white px-4 py-2 text-sm font-bold placeholder:text-slate-400 focus:outline-none focus:ring-2 ring-indigo-500/10"
+                                                                className="flex h-12 w-full rounded-xl border border-slate-200 bg-white px-4 py-2 text-sm font-bold placeholder:text-slate-400 focus:outline-none focus:ring-2 ring-[#6b5ea7]/10"
                                                             />
                                                             <div className="flex gap-2">
                                                                 <input
                                                                     value={tempLink.url}
                                                                     onChange={(e) => setTempLink({ ...tempLink, url: e.target.value })}
                                                                     placeholder="YouTube URL"
-                                                                    className="flex h-12 flex-1 rounded-xl border border-slate-200 bg-white px-4 py-2 text-sm font-bold placeholder:text-slate-400 focus:outline-none focus:ring-2 ring-indigo-500/10"
+                                                                    className="flex h-12 flex-1 rounded-xl border border-slate-200 bg-white px-4 py-2 text-sm font-bold placeholder:text-slate-400 focus:outline-none focus:ring-2 ring-[#6b5ea7]/10"
                                                                 />
                                                                 <Button
                                                                     onClick={() => {
                                                                         setResult({ ...result, referenceUrl: tempLink });
                                                                         setIsEditingLink(false);
                                                                     }}
-                                                                    className="h-12 w-12 rounded-xl bg-indigo-600 text-white"
+                                                                    className="h-12 w-12 rounded-xl bg-[#6b5ea7] text-white"
                                                                 >
                                                                     <Check className="w-4 h-4" />
                                                                 </Button>
@@ -1964,7 +1964,7 @@ window.onload = function() {
                                                                     </h5>
                                                                 </div>
                                                                 <p className="text-sm text-slate-500 font-medium">
-                                                                    Find curated videos for: <span className="text-indigo-600 font-bold">"{result.videoSearchQuery || topic}"</span>
+                                                                    Find curated videos for: <span className="text-[#6b5ea7] font-bold">"{result.videoSearchQuery || topic}"</span>
                                                                 </p>
                                                             </div>
                                                             <a
@@ -2023,8 +2023,8 @@ window.onload = function() {
                                                         <Sparkles className="w-32 h-32" />
                                                     </div>
                                                     <div className="relative z-10">
-                                                        <span className="text-[10px] font-black uppercase tracking-[0.3em] text-white/60 mb-4 block">Teacher's Inspiration</span>
-                                                        <p className="text-2xl font-black italic leading-tight">"{result.motivationalQuote}"</p>
+                                                        <span className="text-[10px] font-black uppercase tracking-[0.3em] text-white/80 mb-4 block">Teacher's Inspiration</span>
+                                                        <p className="text-2xl font-black italic leading-tight text-white shadow-sm">"{result.motivationalQuote}"</p>
                                                     </div>
                                                 </div>
                                             )
@@ -2037,12 +2037,12 @@ window.onload = function() {
                                             const isAnswered = selectedAnswer !== undefined;
 
                                             return (
-                                                <div key={i} className="p-6 sm:p-10 bg-white rounded-[1.5rem] sm:rounded-[2rem] border border-slate-200 shadow-xl shadow-slate-100/50 mb-6 sm:mb-8 last:mb-0 group hover:border-indigo-200 transition-all relative overflow-hidden">
+                                                <div key={i} className="p-6 sm:p-10 bg-white rounded-[1.5rem] sm:rounded-[2rem] border border-slate-200 shadow-xl shadow-slate-100/50 mb-6 sm:mb-8 last:mb-0 group hover:border-purple-200 transition-all relative overflow-hidden">
                                                     <div className="absolute -top-6 -right-6 opacity-[0.02] rotate-12 transition-transform group-hover:rotate-0 group-hover:scale-110 pointer-events-none">
-                                                        <Brain className="w-32 h-32 text-indigo-900" />
+                                                        <Brain className="w-32 h-32 text-purple-900" />
                                                     </div>
                                                     <div className="flex flex-col sm:flex-row items-start gap-4 sm:gap-6 relative z-10">
-                                                        <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-xl sm:rounded-2xl bg-indigo-50 text-indigo-600 flex items-center justify-center font-black text-base sm:text-lg border border-indigo-100 shadow-sm shrink-0">
+                                                        <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-xl sm:rounded-2xl bg-purple-50 text-[#6b5ea7] flex items-center justify-center font-black text-base sm:text-lg border border-purple-100 shadow-sm shrink-0">
                                                             {i + 1}
                                                         </div>
                                                         <div className="flex-1">
@@ -2112,7 +2112,7 @@ window.onload = function() {
                                                     variant={currentPage === 1 ? "default" : "outline"}
                                                     size="sm"
                                                     onClick={() => setCurrentPage(1)}
-                                                    className={`rounded-xl px-4 font-bold ${currentPage === 1 ? 'bg-indigo-600 text-white' : 'text-slate-600 border-slate-200'}`}
+                                                    className={`rounded-xl px-4 font-bold ${currentPage === 1 ? 'bg-[#6b5ea7] text-white' : 'text-slate-600 border-slate-200'}`}
                                                 >
                                                     Content
                                                 </Button>
@@ -2120,7 +2120,7 @@ window.onload = function() {
                                                     variant={currentPage === (result?.sections?.length || 0) + 2 ? "default" : "outline"}
                                                     size="sm"
                                                     onClick={() => setCurrentPage((result?.sections?.length || 0) + 2)}
-                                                    className={`rounded-xl px-4 font-bold ${currentPage === (result?.sections?.length || 0) + 2 ? 'bg-indigo-600 text-white' : 'text-slate-600 border-slate-200'}`}
+                                                    className={`rounded-xl px-4 font-bold ${currentPage === (result?.sections?.length || 0) + 2 ? 'bg-[#6b5ea7] text-white' : 'text-slate-600 border-slate-200'}`}
                                                 >
                                                     Review
                                                 </Button>
@@ -2165,15 +2165,15 @@ window.onload = function() {
 
                                                                 {/* Key Points - Desktop Side / Mobile Top */}
                                                                 {(result?.keyPoints || result?.content?.keyPoints) && (
-                                                                    <div className="bg-indigo-50/50 rounded-3xl p-8 border border-indigo-100 mb-10">
-                                                                        <h4 className="text-indigo-900 font-black text-xl mb-4 flex items-center gap-2">
+                                                                    <div className="bg-purple-50/50 rounded-3xl p-8 border border-purple-100 mb-10">
+                                                                        <h4 className="text-purple-900 font-black text-xl mb-4 flex items-center gap-2">
                                                                             <Target className="w-5 h-5" />
                                                                             Key Points to Remember:
                                                                         </h4>
                                                                         <ul className="grid grid-cols-1 md:grid-cols-2 gap-4">
                                                                             {(result?.keyPoints || result?.content?.keyPoints || []).map((kp: string, i: number) => (
                                                                                 <li key={i} className="flex items-start gap-3 text-sm font-bold text-slate-700">
-                                                                                    <div className="w-5 h-5 rounded-full bg-indigo-600 flex-shrink-0 flex items-center justify-center text-[10px] text-white mt-0.5">{i + 1}</div>
+                                                                                    <div className="w-5 h-5 rounded-full bg-[#6b5ea7] flex-shrink-0 flex items-center justify-center text-[10px] text-white mt-0.5">{i + 1}</div>
                                                                                     {kp}
                                                                                 </li>
                                                                             ))}
@@ -2184,14 +2184,14 @@ window.onload = function() {
                                                                 <div className="space-y-12">
                                                                     {(result?.sections || result?.content?.sections || []).map((s: any, idx: number) => (
                                                                         <div key={idx} className="group">
-                                                                            <h3 className="text-2xl font-black text-slate-800 mb-4 border-l-4 border-indigo-600 pl-4">{s.heading}</h3>
+                                                                            <h3 className="text-2xl font-black text-slate-800 mb-4 border-l-4 border-[#6b5ea7] pl-4">{s.heading}</h3>
                                                                             <div className="text-slate-600 leading-relaxed text-base font-medium mb-6">
                                                                                 <ReactMarkdown>{s.content}</ReactMarkdown>
                                                                             </div>
                                                                             {s.bulletPoints && s.bulletPoints.length > 0 && (
                                                                                 <ul className="grid grid-cols-1 md:grid-cols-2 gap-3 mb-4">
                                                                                     {s.bulletPoints.map((bp: string, bi: number) => (
-                                                                                        <li key={bi} className="bg-white p-4 rounded-xl border border-slate-100 flex items-start gap-3 shadow-sm group-hover:border-indigo-100 transition-all">
+                                                                                        <li key={bi} className="bg-white p-4 rounded-xl border border-slate-100 flex items-start gap-3 shadow-sm group-hover:border-purple-100 transition-all">
                                                                                             <CheckCircle2 className="w-4 h-4 text-emerald-500 mt-0.5 flex-shrink-0" />
                                                                                             <span className="text-sm font-bold text-slate-700">{bp}</span>
                                                                                         </li>
@@ -2263,7 +2263,7 @@ window.onload = function() {
                                                     <div className="space-y-6 mb-12">
                                                         {(result?.reviewQuestions || result?.content?.reviewQuestions || []).map((q: string, i: number) => (
                                                             <div key={i} className="p-6 bg-slate-50 rounded-2xl border border-slate-100 flex items-start gap-4">
-                                                                <span className="font-black text-indigo-600 min-w-8">Q{i + 1}.</span>
+                                                                <span className="font-black text-[#6b5ea7] min-w-8">Q{i + 1}.</span>
                                                                 <p className="text-slate-800 font-bold leading-relaxed">{q}</p>
                                                             </div>
                                                         ))}
@@ -2275,7 +2275,7 @@ window.onload = function() {
                                                             <Button
                                                                 variant="outline"
                                                                 onClick={() => setShowAnswerKey(!showAnswerKey)}
-                                                                className={`w-full h-14 rounded-2xl border-2 transition-all flex items-center justify-center gap-2 font-black ${showAnswerKey ? 'bg-emerald-50 border-emerald-200 text-emerald-700' : 'bg-white border-slate-100 text-slate-600 hover:border-indigo-200 hover:text-indigo-600'}`}
+                                                                className={`w-full h-14 rounded-2xl border-2 transition-all flex items-center justify-center gap-2 font-black ${showAnswerKey ? 'bg-emerald-50 border-emerald-200 text-emerald-700' : 'bg-white border-slate-100 text-slate-600 hover:border-purple-200 hover:text-[#6b5ea7]'}`}
                                                             >
                                                                 {showAnswerKey ? <ChevronRight className="w-5 h-5 rotate-90" /> : <ChevronRight className="w-5 h-5" />}
                                                                 {showAnswerKey ? "Hide Answer Key" : "View Answers for Questions"}
@@ -2318,9 +2318,9 @@ window.onload = function() {
 
                                         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                                             {(result?.slides || []).map((slide: any, i: number) => (
-                                                <div key={i} className="bg-white rounded-[2rem] border-2 border-slate-100 p-8 shadow-xl shadow-slate-100/50 hover:border-indigo-100 transition-all flex flex-col min-h-[300px]">
+                                                <div key={i} className="bg-white rounded-[2rem] border-2 border-slate-100 p-8 shadow-xl shadow-slate-100/50 hover:border-purple-100 transition-all flex flex-col min-h-[300px]">
                                                     <div className="flex items-center gap-3 mb-6">
-                                                        <div className="w-10 h-10 rounded-xl bg-indigo-600 flex items-center justify-center text-white font-black">
+                                                        <div className="w-10 h-10 rounded-xl bg-[#6b5ea7] flex items-center justify-center text-white font-black">
                                                             {i + 1}
                                                         </div>
                                                         <h3 className="text-xl font-bold text-slate-900">{slide.title || slide.heading}</h3>
